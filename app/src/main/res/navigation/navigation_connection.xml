@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_connection"
+    app:startDestination="@id/login">
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.Login"
+        android:label="b_fragment_login"
+        tools:layout="@layout/b_fragment_login" />
+</navigation>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Ou Est Nounou</string>
+
+    <string name="email">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="register">Inscription</string>
+    <string name="forget_password">Mot de passe oublié ?</string>
+    <string name="confirmation">Continuer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".VISUAL_ACTIVITY_1_CONNECTION.Login">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green_1"
+        >
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:src="@drawable/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="50px"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:textColor="@color/white" />
+
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/input_style"
+                android:hint="@string/email"
+                android:padding="40px"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="#FFFFFF"
+                android:layout_below="@id/error"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:layout_marginBottom="50px"
+                android:background="@drawable/input_style"
+                android:hint="@string/password"
+                android:padding="40px"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="#FFFFFF"
+                android:layout_below="@id/email"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"/>
+
+
+            <Button
+                android:id="@+id/validation"
+                style="@style/AppTheme.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/password"
+                android:background="@drawable/button_corner"
+                android:padding="40px"
+                android:text="@string/confirmation"
+                app:backgroundTint="@null"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100px"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:text="@string/register"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/bar"
+                android:layout_width="500px"
+                android:layout_height="10px"
+                android:layout_below="@id/register"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:src="@drawable/bar" />
+
+            <TextView
+                android:id="@+id/forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bar"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:text="@string/forget_password"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -13,8 +13,9 @@
         android:theme="@style/Theme.OuEstNounou"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ACTIVITY.Connection"
+            android:exported="true"
+            android:turnScreenOn="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
