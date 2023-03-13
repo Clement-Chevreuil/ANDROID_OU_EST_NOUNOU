@@ -52,6 +52,7 @@ public class ParentsDAO extends DAOBase{
     }
 
     public void update(Parents parents) {
+        open();
         ContentValues values = new ContentValues();
         values.put(firstName, parents.getFist_name());
         values.put(last_name, parents.getLast_name());
@@ -65,10 +66,13 @@ public class ParentsDAO extends DAOBase{
         values.put(phone, parents.getPhone());
         values.put(sex, parents.getSex());
         mDb.update(nameTableParents, values, id  + " = ?", new String[] {String.valueOf(parents.getId())});
+        close();
     }
 
     public void delete(long id) {
+        open();
         mDb.delete(nameTableParents, id + " = ?", new String[] {String.valueOf(id)});
+        close();
     }
 
     public ArrayList<Parents> getParentss() {

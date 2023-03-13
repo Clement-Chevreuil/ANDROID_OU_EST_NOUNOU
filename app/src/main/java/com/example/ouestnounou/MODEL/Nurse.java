@@ -5,12 +5,10 @@ import java.util.Date;
 public class Nurse {
 
     private int id;
-
     private String sex;
-
     private String fist_name;
     private String last_name;
-    private Date birth;
+    private String birth;
     private String city;
     private String country;
     private String phone;
@@ -23,6 +21,24 @@ public class Nurse {
     private int nb_children;
 
     public Nurse(){}
+
+    public Nurse(String fist_name, String last_name, String sex, String birth, String city, String country, String phone, String adress, String postal_code, String mail, String password, int age_min, int age_max, int nb_children) {
+        this.sex = sex;
+        this.fist_name = fist_name;
+        this.last_name = last_name;
+        this.birth = birth;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.adress = adress;
+        this.postal_code = postal_code;
+        this.mail = mail;
+        this.password = password;
+        this.age_min = age_min;
+        this.age_max = age_max;
+        this.nb_children = nb_children;
+    }
+
 
     public String getSex() {
         return sex;
@@ -56,11 +72,11 @@ public class Nurse {
         this.last_name = last_name;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 

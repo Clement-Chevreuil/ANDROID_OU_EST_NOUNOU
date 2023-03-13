@@ -34,6 +34,7 @@ public class NurseDAO extends DAOBase{
 
     public void add(Nurse nurse) {
 
+        open();
         ContentValues values = new ContentValues();
 
         values.put(firstName, nurse.getFist_name());
@@ -52,9 +53,11 @@ public class NurseDAO extends DAOBase{
         values.put(nbChildren, nurse.getNb_children());
 
         mDb.insert(nameTableNurse, null, values);
+        close();
     }
 
     public void update(Nurse nurse) {
+        open();
         ContentValues values = new ContentValues();
         values.put(firstName, nurse.getFist_name());
         values.put(last_name, nurse.getLast_name());
@@ -71,10 +74,13 @@ public class NurseDAO extends DAOBase{
         values.put(ageMax, nurse.getAge_max());
         values.put(nbChildren, nurse.getNb_children());
         mDb.update(nameTableNurse, values, id  + " = ?", new String[] {String.valueOf(nurse.getId())});
+        close();
     }
 
     public void delete(long id) {
+        open();
         mDb.delete(nameTableNurse, id + " = ?", new String[] {String.valueOf(id)});
+        close();
     }
 
     public ArrayList<Nurse> getNurses() {
