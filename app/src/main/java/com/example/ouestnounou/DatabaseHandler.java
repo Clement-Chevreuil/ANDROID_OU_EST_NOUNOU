@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String sex = "sex";
 
 
-    private static final String nameTableParents = "User";
+    private static final String nameTableParents = "Parents";
 
     private static final String nameTableNurse = "Nurse";
     private static final String ageMin = "age_min";
@@ -40,8 +40,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + firstName + " TEXT,"
                     + lastName + " TEXT,"
                     + phone + " TEXT,"
-                    + birth + " DATE,"
-                    + sex + " sex,"
+                    + birth + " TEXT,"
+                    + sex + " TEXT,"
                     + city + " TEXT,"
                     + adress + " TEXT,"
                     + postalCode + " TEXT,"
@@ -57,8 +57,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + firstName + " TEXT,"
                     + lastName + " TEXT,"
                     + phone + " TEXT,"
-                    + birth + " DATE,"
-                    + sex + " sex,"
+                    + birth + " TEXT,"
+                    + sex + " TEXT,"
                     + city + " TEXT,"
                     + adress + " TEXT,"
                     + postalCode + " TEXT,"
@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + firstName + " TEXT,"
                     + lastName + " TEXT,"
                     + sex + " TEXT,"
-                    + birth + " DATE,);";
+                    + birth + " TEXT);";
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

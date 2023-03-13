@@ -32,6 +32,7 @@ public class ParentsDAO extends DAOBase{
 
     public void add(Parents parents) {
 
+        open();
         ContentValues values = new ContentValues();
 
         values.put(firstName, parents.getFist_name());
@@ -47,6 +48,7 @@ public class ParentsDAO extends DAOBase{
         values.put(sex, parents.getSex());
 
         mDb.insert(nameTableParents, null, values);
+        close();
     }
 
     public void update(Parents parents) {
