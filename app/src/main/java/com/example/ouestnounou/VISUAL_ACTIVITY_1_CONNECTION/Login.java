@@ -132,11 +132,11 @@ public class Login extends Fragment {
                         }
                         if(nurse != null)
                         {
-                            Log.e("test", "connexion reussi nurse");
+                            Navigation.findNavController(view).navigate(R.id.action_login_to_nurse2);
                         }
                         else if(parents != null)
                         {
-                            Log.e("test", "connexion reussi parents");
+                            Navigation.findNavController(view).navigate(R.id.action_login_to_parents2);
                         }
                         else{ erreurConnexion(); }
                     }

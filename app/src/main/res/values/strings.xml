@@ -27,4 +27,11 @@
     <string name="register">Inscription</string>
     <string name="step">Etape</string>
     <string name="home">Acceuil</string>
+    <string name="search">Recherche</string>
+    <string name="pay">Payer</string>
+    <string name="settings">Paramètres</string>
+    <string name="children">Enfant</string>
+    <string name="planning">Planning</string>
+    <string name="childrens">Enfants</string>
+    <string name="calendar">Calendrier</string>
 </resources>
