@@ -8,7 +8,7 @@
     <string name="birth">Date de naissance</string>
     <string name="city">Ville</string>
     <string name="confirmation">Continuer</string>
-    <string name="connexion">Connection</string>
+    <string name="connexion">Connexion</string>
     <string name="country">Pays</string>
     <string name="finish">Fin</string>
     <string name="first_name">Prénom</string>
@@ -22,8 +22,9 @@
     <string name="postal_code">Code postal</string>
     <string name="mail">Mail</string>
     <string name="name">Nom</string>
-    <string name="num_children">Nombre enfant accepté</string>
+    <string name="num_children">Nombre d\'enfants acceptés</string>
     <string name="nurse">Nounou</string>
     <string name="register">Inscription</string>
     <string name="step">Etape</string>
+    <string name="home">Acceuil</string>
 </resources>
