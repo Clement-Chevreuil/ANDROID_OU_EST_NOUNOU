@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="address">Adress</string>
-    <string name="add_children">Ajouter un enfant</string>
-    <string name="age_max">Age maximum</string>
-    <string name="age_min">Age minimum</string>
+    <string name="address">Address</string>
+    <string name="add_children">Add a child</string>
+    <string name="age_max">Maximum age</string>
+    <string name="age_min">Minimum age</string>
     <string name="app_name">Ou Est Nounou</string>
-    <string name="boy">Garçon</string>
-    <string name="birth">Date de naissance</string>
-    <string name="city">Ville</string>
-    <string name="confirmation">Continuer</string>
+    <string name="boy">Boy</string>
+    <string name="birth">Birthday</string>
+    <string name="city">City</string>
+    <string name="confirmation">Continue</string>
     <string name="connexion">Connection</string>
-    <string name="country">Pays</string>
-    <string name="finish">Fin</string>
-    <string name="first_name">Prénom</string>
-    <string name="forget_password">Mot de passe oublié ?</string>
-    <string name="girl">Fille</string>
-    <string name="last_name">Nom de famille</string>
+    <string name="country">Country</string>
+    <string name="finish">Finish</string>
+    <string name="first_name">First Name</string>
+    <string name="forget_password">Forgot password ?</string>
+    <string name="girl">Girl</string>
+    <string name="last_name">Last name</string>
     <string name="parents">Parents</string>
-    <string name="password">Mot de passe</string>
-    <string name="password_confirmation">Confirmation du mot de passe</string>
-    <string name="phone">Téléphone</string>
-    <string name="postal_code">Code postal</string>
+    <string name="password">Password</string>
+    <string name="password_confirmation">Confirm password</string>
+    <string name="phone">Phone number</string>
+    <string name="postal_code">Postal code</string>
     <string name="mail">Mail</string>
-    <string name="name">Nom</string>
-    <string name="num_children">Nombre enfant accepté</string>
+    <string name="name">Name</string>
+    <string name="num_children">Number of children accepted</string>
     <string name="nurse">Nounou</string>
-    <string name="register">Inscription</string>
-    <string name="step">Etape</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">Accueil</string>
+    <string name="register">Register</string>
+    <string name="step">Step</string>
 </resources>
