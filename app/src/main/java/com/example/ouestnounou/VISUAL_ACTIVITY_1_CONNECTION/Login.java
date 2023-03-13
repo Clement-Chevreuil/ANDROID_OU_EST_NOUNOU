@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ouestnounou.DAO.NurseDAO;
+import com.example.ouestnounou.DAO.ParentsDAO;
+import com.example.ouestnounou.MODEL.Nurse;
+import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
 import java.util.Arrays;
@@ -44,6 +49,7 @@ public class Login extends Fragment {
     ImageView logo, bar;
     RadioGroup category;
     RadioButton nurse, parents;
+    String category_text;
 
     public Login() {
 
@@ -66,48 +72,82 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.b_fragment_login, container, false);
 
-        //userDAO = new UserDAO(getContext());
-
-
         error = v.findViewById(R.id.error);
         mail = v.findViewById(R.id.mail);
         password = v.findViewById(R.id.password);
 
         validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(connexionApp);
+        validation.setOnClickListener(click_event);
+
+        nurse = v.findViewById(R.id.nurse);
+        nurse.setOnClickListener(click_event);
+
+        parents = v.findViewById(R.id.parents);
+        parents.setOnClickListener(click_event);
 
         register_link = v.findViewById(R.id.register_link);
-        register_link.setOnClickListener(fragment_register);
+        register_link.setOnClickListener(click_event);
+
+        if(nurse.isChecked()){
+            category_text = nurse.getText().toString();
+        }
+        else if(parents.isChecked()){
+            category_text = parents.getText().toString();
+        }
 
         return v;
     }
 
-    View.OnClickListener connexionApp = new View.OnClickListener(){
+    private View.OnClickListener click_event = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            //View itemDetailFragmentContainer = v.findViewById(R.id.fr);
+        public void onClick(View view) {
+            switch (view.getId())
+            {
+                case R.id.nurse :
+                    category_text = nurse.getText().toString();
+                    break;
 
-            String pseudo_validation = mail.getText().toString();
-            String password_validation = password.getText().toString();
+                case R.id.parents:
+                    category_text = parents.getText().toString();
+                    break;
 
-            if(! pseudo_validation.isEmpty() && ! password_validation.isEmpty()) {
-                //User user = userDAO.connexion(pseudo_validation, password_validation);
-                //if(user != null){
-                    /*Bundle bundle = new Bundle();
-                    bundle.putInt("idUser", user.getId());*/
-                //}
-                //else{ erreurConnexion(); }
+                case R.id.validation :
+
+                    String mail_validation = mail.getText().toString();
+                    String password_validation = password.getText().toString();
+
+                    Nurse nurse = null;
+                    Parents parents = null;
+
+                    if(! mail_validation.isEmpty() && ! password_validation.isEmpty()) {
+                        if(category_text.equals(getResources().getString(R.string.nurse)))
+                        {
+                            NurseDAO nurseDAO = new NurseDAO(getContext());
+                            nurse = nurseDAO.connexion(mail_validation, password_validation);
+                        }
+                        else if(category_text.equals(getResources().getString(R.string.parents)))
+                        {
+                            ParentsDAO parentsDAO = new ParentsDAO(getContext());
+                            parents = parentsDAO.connexion(mail_validation, password_validation);
+                        }
+                        if(nurse != null)
+                        {
+                            Log.e("test", "connexion reussi nurse");
+                        }
+                        else if(parents != null)
+                        {
+                            Log.e("test", "connexion reussi parents");
+                        }
+                        else{ erreurConnexion(); }
+                    }
+                    else { erreurNonRemplie(); }
+                    break;
+
+                case R.id.register_link:
+                    Navigation.findNavController(view).navigate(R.id.action_login_to_registerP1);
+                    break;
+
             }
-            else { erreurNonRemplie(); }
-
-
-        }
-    };
-
-    View.OnClickListener fragment_register = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            Navigation.findNavController(v).navigate(R.id.action_login_to_registerP1);
         }
     };
 
