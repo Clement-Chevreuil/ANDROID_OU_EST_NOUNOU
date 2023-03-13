@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ouestnounou.DAO.ParentsDAO;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
@@ -158,7 +159,11 @@ public class RegisterP3 extends Fragment {
 
                         else if (category_text.equals(getResources().getString(R.string.parents)))
                         {
-                            //Parents new_parents = new Parents(first_name_text, last_name_text, date_birth_text, city_text, country_text, adress_text, postal_code_text, mail_text, password_text, phone_text, sex_text);
+
+                            Parents new_parents = new Parents(first_name_text, last_name_text, date_birth_text, city_text, country_text, adress_text, postal_code_text, mail_text, password_text, phone_text, sex_text);
+                            ParentsDAO parentsDAO = new ParentsDAO(getContext());
+                            parentsDAO.add(new_parents);
+
                             Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
                         }
                     }

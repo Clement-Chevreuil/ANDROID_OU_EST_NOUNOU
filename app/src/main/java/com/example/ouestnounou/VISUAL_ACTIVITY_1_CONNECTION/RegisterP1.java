@@ -179,6 +179,12 @@ public class RegisterP1 extends Fragment {
                     step.setText("etape 1/4");
                     category_text = nurse.getText().toString();
                     break;
+                case R.id.boy:
+                    sex_text = boy.getText().toString();
+                    break;
+                case R.id.girl:
+                    sex_text = girl.getText().toString();
+                    break;
             }
 
         }
