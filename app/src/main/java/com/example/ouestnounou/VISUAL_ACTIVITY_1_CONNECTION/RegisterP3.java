@@ -85,6 +85,8 @@ public class RegisterP3 extends Fragment {
         back = v.findViewById(R.id.back);
         back.setOnClickListener(click_event);
 
+        phone = v.findViewById(R.id.phone);
+
         mail = v.findViewById(R.id.mail);
         password = v.findViewById(R.id.password);
         password_confirmation = v.findViewById(R.id.password_confirmation);
