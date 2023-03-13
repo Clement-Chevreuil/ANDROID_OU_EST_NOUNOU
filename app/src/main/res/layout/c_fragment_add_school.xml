@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".VISUAL_ACTIVITY_1_CONNECTION.Login"
-    android:id="@+id/frame">
+    tools:context=".VISUAL_ACTIVITY_1_CONNECTION.AddSchool">
 
     <RelativeLayout
         android:id="@+id/relative_first"
@@ -39,52 +39,28 @@
                 android:textColor="@color/white"
                 />
 
-
-            <RadioGroup
-                android:id="@+id/category"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/step"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/error"
-                android:layout_marginLeft="@dimen/button_connexion"
-                android:layout_marginRight="@dimen/button_connexion"
+                android:text="Etape : 1/2"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
                 android:layout_marginBottom="20dp"
-                >
+                android:layout_below="@id/error"/>
 
-                <RadioButton android:id="@+id/nurse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nurse"
-                    android:background="@drawable/input_style"
-                    android:textColor="@color/white"
-                    android:onClick="onRadioButtonClicked"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-
-                <RadioButton android:id="@+id/parents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/parents"
-                    android:background="@drawable/input_style"
-                    android:textColor="@color/white"
-                    android:onClick="onRadioButtonClicked"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-
-            </RadioGroup>
 
             <EditText
-                android:id="@+id/mail"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_style"
-                android:hint="@string/mail"
+                android:hint="@string/name"
                 android:padding="40px"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="#FFFFFF"
-                android:layout_below="@id/category"
+                android:layout_below="@id/step"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"
                 android:layout_marginBottom="20dp"/>
@@ -92,34 +68,92 @@
 
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:layout_marginBottom="50px"
                 android:background="@drawable/input_style"
-                android:hint="@string/password"
+                android:hint="@string/phone"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="#FFFFFF"
+                android:layout_below="@id/name"
+                android:layout_marginBottom="50px"
+                android:padding="40px"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"/>
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_style"
+                android:hint="@string/address"
                 android:padding="40px"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="#FFFFFF"
-                android:layout_below="@id/mail"
+                android:layout_below="@id/phone"
                 android:layout_marginLeft="@dimen/button_connexion"
-                android:layout_marginRight="@dimen/button_connexion"/>
+                android:layout_marginRight="@dimen/button_connexion"
+                android:layout_marginBottom="20dp"/>
 
+            <LinearLayout
+                android:id="@+id/city_cp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_style"
+                    android:hint="@string/city"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginBottom="50px"
+                    android:padding="40px"
+                    android:layout_weight="0.6"
+                    android:layout_marginLeft="@dimen/button_connexion"
+                    android:layout_marginRight="@dimen/button_connexion"/>
+
+
+                <EditText
+                    android:id="@+id/postal_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_style"
+                    android:hint="@string/postal_code"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginBottom="50px"
+                    android:padding="40px"
+                    android:layout_weight="0.8"
+                    android:layout_marginLeft="@dimen/button_connexion"
+                    android:layout_marginRight="@dimen/button_connexion"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/validation"
                 style="@style/AppTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/password"
+
                 android:background="@drawable/button_corner"
                 android:padding="40px"
                 android:text="@string/confirmation"
                 app:backgroundTint="@null"
+                android:layout_below="@id/city_cp"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"/>
+
 
         </RelativeLayout>
 
@@ -128,38 +162,23 @@
             android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="100px"
+            android:layout_marginBottom="50px"
             android:gravity="bottom">
 
-            <Button
-                android:id="@+id/register_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10px"
-                android:layout_marginTop="10px"
-                android:layout_marginEnd="10px"
-                android:layout_marginBottom="10px"
-                android:background="@color/invisible"
-                android:fontFamily="sans-serif"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                app:backgroundTint="@null" />
 
             <ImageView
                 android:id="@+id/bar"
                 android:layout_width="500px"
                 android:layout_height="10px"
-                android:layout_below="@id/register_link"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10px"
                 android:src="@drawable/bar" />
 
+
             <Button
-                android:id="@+id/forget_password_link"
+                android:id="@+id/home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/bar"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="10px"
                 android:layout_marginTop="10px"
@@ -167,9 +186,11 @@
                 android:layout_marginBottom="10px"
                 android:background="@color/invisible"
                 android:fontFamily="sans-serif"
-                android:text="@string/forget_password"
+                android:text="@string/home"
                 android:textColor="@color/white"
                 app:backgroundTint="@null" />
+
+
 
         </RelativeLayout>
 

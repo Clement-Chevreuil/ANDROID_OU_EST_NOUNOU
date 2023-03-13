@@ -1,34 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".VISUAL_ACTIVITY_1_CONNECTION.Login"
-    android:id="@+id/frame">
+    tools:context=".VISUAL_ACTIVITY_1_CONNECTION.RegisterP1">
 
     <RelativeLayout
-        android:id="@+id/relative_first"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/green_1"
         >
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:src="@drawable/logo"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="50px"
-            />
 
         <RelativeLayout
-            android:id="@+id/form"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/logo"
-            android:layout_centerInParent="true">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/error"
@@ -39,13 +27,22 @@
                 android:textColor="@color/white"
                 />
 
+            <TextView
+                android:id="@+id/step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Etape : 1/4"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@id/error"/>
 
             <RadioGroup
                 android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/error"
+                android:layout_below="@+id/step"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"
                 android:layout_marginBottom="20dp"
@@ -74,17 +71,49 @@
 
             </RadioGroup>
 
+            <RadioGroup
+                android:id="@+id/sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/category"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"
+                android:layout_marginBottom="20dp"
+                >
+
+                <RadioButton android:id="@+id/boy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/boy"
+                    android:background="@drawable/input_style"
+                    android:textColor="@color/white"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+
+                <RadioButton android:id="@+id/girl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/girl"
+                    android:background="@drawable/input_style"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+
+            </RadioGroup>
+
             <EditText
-                android:id="@+id/mail"
+                android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_style"
-                android:hint="@string/mail"
+                android:hint="@string/first_name"
                 android:padding="40px"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="#FFFFFF"
-                android:layout_below="@id/category"
+                android:layout_below="@id/sex"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"
                 android:layout_marginBottom="20dp"/>
@@ -92,18 +121,29 @@
 
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:layout_marginBottom="50px"
                 android:background="@drawable/input_style"
-                android:hint="@string/password"
-                android:padding="40px"
+                android:hint="@string/last_name"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="#FFFFFF"
-                android:layout_below="@id/mail"
+                android:layout_below="@id/first_name"
+                android:layout_marginBottom="50px"
+                android:padding="40px"
+                android:layout_marginLeft="@dimen/button_connexion"
+                android:layout_marginRight="@dimen/button_connexion"/>
+
+            <DatePicker
+                android:id="@+id/birth"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:background="@drawable/input_style"
+                android:layout_below="@id/last_name"
+                android:layout_marginBottom="50px"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"/>
 
@@ -113,11 +153,12 @@
                 style="@style/AppTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/password"
+
                 android:background="@drawable/button_corner"
                 android:padding="40px"
                 android:text="@string/confirmation"
                 app:backgroundTint="@null"
+                android:layout_below="@id/birth"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"/>
 
@@ -125,41 +166,23 @@
 
 
         <RelativeLayout
-            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="100px"
+            android:layout_marginBottom="50px"
             android:gravity="bottom">
 
-            <Button
-                android:id="@+id/register_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10px"
-                android:layout_marginTop="10px"
-                android:layout_marginEnd="10px"
-                android:layout_marginBottom="10px"
-                android:background="@color/invisible"
-                android:fontFamily="sans-serif"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                app:backgroundTint="@null" />
 
             <ImageView
-                android:id="@+id/bar"
                 android:layout_width="500px"
                 android:layout_height="10px"
-                android:layout_below="@id/register_link"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10px"
                 android:src="@drawable/bar" />
 
             <Button
-                android:id="@+id/forget_password_link"
+                android:id="@+id/connexion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/bar"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="10px"
                 android:layout_marginTop="10px"
@@ -167,9 +190,11 @@
                 android:layout_marginBottom="10px"
                 android:background="@color/invisible"
                 android:fontFamily="sans-serif"
-                android:text="@string/forget_password"
+                android:text="@string/connexion"
                 android:textColor="@color/white"
                 app:backgroundTint="@null" />
+
+
 
         </RelativeLayout>
 

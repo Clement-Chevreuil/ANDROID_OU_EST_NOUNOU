@@ -8,5 +8,94 @@
         android:id="@+id/login"
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.Login"
         android:label="b_fragment_login"
-        tools:layout="@layout/b_fragment_login" />
+        tools:layout="@layout/b_fragment_login" >
+        <action
+            android:id="@+id/action_login_to_registerP1"
+            app:destination="@id/registerP1" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerP2"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP2"
+        android:label="RegisterP2" >
+        <action
+            android:id="@+id/action_registerP2_to_registerP1"
+            app:destination="@id/registerP1" />
+        <action
+            android:id="@+id/action_registerP2_to_registerP3"
+            app:destination="@id/registerP3" />
+        <action
+            android:id="@+id/action_registerP2_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerP1"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP1"
+        android:label="b_fragment_register_p1"
+        tools:layout="@layout/b_fragment_register_p1" >
+        <action
+            android:id="@+id/action_registerP1_to_registerP2"
+            app:destination="@id/registerP2" />
+        <action
+            android:id="@+id/action_registerP1_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerP3"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP3"
+        android:label="b_fragment_register_p3"
+        tools:layout="@layout/b_fragment_register_p3" >
+        <action
+            android:id="@+id/action_registerP3_to_registerP2"
+            app:destination="@id/registerP2" />
+        <action
+            android:id="@+id/action_registerP3_to_registerP4Nurse"
+            app:destination="@id/registerP4Nurse" />
+        <action
+            android:id="@+id/action_registerP3_to_registerP4Parents"
+            app:destination="@id/registerP4Parents" />
+        <action
+            android:id="@+id/action_registerP3_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerP4Nurse"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP4Nurse"
+        android:label="b_fragment_register_p4_nurse"
+        tools:layout="@layout/b_fragment_register_p4_nurse" >
+        <action
+            android:id="@+id/action_registerP4Nurse_to_registerP3"
+            app:destination="@id/registerP3" />
+        <action
+            android:id="@+id/action_registerP4Nurse_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerP4Parents"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP4Parents"
+        android:label="b_fragment_register_p4_parents"
+        tools:layout="@layout/b_fragment_register_p4_parents" >
+        <action
+            android:id="@+id/action_registerP4Parents_to_registerP3"
+            app:destination="@id/registerP3" />
+        <action
+            android:id="@+id/action_registerP4Parents_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_registerP4Parents_to_addChildren"
+            app:destination="@id/addChildren" />
+    </fragment>
+    <fragment
+        android:id="@+id/addChildren"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddChildren"
+        android:label="c_fragment_add_children"
+        tools:layout="@layout/c_fragment_add_children" >
+        <action
+            android:id="@+id/action_addChildren_to_registerP4Parents"
+            app:destination="@id/registerP4Parents" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSchool"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddSchool"
+        android:label="c_fragment_add_school"
+        tools:layout="@layout/c_fragment_add_school" />
 </navigation>
