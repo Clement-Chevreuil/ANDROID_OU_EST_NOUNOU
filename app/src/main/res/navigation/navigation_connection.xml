@@ -92,6 +92,9 @@
         <action
             android:id="@+id/action_addChildren_to_registerP4Parents"
             app:destination="@id/registerP4Parents" />
+        <action
+            android:id="@+id/action_addChildren_to_addSchool"
+            app:destination="@id/addSchool" />
     </fragment>
     <fragment
         android:id="@+id/addSchool"

@@ -7,12 +7,20 @@ public class Children {
     private int id;
     private String fist_name;
     private String last_name;
-    private Date birth;
+    private String birth;
 
     private String sex;
 
     private String informations;
 
+    public Children( String fist_name, String last_name, String birth, String sex) {
+        this.fist_name = fist_name;
+        this.last_name = last_name;
+        this.birth = birth;
+        this.sex = sex;
+    }
+
+    public Children(){}
     public String getSex() {
         return sex;
     }
@@ -53,11 +61,11 @@ public class Children {
         this.last_name = last_name;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 }
