@@ -33,6 +33,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String nameTableSchool = "School";
     private static final String name = "name";
 
+    private static final String nameTableCalendarEvent = "CalendarEvent";
+    private static final String datePropose = "datePropose";
+    private static final String accepted = "accepted";
+    private static final String startTime = "startTime";
+    private static final String endTime = "endTime";
+
 
     private static final String reqCreateNurse =
             "CREATE TABLE " + nameTableNurse + " ("
@@ -82,6 +88,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + lastName + " TEXT,"
                     + sex + " TEXT,"
                     + birth + " TEXT);";
+
+    private static final String reqCreateCalendarEvent =
+            "CREATE TABLE " + nameTableCalendarEvent + " ("
+                    + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + accepted + " TEXT NULL,"
+                    + datePropose + " TEXT,"
+                    + startTime + " TEXT,"
+                    + endTime + " TEXT);";
+
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -93,6 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(reqCreateSchool);
         db.execSQL(reqCreateParents);
         db.execSQL(reqCreateNurse);
+        db.execSQL(reqCreateCalendarEvent);
     }
 
     @Override
@@ -101,11 +117,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String reqSuppParents = "DROP TABLE IF EXISTS " + nameTableParents + reqCreateParents;
         String reqSuppSchool = "DROP TABLE IF EXISTS " + nameTableSchool + reqCreateSchool;
         String reqSuppChildren = "DROP TABLE IF EXISTS " + nameTableChildren + reqCreateChildren;
+        String reqSuppCalendarEvent = "DROP TABLE IF EXISTS " + nameTableCalendarEvent + reqCreateCalendarEvent;
 
         db.execSQL(reqSuppNurse);
         db.execSQL(reqSuppParents);
         db.execSQL(reqSuppSchool);
         db.execSQL(reqSuppChildren);
+        db.execSQL(reqSuppCalendarEvent);
 
         onCreate(db);
     }

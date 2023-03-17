@@ -11,4 +11,6 @@
     <color name="green_1">#66A16F</color>
     <color name="green_2">#397343</color>
     <color name="invisible">#00FFFFFF</color>
+
+    <color name="colorPrimary">#3F51B5</color>
 </resources>

@@ -136,6 +136,11 @@ public class Login extends Fragment {
                         }
                         else if(parents != null)
                         {
+                            SharedPreferences prefs = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor shared = prefs.edit();
+                            shared.putInt("id", parents.getId());
+                            shared.apply();
+
                             Navigation.findNavController(view).navigate(R.id.action_login_to_parents2);
                         }
                         else{ erreurConnexion(); }

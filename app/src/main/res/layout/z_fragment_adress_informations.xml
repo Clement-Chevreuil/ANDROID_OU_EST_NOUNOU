@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MODULE.AdressInformations">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green_1"
+        >
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10px"
+            android:textColor="@color/white"
+            />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_style"
+            android:hint="@string/address"
+            android:padding="40px"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF"
+            android:layout_below="@id/error"
+            android:layout_marginLeft="@dimen/button_connexion"
+            android:layout_marginRight="@dimen/button_connexion"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_style"
+            android:hint="@string/city"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF"
+            android:layout_below="@id/address"
+            android:layout_marginBottom="50px"
+            android:padding="40px"
+            android:layout_marginLeft="@dimen/button_connexion"
+            android:layout_marginRight="@dimen/button_connexion"/>
+
+        <EditText
+            android:id="@+id/postal_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_style"
+            android:hint="@string/postal_code"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF"
+            android:layout_below="@id/city"
+            android:layout_marginBottom="50px"
+            android:padding="40px"
+            android:layout_marginLeft="@dimen/button_connexion"
+            android:layout_marginRight="@dimen/button_connexion"/>
+
+        <EditText
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_style"
+            android:hint="@string/country"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF"
+            android:layout_below="@id/postal_code"
+            android:layout_marginBottom="50px"
+            android:padding="40px"
+            android:layout_marginLeft="@dimen/button_connexion"
+            android:layout_marginRight="@dimen/button_connexion"/>
+
+
+        <Button
+            android:id="@+id/validation"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/button_corner"
+            android:padding="40px"
+            android:text="@string/confirmation"
+            android:backgroundTint="@null"
+            android:layout_below="@id/country"
+            android:layout_marginLeft="@dimen/button_connexion"
+            android:layout_marginRight="@dimen/button_connexion"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
