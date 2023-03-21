@@ -28,6 +28,7 @@ public class SchoolDAO extends DAOBase{
 
     public void add(School school) {
 
+        open();
         ContentValues values = new ContentValues();
 
         values.put(name, school.getName());
@@ -39,9 +40,11 @@ public class SchoolDAO extends DAOBase{
         values.put(phone, school.getPhone());
 
         mDb.insert(nameTableSchool, null, values);
+        close();
     }
 
     public void update(School school) {
+        open();
         ContentValues values = new ContentValues();
         values.put(name, school.getName());
         values.put(mail, school.getMail());
@@ -51,10 +54,13 @@ public class SchoolDAO extends DAOBase{
         values.put(postalCode, school.getPostal_code());
         values.put(phone, school.getPhone());
         mDb.update(nameTableSchool, values, id  + " = ?", new String[] {String.valueOf(school.getId())});
+        close();
     }
 
     public void delete(long id) {
+        open();
         mDb.delete(nameTableSchool, id + " = ?", new String[] {String.valueOf(id)});
+        close();
     }
 
     public ArrayList<School> getSchools() {

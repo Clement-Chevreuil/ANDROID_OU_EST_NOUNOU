@@ -1,0 +1,60 @@
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionningAdd">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/textViewStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendarView"
+            android:layout_marginTop="10dp"
+            android:text="Start Time"/>
+
+        <Button
+            android:id="@+id/buttonStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewStartTime"
+            android:layout_marginTop="10dp"
+            android:text="Select Start Time"/>
+
+        <TextView
+            android:id="@+id/textViewEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonStartTime"
+            android:layout_marginTop="10dp"
+            android:text="End Time"/>
+
+        <Button
+            android:id="@+id/buttonEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewEndTime"
+            android:layout_marginTop="10dp"
+            android:text="Select End Time"/>
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonEndTime"
+            android:layout_marginTop="10dp"
+            android:text="Submit"/>
+
+    </RelativeLayout>
+</FrameLayout>

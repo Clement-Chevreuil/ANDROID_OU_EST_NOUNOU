@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ouestnounou.DAO.NurseDAO;
+import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.R;
 
 public class RegisterP4Nurse extends Fragment {
@@ -68,8 +70,20 @@ public class RegisterP4Nurse extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.b_fragment_register_p4_nurse, container, false);
+
+        View v = inflater.inflate(R.layout.b_fragment_register_p4_nurse, container, false);
+
+        num_children = v.findViewById(R.id.num_children);
+        age_max = v.findViewById(R.id.age_max);
+        age_min = v.findViewById(R.id.age_min);
+        error = v.findViewById(R.id.error);
+        validation = v.findViewById(R.id.validation);
+        validation.setOnClickListener(click_event);
+
+        connexion = v.findViewById(R.id.connexion);
+        connexion.setOnClickListener(click_event);
+
+        return v;
     }
 
     private View.OnClickListener click_event = new View.OnClickListener() {
@@ -82,6 +96,18 @@ public class RegisterP4Nurse extends Fragment {
                     num_children_int = Integer.valueOf(num_children.getText().toString());
                     age_min_int = Integer.valueOf(age_min.getText().toString());
                     age_max_int = Integer.valueOf(age_max.getText().toString());
+
+                    if(num_children_int == null || age_max_int == null || age_min_int == null)
+                    {
+                        error.setText("Veuillez remplir les champs correctements");
+                    }
+                    else
+                    {
+                        Nurse new_nurse = new Nurse(first_name_text, last_name_text, sex_text, date_birth_text, city_text, country_text, phone_text, adress_text, postal_code_text, mail_text, password_text, age_min_int, age_max_int, num_children_int);
+                        NurseDAO nurseDAO = new NurseDAO(getContext());
+                        nurseDAO.add(new_nurse);
+                        Navigation.findNavController(view).navigate(R.id.action_registerP4Nurse_to_login);
+                    }
 
                     break;
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_menu_surse"
+    app:startDestination="@id/settings_parents">
+
+    <fragment
+        android:id="@+id/settings_parents"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.SETTINGS.Settings"
+        android:label="e_fragment_settings"
+        tools:layout="@layout/e_fragment_settings" />
+    <fragment
+        android:id="@+id/calendar_parents_add"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionningAdd"
+        android:label="e_fragment_calendar" >
+        <action
+            android:id="@+id/action_calendar_parents_add_to_calendar_parents_gestionning"
+            app:destination="@id/calendar_parents_gestionning" />
+    </fragment>
+    <fragment
+        android:id="@+id/pay_parents"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.Pay"
+        android:label="e_fragment_pay"
+        tools:layout="@layout/e_fragment_pay" />
+    <fragment
+        android:id="@+id/search_parents"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.Search"
+        android:label="e_fragment_search"
+        tools:layout="@layout/e_fragment_search" />
+    <fragment
+        android:id="@+id/calendar_parents_gestionning"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionning"
+        android:label="z_fragment_calendar_gestionning"
+        tools:layout="@layout/e_fragment_calendar_gestionning" >
+        <action
+            android:id="@+id/action_calendar_gestionning_to_calendar_parents_add"
+            app:destination="@id/calendar_parents_add" />
+    </fragment>
+</navigation>

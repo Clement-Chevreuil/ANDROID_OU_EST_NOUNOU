@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_login_to_registerP1"
             app:destination="@id/registerP1" />
+        <action
+            android:id="@+id/action_login_to_nurse2"
+            app:destination="@id/nurse2" />
+        <action
+            android:id="@+id/action_login_to_parents2"
+            app:destination="@id/parents2" />
     </fragment>
     <fragment
         android:id="@+id/registerP2"
@@ -101,4 +107,14 @@
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddSchool"
         android:label="c_fragment_add_school"
         tools:layout="@layout/c_fragment_add_school" />
+    <activity
+        android:id="@+id/nurse2"
+        android:name="com.example.ouestnounou.ACTIVITY.Nurse"
+        android:label="d_activity_nurse"
+        tools:layout="@layout/d_activity_nurse" />
+    <activity
+        android:id="@+id/parents2"
+        android:name="com.example.ouestnounou.ACTIVITY.Parents"
+        android:label="e_activity_parents"
+        tools:layout="@layout/e_activity_parents" />
 </navigation>

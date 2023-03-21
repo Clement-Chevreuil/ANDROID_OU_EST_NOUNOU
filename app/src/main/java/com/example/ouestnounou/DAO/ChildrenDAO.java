@@ -25,6 +25,7 @@ public class ChildrenDAO extends DAOBase{
 
     public void add(Children children) {
 
+        open();
         ContentValues values = new ContentValues();
 
         values.put(firstName, children.getFist_name());
@@ -33,19 +34,24 @@ public class ChildrenDAO extends DAOBase{
         values.put(sex, children.getSex());
 
         mDb.insert(nameTableChildren, null, values);
+        close();
     }
 
     public void update(Children children) {
+        open();
         ContentValues values = new ContentValues();
         values.put(firstName, children.getFist_name());
         values.put(last_name, children.getLast_name());
         values.put(birth, String.valueOf(children.getBirth()));
         values.put(sex, children.getSex());
         mDb.update(nameTableChildren, values, id  + " = ?", new String[] {String.valueOf(children.getId())});
+        close();
     }
 
     public void delete(long id) {
+        open();
         mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(id)});
+        close();
     }
 
     public ArrayList<Children> getChildrens() {

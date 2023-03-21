@@ -8,6 +8,7 @@ import com.example.ouestnounou.MODEL.Parents;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ParentsDAO extends DAOBase{
 
@@ -52,6 +53,7 @@ public class ParentsDAO extends DAOBase{
     }
 
     public void update(Parents parents) {
+        open();
         ContentValues values = new ContentValues();
         values.put(firstName, parents.getFist_name());
         values.put(last_name, parents.getLast_name());
@@ -65,13 +67,16 @@ public class ParentsDAO extends DAOBase{
         values.put(phone, parents.getPhone());
         values.put(sex, parents.getSex());
         mDb.update(nameTableParents, values, id  + " = ?", new String[] {String.valueOf(parents.getId())});
+        close();
     }
 
     public void delete(long id) {
+        open();
         mDb.delete(nameTableParents, id + " = ?", new String[] {String.valueOf(id)});
+        close();
     }
 
-    public ArrayList<Parents> getParentss() {
+    public ArrayList<Parents> getParents() {
         ArrayList<Parents> allParents = new ArrayList<Parents>();
 
         this.open();
@@ -94,6 +99,39 @@ public class ParentsDAO extends DAOBase{
         this.close();
         return allParents;
 
+    }
+
+    public Parents getParent(int id_parents){
+
+        this.open();
+        Cursor unCurseur = mDb.rawQuery("SELECT * FROM Parents WHERE id = '" + id_parents + "' ;", null);
+        Parents parents = new Parents();
+        int nbrRec = unCurseur.getCount();
+        if (nbrRec != 0)
+        {
+            unCurseur.moveToFirst();
+            parents.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
+            parents.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+            parents.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+            parents.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
+            parents.setAdress(unCurseur.getString(unCurseur.getColumnIndex(adress)));
+            parents.setCountry(unCurseur.getString(unCurseur.getColumnIndex(country)));
+            parents.setCity(unCurseur.getString(unCurseur.getColumnIndex(city)));
+            parents.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
+            parents.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex(postalCode)));
+            parents.setPhone(unCurseur.getString(unCurseur.getColumnIndex(phone)));
+            parents.setMail(unCurseur.getString(unCurseur.getColumnIndex(mail)));
+            parents.setPassword(unCurseur.getString(unCurseur.getColumnIndex(password)));
+        }
+        else
+        {
+            this.close();
+            parents = null;
+            return parents;
+        }
+
+        this.close();
+        return parents;
     }
 
     public Parents connexion(String mail_data, String password_data){
