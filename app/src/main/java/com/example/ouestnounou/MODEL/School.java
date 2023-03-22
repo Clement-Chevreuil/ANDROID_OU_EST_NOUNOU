@@ -5,18 +5,18 @@ import java.util.Date;
 public class School {
 
     private int id;
-    public Integer phone;
+    public String phone;
     private String name;
     private String city;
     private String country;
-    private String address;
+    private String adress;
     private String postal_code;
     private String mail;
 
-    public School( String name, String phone, String address, String city, String postal_code) {
+    public School( String name, String phone, String adress, String city, String postal_code) {
         this.name = name;
-        this.phone = Integer.parseInt(phone);
-        this.address = address;
+        this.phone = phone;
+        this.adress = adress;
         this.city = city;
         this.postal_code = postal_code;
         this.mail = "temp";
@@ -33,11 +33,11 @@ public class School {
         this.id = id;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -65,12 +65,12 @@ public class School {
         this.country = country;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getPostal_code() {
