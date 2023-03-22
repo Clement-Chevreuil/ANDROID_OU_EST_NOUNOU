@@ -90,7 +90,7 @@ public class RegisterP4Parents extends Fragment {
                     break;
 
                 case R.id.add_children:
-                    Navigation.findNavController(view).navigate(R.id.action_registerP4Nurse_to_login);
+                    Navigation.findNavController(view).navigate(R.id.action_registerP4Parents_to_addChildren);
                     break;
             }
 

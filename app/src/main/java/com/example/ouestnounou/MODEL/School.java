@@ -5,13 +5,25 @@ import java.util.Date;
 public class School {
 
     private int id;
-    public Integer phone;
+    public String phone;
     private String name;
     private String city;
     private String country;
     private String adress;
     private String postal_code;
     private String mail;
+
+    public School( String name, String phone, String adress, String city, String postal_code) {
+        this.name = name;
+        this.phone = phone;
+        this.adress = adress;
+        this.city = city;
+        this.postal_code = postal_code;
+        this.mail = "temp";
+        this.country = "temp";
+    }
+
+    public School(){}
 
     public int getId() {
         return id;
@@ -21,11 +33,11 @@ public class School {
         this.id = id;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

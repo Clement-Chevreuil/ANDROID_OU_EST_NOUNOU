@@ -1,5 +1,6 @@
 package com.example.ouestnounou.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ public class SchoolDAO extends DAOBase{
     private static final String mail = "mail";
     private static final String city = "city";
     private static final String country = "country";
-    private static final String adress = "adress";
+    private static final String address = "address";
     private static final String postalCode = "postal_code";
     private static final String phone = "phone";
     private static final String name = "name";
@@ -35,9 +36,9 @@ public class SchoolDAO extends DAOBase{
         values.put(mail, school.getMail());
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
-        values.put(adress, school.getAdress());
+        values.put(address, school.getAddress());
         values.put(postalCode, school.getPostal_code());
-        values.put(phone, school.getPhone());
+        values.put(phone, school.getPhone().toString());
 
         mDb.insert(nameTableSchool, null, values);
         close();
@@ -50,9 +51,9 @@ public class SchoolDAO extends DAOBase{
         values.put(mail, school.getMail());
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
-        values.put(adress, school.getAdress());
+        values.put(address, school.getAddress());
         values.put(postalCode, school.getPostal_code());
-        values.put(phone, school.getPhone());
+        values.put(phone, school.getPhone().toString());
         mDb.update(nameTableSchool, values, id  + " = ?", new String[] {String.valueOf(school.getId())});
         close();
     }
@@ -63,6 +64,7 @@ public class SchoolDAO extends DAOBase{
         close();
     }
 
+    @SuppressLint("Range")
     public ArrayList<School> getSchools() {
         ArrayList<School> allSchool = new ArrayList<School>();
 
