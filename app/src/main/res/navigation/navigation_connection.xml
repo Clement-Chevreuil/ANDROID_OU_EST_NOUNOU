@@ -106,7 +106,11 @@
         android:id="@+id/addSchool"
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddSchool"
         android:label="c_fragment_add_school"
-        tools:layout="@layout/c_fragment_add_school" />
+        tools:layout="@layout/c_fragment_add_school" >
+        <action
+            android:id="@+id/action_addSchool_to_parents2"
+            app:destination="@id/parents2" />
+    </fragment>
     <activity
         android:id="@+id/nurse2"
         android:name="com.example.ouestnounou.ACTIVITY.Nurse"
