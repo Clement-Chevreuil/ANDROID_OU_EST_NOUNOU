@@ -6,10 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ouestnounou.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
-public class Search extends Fragment {
+public class Search extends Fragment implements OnMapReadyCallback{
+
+
+    private MapView mapView;
+    private GoogleMap googleMap;
 
 
     public Search() {
@@ -25,9 +34,44 @@ public class Search extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.e_fragment_search, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.e_fragment_search, container, false);
+
+        // Obtient une référence au SupportMapFragment
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
+
+        // Si le SupportMapFragment n'existe pas, crée-le et ajoute-le
+        if (mapFragment == null) {
+            mapFragment = SupportMapFragment.newInstance();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.add(R.id.mapView, mapFragment).commit();
+        }
+
+        // Initialise la carte avec l'interface OnMapReadyCallback
+        mapFragment.getMapAsync(this);
+
+        return view;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (googleMap != null) {
+            googleMap.clear();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (googleMap != null) {
+            googleMap.clear();
+        }
     }
 }
