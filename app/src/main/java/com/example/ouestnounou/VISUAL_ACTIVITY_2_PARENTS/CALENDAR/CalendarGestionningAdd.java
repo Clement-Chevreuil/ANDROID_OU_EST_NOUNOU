@@ -33,6 +33,7 @@ public class CalendarGestionningAdd extends Fragment {
     private TextView textViewStartTime, textViewEndTime;
     private Button buttonStartTime, buttonEndTime, buttonSubmit;
     private String selectedDateString, selectedStartTime, selectedEndTime;
+    private static final String ARG_DATE = "date";
 
 
     @Nullable
@@ -54,10 +55,11 @@ public class CalendarGestionningAdd extends Fragment {
 
 
         if (getArguments() != null) {
-            selectedDateString = getArguments().getString("date");
 
+            selectedDateString = getArguments().getString(ARG_DATE);
             String[] date_array = selectedDateString.split("/");
             // Create a Calendar instance and set the selected date
+
             Calendar calendar = Calendar.getInstance();
 
             Calendar cal = Calendar.getInstance();

@@ -93,6 +93,19 @@ public class NurseDAO extends DAOBase{
                 Nurse nurse = new Nurse();
                 nurse.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
                 nurse.setMail(unCurseur.getString(unCurseur.getColumnIndex(mail)));
+                nurse.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+                nurse.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+                nurse.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
+                nurse.setPassword(unCurseur.getString(unCurseur.getColumnIndex(password)));
+                nurse.setCity(unCurseur.getString(unCurseur.getColumnIndex(city)));
+                nurse.setCountry(unCurseur.getString(unCurseur.getColumnIndex(country)));
+                nurse.setAdress(unCurseur.getString(unCurseur.getColumnIndex(adress)));
+                nurse.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex(postalCode)));
+                nurse.setPhone(unCurseur.getString(unCurseur.getColumnIndex(phone)));
+                nurse.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
+                nurse.setAge_min(unCurseur.getInt(unCurseur.getColumnIndex(ageMin)));
+                nurse.setAge_max(unCurseur.getInt(unCurseur.getColumnIndex(ageMax)));
+                nurse.setNb_children(unCurseur.getInt(unCurseur.getColumnIndex(nbChildren)));
                 allNurse.add(nurse);
             }
             while (unCurseur.moveToNext());
@@ -106,6 +119,36 @@ public class NurseDAO extends DAOBase{
         this.close();
         return allNurse;
 
+    }
+
+    public Nurse getNurseById(int idNurse) {
+        Nurse nurse = null;
+
+        this.open();
+        Cursor cursor = mDb.rawQuery("SELECT * FROM Nurse WHERE id = ?;", new String[] { String.valueOf(idNurse) });
+
+        if (cursor.moveToFirst()) {
+            nurse = new Nurse();
+            nurse.setId(cursor.getInt(cursor.getColumnIndex(id)));
+            nurse.setMail(cursor.getString(cursor.getColumnIndex(mail)));
+            nurse.setFist_name(cursor.getString(cursor.getColumnIndex(firstName)));
+            nurse.setLast_name(cursor.getString(cursor.getColumnIndex(last_name)));
+            nurse.setBirth(cursor.getString(cursor.getColumnIndex(birth)));
+            nurse.setPassword(cursor.getString(cursor.getColumnIndex(password)));
+            nurse.setCity(cursor.getString(cursor.getColumnIndex(city)));
+            nurse.setCountry(cursor.getString(cursor.getColumnIndex(country)));
+            nurse.setAdress(cursor.getString(cursor.getColumnIndex(adress)));
+            nurse.setPostal_code(cursor.getString(cursor.getColumnIndex(postalCode)));
+            nurse.setPhone(cursor.getString(cursor.getColumnIndex(phone)));
+            nurse.setSex(cursor.getString(cursor.getColumnIndex(sex)));
+            nurse.setAge_min(cursor.getInt(cursor.getColumnIndex(ageMin)));
+            nurse.setAge_max(cursor.getInt(cursor.getColumnIndex(ageMax)));
+            nurse.setNb_children(cursor.getInt(cursor.getColumnIndex(nbChildren)));
+        }
+
+        cursor.close();
+        this.close();
+        return nurse;
     }
 
     public Nurse connexion(String mail_data, String password_data){

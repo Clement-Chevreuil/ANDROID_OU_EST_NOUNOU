@@ -3,6 +3,7 @@ package com.example.ouestnounou.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.ouestnounou.MODEL.Children;
 
@@ -48,9 +49,9 @@ public class ChildrenDAO extends DAOBase{
         close();
     }
 
-    public void delete(long id) {
+    public void delete(long id_children) {
         open();
-        mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(id)});
+        mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(id_children)});
         close();
     }
 
@@ -63,6 +64,10 @@ public class ChildrenDAO extends DAOBase{
             do {
                 Children children = new Children();
                 children.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
+                children.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+                children.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+                children.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
+                children.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
                 allChildren.add(children);
             }
             while (unCurseur.moveToNext());

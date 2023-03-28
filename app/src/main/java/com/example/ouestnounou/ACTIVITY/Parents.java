@@ -36,9 +36,9 @@ public class Parents extends AppCompatActivity {
                     case R.id.calendar:
                         navController.navigate(R.id.calendar_parents_gestionning);
                         return true;
-                    /*case R.id.childrens:
-                        navController.navigate(R.id.calendar_gestionning);
-                        return true;*/
+                    case R.id.childrens:
+                        navController.navigate(R.id.children);
+                        return true;
                     case R.id.search:
                         navController.navigate(R.id.search_parents);
                         return true;

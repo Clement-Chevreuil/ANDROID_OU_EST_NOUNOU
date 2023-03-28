@@ -1,5 +1,8 @@
 package com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -142,7 +145,16 @@ public class AddChildren extends Fragment {
                         ChildrenDAO childrenDAO = new ChildrenDAO(getContext());
                         childrenDAO.add(new_children);
 
-                        Navigation.findNavController(view).navigate(R.id.action_addChildren_to_addSchool);
+                        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+                        int id = prefs.getInt("id", -1);
+                        if(id == -1)
+                        {
+                            Navigation.findNavController(view).navigate(R.id.action_addChildren_to_addSchool);
+                        }
+                        else{
+                            Navigation.findNavController(view).navigate(R.id.action_addChildren_to_children);
+                        }
+
                     //ENREGISTER ENFANT BDD
                     //ALLER SUR LA PAGE ECOLE
 
