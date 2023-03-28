@@ -9,14 +9,14 @@ public class School {
     private String name;
     private String city;
     private String country;
-    private String adress;
+    private String address;
     private String postal_code;
     private String mail;
 
-    public School( String name, String phone, String adress, String city, String postal_code) {
+    public School( String name, String phone, String address, String city, String postal_code) {
         this.name = name;
         this.phone = phone;
-        this.adress = adress;
+        this.address = address;
         this.city = city;
         this.postal_code = postal_code;
         this.mail = "temp";
@@ -65,12 +65,12 @@ public class School {
         this.country = country;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPostal_code() {
