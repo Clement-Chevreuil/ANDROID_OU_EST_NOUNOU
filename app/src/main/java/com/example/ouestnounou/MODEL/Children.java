@@ -11,13 +11,27 @@ public class Children {
 
     private String sex;
 
+    private int nurse_accepted;
+
     private String informations;
 
-    public Children( String fist_name, String last_name, String birth, String sex) {
+    private com.example.ouestnounou.MODEL.Parents parents;
+    private Nurse nurse;
+
+    public Children( String fist_name, String last_name, String birth, String sex, Parents parents, Nurse nurse) {
         this.fist_name = fist_name;
         this.last_name = last_name;
         this.birth = birth;
         this.sex = sex;
+        this.nurse = nurse;
+        this.parents = parents;
+    }
+    public Children( String fist_name, String last_name, String birth, String sex, Parents parents) {
+        this.fist_name = fist_name;
+        this.last_name = last_name;
+        this.birth = birth;
+        this.sex = sex;
+        this.parents = parents;
     }
 
     public Children(){}
@@ -67,5 +81,29 @@ public class Children {
 
     public void setBirth(String birth) {
         this.birth = birth;
+    }
+
+    public com.example.ouestnounou.MODEL.Parents getParents() {
+        return parents;
+    }
+
+    public void setParents(com.example.ouestnounou.MODEL.Parents parents) {
+        this.parents = parents;
+    }
+
+    public Nurse getNurse() {
+        return nurse;
+    }
+
+    public void setNurse(Nurse nurse) {
+        this.nurse = nurse;
+    }
+
+    public int getNurse_accepted() {
+        return nurse_accepted;
+    }
+
+    public void setNurse_accepted(int nurse_accepted) {
+        this.nurse_accepted = nurse_accepted;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ouestnounou;
+package com.example.ouestnounou.DAO;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,6 +84,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String reqCreateChildren =
             "CREATE TABLE " + nameTableChildren + " ("
                     + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "nurse_accepted" + " INTEGER NULL,"
+                    + "id_parents" + " INTEGER,"
+                    + "id_nurse" + " INTEGER NULL,"
                     + firstName + " TEXT,"
                     + lastName + " TEXT,"
                     + sex + " TEXT,"
@@ -92,6 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String reqCreateCalendarEvent =
             "CREATE TABLE " + nameTableCalendarEvent + " ("
                     + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "id_children" + " INTEGER,"
                     + accepted + " TEXT NULL,"
                     + datePropose + " TEXT,"
                     + startTime + " TEXT,"

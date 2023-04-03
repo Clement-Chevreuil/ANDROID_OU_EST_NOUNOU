@@ -36,7 +36,7 @@ public class SchoolDAO extends DAOBase{
         values.put(mail, school.getMail());
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
-        values.put(address, school.getAdress());
+        values.put(address, school.getAddress());
         values.put(postalCode, school.getPostal_code());
         values.put(phone, school.getPhone().toString());
 
@@ -51,7 +51,7 @@ public class SchoolDAO extends DAOBase{
         values.put(mail, school.getMail());
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
-        values.put(address, school.getAdress());
+        values.put(address, school.getAddress());
         values.put(postalCode, school.getPostal_code());
         values.put(phone, school.getPhone().toString());
         mDb.update(nameTableSchool, values, id  + " = ?", new String[] {String.valueOf(school.getId())});

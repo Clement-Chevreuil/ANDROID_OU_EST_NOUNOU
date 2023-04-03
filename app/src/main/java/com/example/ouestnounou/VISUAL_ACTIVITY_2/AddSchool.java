@@ -1,24 +1,18 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.ouestnounou.DAO.ChildrenDAO;
 import com.example.ouestnounou.DAO.SchoolDAO;
-import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.MODEL.School;
 import com.example.ouestnounou.R;
 
@@ -118,7 +112,7 @@ public class AddSchool extends Fragment {
                         SchoolDAO schoolDAO = new SchoolDAO(getContext());
                         schoolDAO.add(new_school);
 
-                        Navigation.findNavController(view).navigate(R.id.action_addSchool_to_parents2);
+                        //Navigation.findNavController(view).navigate(R.id.action_addSchool_to_parents2);
                     }
                     break;
             }

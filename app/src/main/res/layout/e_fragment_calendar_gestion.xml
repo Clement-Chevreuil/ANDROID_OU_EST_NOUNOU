@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionningAdd">
+    tools:context=".VISUAL_ACTIVITY_2.CALENDAR.CalendarGestionningAdd">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,11 +48,29 @@
             android:layout_marginTop="10dp"
             android:text="Select End Time"/>
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:theme="@style/SpinnerDropDownItemStyle"
+            android:spinnerMode="dropdown"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:popupBackground="#FFFFFF"
+            android:dropDownVerticalOffset="80dp"
+            android:dropDownWidth="500dp"
+            android:dropDownHeight="wrap_content"
+            android:dividerHeight="100px"
+            android:layout_below="@id/buttonEndTime"/>
+
+
         <Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonEndTime"
+            android:layout_below="@id/spinner"
             android:layout_marginTop="10dp"
             android:text="Submit"/>
 

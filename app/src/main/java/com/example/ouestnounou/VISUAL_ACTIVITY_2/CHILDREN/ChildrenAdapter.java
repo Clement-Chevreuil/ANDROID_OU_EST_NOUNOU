@@ -1,17 +1,19 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CHILDREN;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.CHILDREN;
+
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.ouestnounou.DAO.ChildrenDAO;
-import com.example.ouestnounou.MODEL.CalendarEvent;
 import com.example.ouestnounou.MODEL.Children;
+import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.R;
 
 import java.util.ArrayList;
@@ -29,7 +31,11 @@ public class ChildrenAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return children_list.size();
+
+        if(children_list != null)
+            return children_list.size();
+        else
+            return 0;
     }
 
     @Override
@@ -60,14 +66,28 @@ public class ChildrenAdapter extends BaseAdapter {
         com.example.ouestnounou.MODEL.Children children = children_list.get(position);
         holder.timeTextView.setText( children.getFist_name() + " - " + children.getLast_name());
 
+        SharedPreferences prefs = convertView.getContext().getSharedPreferences("session", MODE_PRIVATE);
+        int id_category = prefs.getInt("id", 0);
+        String category = prefs.getString("category", "");
+
+        View finalConvertView = convertView;
         holder.delChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                childrenDAO.delete(children.getId());
-                // Mettre ici le code à exécuter lorsque le bouton est cliqué
-                // Par exemple, vous pouvez supprimer l'enfant associé à ce bouton
-                children_list.remove(position);
-                notifyDataSetChanged();
+                if(category.equals(finalConvertView.getResources().getString(R.string.nurse))){
+                    Nurse nurse = new Nurse();
+                    nurse.setId(-1);
+                    children.setNurse(nurse);
+                    childrenDAO.update(children);
+                    children_list.remove(position);
+                    notifyDataSetChanged();
+                }
+                else{
+                    childrenDAO.delete(children.getId());
+                    children_list.remove(position);
+                    notifyDataSetChanged();
+                }
+
             }
         });
 

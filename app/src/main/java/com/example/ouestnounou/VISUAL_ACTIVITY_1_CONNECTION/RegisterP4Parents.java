@@ -65,9 +65,6 @@ public class RegisterP4Parents extends Fragment {
 
         View v = inflater.inflate(R.layout.b_fragment_register_p4_parents, container, false);
 
-        add_children = v.findViewById(R.id.add_children);
-        add_children.setOnClickListener(click_event);
-
         validation = v.findViewById(R.id.validation);
         validation.setOnClickListener(click_event);
 
@@ -87,10 +84,6 @@ public class RegisterP4Parents extends Fragment {
 
                 case R.id.connexion:
                     Navigation.findNavController(view).navigate(R.id.action_registerP4Parents_to_login);
-                    break;
-
-                case R.id.add_children:
-                    Navigation.findNavController(view).navigate(R.id.action_registerP4Parents_to_addChildren);
                     break;
             }
 

@@ -1,4 +1,4 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.CALENDAR;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.ouestnounou.DAO.ChildrenDAO;
 import com.example.ouestnounou.MODEL.CalendarEvent;
+import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.R;
 
 import java.util.List;
@@ -51,7 +53,9 @@ public class CalendarEventAdapter extends BaseAdapter {
         }
 
         CalendarEvent event = mEvents.get(position);
-        holder.timeTextView.setText(event.getDate() + " - " + event.getEndTime());
+        ChildrenDAO childrenDAO = new ChildrenDAO(convertView.getContext());
+        Children child = childrenDAO.getChildrenByIDEasy(event.getChildren().getId());
+        holder.timeTextView.setText(event.getDate() + " - " + event.getStartTime() + " - " + event.getEndTime() + " : " + child.getFist_name() + " " + child.getLast_name());
         holder.acceptedCheckBox.setChecked(event.isAccepted());
         holder.acceptedCheckBox.setEnabled(false);
 

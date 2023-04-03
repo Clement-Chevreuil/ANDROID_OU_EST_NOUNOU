@@ -20,7 +20,7 @@
             android:name=".ACTIVITY.Nurse"
             android:exported="false" />
         <activity
-            android:name=".ACTIVITY.Parents"
+            android:name=".ACTIVITY.Menu"
             android:exported="false" />
         <activity
             android:name=".ACTIVITY.Connection"

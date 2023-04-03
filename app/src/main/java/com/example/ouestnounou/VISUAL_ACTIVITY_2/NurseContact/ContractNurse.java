@@ -1,5 +1,8 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CHILDREN;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.NurseContact;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +11,23 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.example.ouestnounou.DAO.ChildrenDAO;
+import com.example.ouestnounou.DAO.ParentsDAO;
+import com.example.ouestnounou.MODEL.Children;
+import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
-import com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarEventAdapter;
+import com.example.ouestnounou.VISUAL_ACTIVITY_2.CHILDREN.ChildrenAdapter;
 
 import java.util.ArrayList;
 
-public class Children extends Fragment {
-        ChildrenDAO childrenDAO;
-        ListView children_list;
-        Button add_children;
-    public Children() {
+public class ContractNurse extends Fragment {
+
+    ChildrenDAO childrenDAO;
+    ListView children_list;
+    Button add_children;
+
+    public ContractNurse() {
         // Required empty public constructor
     }
 
@@ -36,16 +43,16 @@ public class Children extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.e_fragment_children, container, false);
+        View v = inflater.inflate(R.layout.e_fragment_contract_nurse, container, false);
 
         children_list = v.findViewById(R.id.children_list);
-        add_children = v.findViewById(R.id.add_children);
-
-        add_children.setOnClickListener(click_event);
-
 
         childrenDAO = new ChildrenDAO(getContext());
-        ArrayList<com.example.ouestnounou.MODEL.Children> childrens = childrenDAO.getChildrens();
+
+        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        int id_nurse = prefs.getInt("id", 0);
+
+        ArrayList<Children> childrens = childrenDAO.getChildrensByNurseIdWaiting(id_nurse);
 
         // Créer l'adapter pour les événements
         ChildrenAdapter adapter = new ChildrenAdapter(getContext(), childrens);
@@ -55,10 +62,4 @@ public class Children extends Fragment {
 
         return v;
     }
-    private View.OnClickListener click_event = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Navigation.findNavController(view).navigate(R.id.action_children_to_addChildren);
-        }
-    };
 }

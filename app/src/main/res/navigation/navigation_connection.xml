@@ -86,30 +86,6 @@
         <action
             android:id="@+id/action_registerP4Parents_to_login"
             app:destination="@id/login" />
-        <action
-            android:id="@+id/action_registerP4Parents_to_addChildren"
-            app:destination="@id/addChildren" />
-    </fragment>
-    <fragment
-        android:id="@+id/addChildren"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddChildren"
-        android:label="c_fragment_add_children"
-        tools:layout="@layout/c_fragment_add_children" >
-        <action
-            android:id="@+id/action_addChildren_to_registerP4Parents"
-            app:destination="@id/registerP4Parents" />
-        <action
-            android:id="@+id/action_addChildren_to_addSchool"
-            app:destination="@id/addSchool" />
-    </fragment>
-    <fragment
-        android:id="@+id/addSchool"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddSchool"
-        android:label="c_fragment_add_school"
-        tools:layout="@layout/c_fragment_add_school" >
-        <action
-            android:id="@+id/action_addSchool_to_parents2"
-            app:destination="@id/parents2" />
     </fragment>
     <activity
         android:id="@+id/nurse2"
@@ -118,7 +94,7 @@
         tools:layout="@layout/d_activity_nurse" />
     <activity
         android:id="@+id/parents2"
-        android:name="com.example.ouestnounou.ACTIVITY.Parents"
+        android:name="com.example.ouestnounou.ACTIVITY.Menu"
         android:label="e_activity_parents"
         tools:layout="@layout/e_activity_parents" />
 </navigation>

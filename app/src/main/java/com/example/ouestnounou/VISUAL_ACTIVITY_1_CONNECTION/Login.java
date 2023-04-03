@@ -132,12 +132,19 @@ public class Login extends Fragment {
                         }
                         if(nurse != null)
                         {
-                            Navigation.findNavController(view).navigate(R.id.action_login_to_nurse2);
+                            SharedPreferences prefs = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor shared = prefs.edit();
+                            shared.putString("category", category_text);
+                            shared.putInt("id", nurse.getId());
+                            shared.apply();
+
+                            Navigation.findNavController(view).navigate(R.id.action_login_to_parents2);
                         }
                         else if(parents != null)
                         {
                             SharedPreferences prefs = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
                             SharedPreferences.Editor shared = prefs.edit();
+                            shared.putString("category", category_text);
                             shared.putInt("id", parents.getId());
                             shared.apply();
 

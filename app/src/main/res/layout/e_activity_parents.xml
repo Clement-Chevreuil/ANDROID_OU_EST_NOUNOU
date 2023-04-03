@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ACTIVITY.Parents">
+    tools:context=".ACTIVITY.Menu">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_menu_parents"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navGraph="@navigation/navigation_menu_parents"
+        app:navGraph="@navigation/navigation_menu"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

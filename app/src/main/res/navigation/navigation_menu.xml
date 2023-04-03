@@ -7,30 +7,34 @@
 
     <fragment
         android:id="@+id/settings_parents"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.SETTINGS.Settings"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.SETTINGS.Settings"
         android:label="e_fragment_settings"
-        tools:layout="@layout/e_fragment_settings" />
+        tools:layout="@layout/e_fragment_settings" >
+        <action
+            android:id="@+id/action_settings_parents_self"
+            app:destination="@id/settings_parents" />
+    </fragment>
     <fragment
         android:id="@+id/calendar_parents_add"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionningAdd"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.CALENDAR.CalendarGestionningAdd"
         android:label="e_fragment_calendar" >
         <action
             android:id="@+id/action_calendar_parents_add_to_calendar_parents_gestionning"
             app:destination="@id/calendar_parents_gestionning" />
     </fragment>
     <fragment
-        android:id="@+id/pay_parents"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.Pay"
+        android:id="@+id/contract"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.NurseContact.ContractNurse"
         android:label="e_fragment_pay"
-        tools:layout="@layout/e_fragment_pay" />
+        tools:layout="@layout/e_fragment_contract_nurse" />
     <fragment
         android:id="@+id/search_parents"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.Search"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.Search"
         android:label="e_fragment_search"
         tools:layout="@layout/e_fragment_search" />
     <fragment
         android:id="@+id/calendar_parents_gestionning"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR.CalendarGestionning"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.CALENDAR.CalendarGestionning"
         android:label="z_fragment_calendar_gestionning"
         tools:layout="@layout/e_fragment_calendar_gestionning" >
         <action
@@ -39,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/children"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CHILDREN.Children"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.CHILDREN.Children"
         android:label="e_fragment_children"
         tools:layout="@layout/e_fragment_children" >
         <action
@@ -48,11 +52,15 @@
     </fragment>
     <fragment
         android:id="@+id/addChildren2"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.AddChildren"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.AddChildren"
         android:label="c_fragment_add_children"
         tools:layout="@layout/c_fragment_add_children" >
         <action
             android:id="@+id/action_addChildren_to_children"
             app:destination="@id/children" />
     </fragment>
+    <fragment
+        android:id="@+id/contractParents"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.ContractParents"
+        android:label="ContractParents" />
 </navigation>

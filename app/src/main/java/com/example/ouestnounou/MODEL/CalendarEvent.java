@@ -8,11 +8,14 @@ public class CalendarEvent {
     private String endTime;
     private boolean accepted;
 
-    public CalendarEvent(String date, String startTime, String endTime, boolean accepted) {
+    private Children children;
+
+    public CalendarEvent(String date, String startTime, String endTime, boolean accepted, Children children) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.accepted = accepted;
+        this.children = children;
     }
 
     public CalendarEvent(String date, String startTime, String endTime) {
@@ -24,6 +27,14 @@ public class CalendarEvent {
 
     public CalendarEvent() {
 
+    }
+
+    public Children getChildren() {
+        return children;
+    }
+
+    public void setChildren(Children children) {
+        this.children = children;
     }
 
     public int getId() {

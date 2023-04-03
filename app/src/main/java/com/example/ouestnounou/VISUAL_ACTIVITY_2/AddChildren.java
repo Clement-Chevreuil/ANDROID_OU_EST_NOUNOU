@@ -1,4 +1,4 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -14,15 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ouestnounou.DAO.ChildrenDAO;
-import com.example.ouestnounou.DAO.ParentsDAO;
 import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
@@ -141,19 +137,18 @@ public class AddChildren extends Fragment {
                         args.putString(ARG_DATE_BIRTH, birth_text);
                         args.putString(ARG_SEX, sex_text);
 
-                        Children new_children = new Children(first_name_text, last_name_text, birth_text, sex_text);
+                        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+                        int id_parents = prefs.getInt("id", 0);
+
+                        com.example.ouestnounou.MODEL.Parents parents_children = new Parents();
+                        parents_children.setId(id_parents);
+
+                        Children new_children = new Children(first_name_text, last_name_text, birth_text, sex_text, parents_children);
+
                         ChildrenDAO childrenDAO = new ChildrenDAO(getContext());
                         childrenDAO.add(new_children);
 
-                        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-                        int id = prefs.getInt("id", -1);
-                        if(id == -1)
-                        {
-                            Navigation.findNavController(view).navigate(R.id.action_addChildren_to_addSchool);
-                        }
-                        else{
-                            Navigation.findNavController(view).navigate(R.id.action_addChildren_to_children);
-                        }
+                        Navigation.findNavController(view).navigate(R.id.action_addChildren_to_children);
 
                     //ENREGISTER ENFANT BDD
                     //ALLER SUR LA PAGE ECOLE

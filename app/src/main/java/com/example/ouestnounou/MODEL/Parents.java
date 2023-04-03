@@ -1,5 +1,6 @@
 package com.example.ouestnounou.MODEL;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Parents {
@@ -18,6 +19,23 @@ public class Parents {
 
     private String sex;
 
+    private ArrayList<Children> chidrens;
+
+    public Parents(int id, String fist_name, String last_name, String birth, String city, String country, String adress, String postal_code, String mail, String password, String phone, String sex, ArrayList<Children> childrens) {
+        this.id = id;
+        this.fist_name = fist_name;
+        this.last_name = last_name;
+        this.birth = birth;
+        this.city = city;
+        this.country = country;
+        this.adress = adress;
+        this.postal_code = postal_code;
+        this.mail = mail;
+        this.password = password;
+        this.phone = phone;
+        this.sex = sex;
+        this.chidrens = childrens;
+    }
     public Parents(int id, String fist_name, String last_name, String birth, String city, String country, String adress, String postal_code, String mail, String password, String phone, String sex) {
         this.id = id;
         this.fist_name = fist_name;
@@ -143,5 +161,13 @@ public class Parents {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public ArrayList<Children> getChidrens() {
+        return chidrens;
+    }
+
+    public void setChidrens(ArrayList<Children> chidrens) {
+        this.chidrens = chidrens;
     }
 }

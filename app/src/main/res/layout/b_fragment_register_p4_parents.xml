@@ -41,20 +41,6 @@
                 android:layout_below="@id/error"/>
 
             <Button
-                android:id="@+id/add_children"
-                style="@style/AppTheme.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_corner"
-                android:padding="40px"
-                android:text="@string/add_children"
-                app:backgroundTint="@null"
-                android:layout_below="@id/step"
-                android:layout_marginLeft="@dimen/button_connexion"
-                android:layout_marginRight="@dimen/button_connexion"
-                android:layout_marginBottom="20dp"/>
-
-            <Button
                 android:id="@+id/validation"
                 style="@style/AppTheme.Button"
                 android:layout_width="match_parent"
@@ -63,7 +49,7 @@
                 android:padding="40px"
                 android:text="@string/finish"
                 app:backgroundTint="@null"
-                android:layout_below="@id/add_children"
+                android:layout_below="@id/step"
                 android:layout_marginLeft="@dimen/button_connexion"
                 android:layout_marginRight="@dimen/button_connexion"/>
 

@@ -1,16 +1,13 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.SETTINGS;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.SETTINGS;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.example.ouestnounou.R;
 import com.google.android.material.tabs.TabLayout;

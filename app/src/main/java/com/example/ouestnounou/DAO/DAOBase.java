@@ -3,9 +3,6 @@ package com.example.ouestnounou.DAO;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.ouestnounou.DatabaseHandler;
-import com.example.ouestnounou.DatabaseHandler;
-
 public abstract class DAOBase {
 
     protected final static int VERSION = 1;

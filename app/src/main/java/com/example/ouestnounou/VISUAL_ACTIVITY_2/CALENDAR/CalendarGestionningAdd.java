@@ -1,13 +1,18 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2_PARENTS.CALENDAR;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.CALENDAR;
+
+import static android.content.Context.MODE_PRIVATE;
 
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -17,14 +22,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.ouestnounou.DAO.CalendarEventDAO;
+import com.example.ouestnounou.DAO.ChildrenDAO;
 import com.example.ouestnounou.MODEL.CalendarEvent;
+import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.R;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class CalendarGestionningAdd extends Fragment {
@@ -35,11 +41,35 @@ public class CalendarGestionningAdd extends Fragment {
     private String selectedDateString, selectedStartTime, selectedEndTime;
     private static final String ARG_DATE = "date";
 
+    private Spinner spinner;
+    private ChildrenDAO childrenDAO;
+
+    Children child;
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.e_fragment_calendar_gestion, container, false);
+
+        spinner = view.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+
+        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        int id_parents = prefs.getInt("id", 0);
+
+        // Ajout des éléments au ArrayAdapter
+
+        childrenDAO = new ChildrenDAO(getContext());
+        ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(id_parents);
+
+        for (Children child : childrens) {
+            adapter.add(child.getFist_name() + " " + child.getLast_name());
+        }
+
+        // Associer l'adapter au spinner
+        spinner.setAdapter(adapter);
 
         // Find views
         calendarView = view.findViewById(R.id.calendarView);
@@ -122,7 +152,7 @@ public class CalendarGestionningAdd extends Fragment {
                 if (selectedStartTime == null || selectedEndTime == null) {
                     Toast.makeText(getContext(), "Please select start and end times", Toast.LENGTH_SHORT).show();
                 } else {
-                    CalendarEvent calendarEvent = new CalendarEvent(selectedDateString, selectedStartTime,selectedEndTime);
+                    CalendarEvent calendarEvent = new CalendarEvent(selectedDateString, selectedStartTime,selectedEndTime, false, child);
                     CalendarEventDAO calendarEventDAO = new CalendarEventDAO(getContext());
                     calendarEventDAO.addEvent(calendarEvent);
                     Navigation.findNavController(view).navigate(R.id.action_calendar_parents_add_to_calendar_parents_gestionning);
@@ -146,6 +176,20 @@ public class CalendarGestionningAdd extends Fragment {
                 // Format the date as a string
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 selectedDateString = dateFormat.format(selectedDate);
+
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                String[] words = selectedItem.split(" ");
+                child = childrenDAO.getChildrenByNameEasy(words[0], words[1]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
