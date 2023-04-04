@@ -1,6 +1,7 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2.NurseContact;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.CONTRACT;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class ChildrenNurseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.e_children_contract_list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.e_nurse_contract_list_item, parent, false);
             holder = new ViewHolder();
             holder.timeTextView = (TextView) convertView.findViewById(R.id.name_child);
             holder.accept = (Button) convertView.findViewById(R.id.accept);
@@ -67,6 +68,12 @@ public class ChildrenNurseAdapter extends BaseAdapter {
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences prefs = parent.getRootView().getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
+                String category = prefs.getString("category", "");
+                int id_category = prefs.getInt("id", 0);
+                Nurse nurse =new Nurse();
+                nurse.setId(id_category);
+                children.setNurse(nurse);
                 children.setNurse_accepted(1);
                 childrenDAO.update(children);
                 children_list.remove(position);

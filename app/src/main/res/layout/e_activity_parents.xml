@@ -23,6 +23,6 @@
         android:theme="@style/BottomNavigationTheme"
         android:background="?android:attr/windowBackground"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_parents" />
+        app:menu="@menu/menu" />
 
 </RelativeLayout>

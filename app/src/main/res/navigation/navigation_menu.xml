@@ -24,12 +24,12 @@
     </fragment>
     <fragment
         android:id="@+id/contract"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.NurseContact.ContractNurse"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.CONTRACT.Contract"
         android:label="e_fragment_pay"
         tools:layout="@layout/e_fragment_contract_nurse" />
     <fragment
         android:id="@+id/search_parents"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.Search"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.SEARCH.Search"
         android:label="e_fragment_search"
         tools:layout="@layout/e_fragment_search" >
         <action
@@ -64,11 +64,11 @@
             app:destination="@id/children" />
     </fragment>
     <fragment
-        android:id="@+id/contractParents"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.ContractParents"
-        android:label="ContractParents" />
-    <fragment
         android:id="@+id/parentsSearchNurse"
-        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.ParentsSearchNurse"
-        android:label="ParentsSearchNurse" />
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.SEARCH.ParentsSearchNurse"
+        android:label="ParentsSearchNurse" >
+        <action
+            android:id="@+id/action_parentsSearchNurse_to_contract"
+            app:destination="@id/contract" />
+    </fragment>
 </navigation>

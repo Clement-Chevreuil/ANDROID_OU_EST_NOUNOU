@@ -10,8 +10,8 @@
 
     <item
         android:id="@+id/pay"
-        android:icon="@drawable/pay_foreground"
-        android:title="@string/pay" />
+        android:icon="@drawable/link_foreground"
+        android:title="Demandes" />
 
     <item
         android:id="@+id/settings"

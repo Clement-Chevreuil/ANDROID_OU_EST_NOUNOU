@@ -3,21 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VISUAL_ACTIVITY_2.Search">
+    tools:context=".VISUAL_ACTIVITY_2.SEARCH.Search"
+    android:background="@color/green_1">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/validation"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+"
-            android:textSize="24sp"
-            android:layout_gravity="right"
-            android:layout_margin="16dp"/>
+            android:text="Choisir l'enfant"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/linear"
+            android:textSize="50px"/>
 
         <Spinner
             android:id="@+id/spinner"
@@ -35,6 +38,16 @@
             android:dropDownHeight="wrap_content"
             android:dividerHeight="100px" />
 
+        <Button
+            android:id="@+id/validation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="24sp"
+            android:layout_gravity="right"
+            android:layout_margin="16dp"/>
+
     </LinearLayout>
+
 
 </FrameLayout>

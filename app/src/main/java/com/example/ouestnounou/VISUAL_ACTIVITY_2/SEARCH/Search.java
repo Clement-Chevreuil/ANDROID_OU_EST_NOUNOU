@@ -1,5 +1,8 @@
-package com.example.ouestnounou.VISUAL_ACTIVITY_2;
+package com.example.ouestnounou.VISUAL_ACTIVITY_2.SEARCH;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import androidx.fragment.app.Fragment;
@@ -34,17 +38,12 @@ import java.util.List;
 
 public class Search extends Fragment implements OnMapReadyCallback{
 
-
     private MapView mapView;
     private GoogleMap googleMap;
-
-
-
 
     public Search() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,11 +83,9 @@ public class Search extends Fragment implements OnMapReadyCallback{
         Geocoder geocoder = new Geocoder(getContext());
 
         NurseDAO nurseDAO = new NurseDAO(getContext());
-        ArrayList<Nurse> list_nurse = nurseDAO.getNurses();
+        ArrayList<Nurse> list_nurse = nurseDAO.getNursesNotComplete();
 
         for(Nurse nurse : list_nurse ) {
-
-            Log.e("test", nurse.getAdress());
 
             List<Address> addresses = null;
             try {
@@ -107,17 +104,17 @@ public class Search extends Fragment implements OnMapReadyCallback{
                 Marker marker = googleMap.addMarker(markerOptions);
                 marker.setTag(nurse);
 
-
                 View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
-
 
                 googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
                         // Récupérer l'objet Nurse associé au marqueur cliqué
                         Nurse nurse = (Nurse) marker.getTag();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("nurse_id", nurse.getId());
                         // Naviguer vers la vue suivante en passant l'objet Nurse à l'aide du Bundle
-                        Navigation.findNavController(getView()).navigate(R.id.action_search_parents_to_parentsSearchNurse);
+                        Navigation.findNavController(getView()).navigate(R.id.action_search_parents_to_parentsSearchNurse, bundle);
                     }
                 });
 
@@ -136,24 +133,16 @@ public class Search extends Fragment implements OnMapReadyCallback{
                         return infoWindow;
                     }
                 });
-
-
             }
         }
     }
 
     private View createInfoWindowView(Nurse nurse) {
-        Log.e("test","test");
         View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
-        Button myButton = (Button) infoWindow.findViewById(R.id.bouton_carte);
-        myButton.setText(nurse.getFist_name() + " " + nurse.getLast_name() + "\n" + nurse.getAdress() + " " + nurse.getCity());
-        Log.e("test2","test2");
-        myButton.setOnClickListener(click_event);
-        Log.e("test3","test3");
+        TextView informations = (TextView) infoWindow.findViewById(R.id.infos);
+        informations.setText(nurse.getFist_name() + " " + nurse.getLast_name() + "\n" + nurse.getAdress() + " " + nurse.getCity());
         return infoWindow;
     }
-
-
 
     @Override
     public void onStart() {
@@ -171,15 +160,4 @@ public class Search extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    private View.OnClickListener click_event = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.e("test4","test4");
-            // Code à exécuter lorsque le bouton est cliqué
-            FragmentActivity activity = getActivity();
-            NavHostFragment navHostFragment = (NavHostFragment) activity.getSupportFragmentManager().findFragmentById(R.id.navigation_menu_parents);
-            NavController navController = navHostFragment.getNavController();
-            navController.navigate(R.id.contractParents);
-        }
-    };
 }

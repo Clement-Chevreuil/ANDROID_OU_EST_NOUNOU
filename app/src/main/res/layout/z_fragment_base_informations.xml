@@ -128,7 +128,8 @@
                 android:backgroundTint="@null"
                 android:layout_below="@id/validation"
                 android:layout_marginLeft="@dimen/button_connexion"
-                android:layout_marginRight="@dimen/button_connexion"/>
+                android:layout_marginRight="@dimen/button_connexion"
+                android:layout_marginTop="20dp"/>
 
         </RelativeLayout>
 

@@ -11,17 +11,33 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:layout_centerVertical="true"/>
+        android:padding="10dp"
+        android:textSize="60px"
+        android:text="test"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/infos_child"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true">
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/name_child"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="45px"
+        android:text="test"/>
+
+    <LinearLayout
+        android:layout_below="@+id/infos_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <Button
             android:id="@+id/edit_child"
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="150px"
+            android:layout_height="150px"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             android:background="@drawable/edit_foreground"
@@ -29,12 +45,32 @@
 
         <Button
             android:id="@+id/del_child"
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="150px"
+            android:layout_height="150px"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:background="@drawable/delete_foreground"
+            />
+
+        <Button
+            android:id="@+id/mail"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:background="@drawable/mail_foreground"
+            />
+
+        <Button
+            android:id="@+id/phone"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:background="@drawable/phone_foreground"
             />
     </LinearLayout>
 

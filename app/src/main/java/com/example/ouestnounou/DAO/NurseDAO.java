@@ -121,6 +121,44 @@ public class NurseDAO extends DAOBase{
 
     }
 
+    public ArrayList<Nurse> getNursesNotComplete() {
+        ArrayList<Nurse> allNurse = new ArrayList<Nurse>();
+
+        this.open();
+        Cursor unCurseur = mDb.rawQuery("SELECT * FROM Nurse WHERE (SELECT COUNT(*) FROM Children WHERE Children.nurse_id = Nurse.id) != Nurse.nb_children;", null);
+        if (unCurseur.moveToFirst()) {
+            do {
+                Nurse nurse = new Nurse();
+                nurse.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
+                nurse.setMail(unCurseur.getString(unCurseur.getColumnIndex(mail)));
+                nurse.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+                nurse.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+                nurse.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
+                nurse.setPassword(unCurseur.getString(unCurseur.getColumnIndex(password)));
+                nurse.setCity(unCurseur.getString(unCurseur.getColumnIndex(city)));
+                nurse.setCountry(unCurseur.getString(unCurseur.getColumnIndex(country)));
+                nurse.setAdress(unCurseur.getString(unCurseur.getColumnIndex(adress)));
+                nurse.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex(postalCode)));
+                nurse.setPhone(unCurseur.getString(unCurseur.getColumnIndex(phone)));
+                nurse.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
+                nurse.setAge_min(unCurseur.getInt(unCurseur.getColumnIndex(ageMin)));
+                nurse.setAge_max(unCurseur.getInt(unCurseur.getColumnIndex(ageMax)));
+                nurse.setNb_children(unCurseur.getInt(unCurseur.getColumnIndex(nbChildren)));
+                allNurse.add(nurse);
+            }
+            while (unCurseur.moveToNext());
+            Collections.shuffle(allNurse);
+        }
+        else
+        {
+            this.close();
+            return null;
+        }
+        this.close();
+        return allNurse;
+
+    }
+
     public Nurse getNurseById(int idNurse) {
         Nurse nurse = null;
 

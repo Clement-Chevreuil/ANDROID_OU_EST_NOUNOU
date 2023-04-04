@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -38,15 +39,7 @@ public class Menu extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.pay:
-
-                        category = prefs.getString("category", "");
-                        if(category.equals(getResources().getString(R.string.nurse))){
-                            navController.navigate(R.id.contract);
-                        }
-                        else{
-                            navController.navigate(R.id.contractParents);
-                        }
-
+                        navController.navigate(R.id.contract);
                         return true;
                     case R.id.settings:
                         navController.navigate(R.id.settings_parents);
@@ -96,9 +89,31 @@ public class Menu extends AppCompatActivity {
 
                         return true;
                     case R.id.search:
-                        navController.navigate(R.id.search_parents);
+                        category = prefs.getString("category", "");
+                        if( ! category.equals(getResources().getString(R.string.nurse))){
+                            ArrayList<Children> childrensVerif = childrenDAO.getChildrensByParentId(id_category);
+                            ArrayList<Children> childrensNurse = childrenDAO.getChildrensByParentIdWithoutNurse(id_category);
+                            if(childrensNurse == null)
+                            {
+                                Toast.makeText(getApplicationContext(), "Tout vos enfants ont deja une nounou", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (childrensVerif == null) {
+                                Toast.makeText(getApplicationContext(), "Il vous faut des enfants pour acceder a cette page", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                navController.navigate(R.id.search_parents);
+                            }
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Fonctionnalité non disponible pour le moment", Toast.LENGTH_SHORT).show();
+                           //navController.navigate(R.id.search_parents);
+                        }
                         return true;
-                    default:
+
+                        default:
                         return false;
                 }
             }

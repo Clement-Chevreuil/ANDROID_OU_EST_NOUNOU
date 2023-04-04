@@ -54,6 +54,9 @@ public class CalendarGestionning extends Fragment {
         View rootView = inflater.inflate(R.layout.e_fragment_calendar_gestionning, container, false);
 
 
+        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        String category = prefs.getString("category", "");
+        int id_category = prefs.getInt("id", 0);
 
         calendarEventDAO = new CalendarEventDAO(getContext());
 
@@ -61,6 +64,8 @@ public class CalendarGestionning extends Fragment {
         calendarView = rootView.findViewById(R.id.calendarView);
         eventList = rootView.findViewById(R.id.eventList);
         addEventButton = rootView.findViewById(R.id.addEventButton);
+
+
 
         // Initialisation de la liste d'événements
         events = new ArrayList<String>();
@@ -70,13 +75,22 @@ public class CalendarGestionning extends Fragment {
         spinner = rootView.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
         int id_parents = prefs.getInt("id", 0);
 
         // Ajout des éléments au ArrayAdapter
 
         childrenDAO = new ChildrenDAO(getContext());
-        ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(id_parents);
+        ArrayList<Children> childrens;
+
+        if(category.equals(getResources().getString(R.string.nurse))){
+            addEventButton.setVisibility(View.GONE);
+            childrens = childrenDAO.getChildrensByNurseId(id_parents);
+        }
+        else{
+            childrens = childrenDAO.getChildrensByParentId(id_parents);
+        }
+
+
 
         adapter.add("");
         for (Children child : childrens) {

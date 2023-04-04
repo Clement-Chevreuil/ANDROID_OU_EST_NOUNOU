@@ -38,24 +38,30 @@ public class Children extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        String category = prefs.getString("category", "");
+        int id_category = prefs.getInt("id", 0);
+
+
+
+
         View v =  inflater.inflate(R.layout.e_fragment_children, container, false);
 
         children_list = v.findViewById(R.id.children_list);
         add_children = v.findViewById(R.id.add_children);
-
         add_children.setOnClickListener(click_event);
 
+        if(category.equals(getResources().getString(R.string.nurse))){
+            add_children.setVisibility(View.GONE);
+        }
 
         childrenDAO = new ChildrenDAO(getContext());
-
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        int id_category = prefs.getInt("id", 0);
-        String category = prefs.getString("category", "");
 
         ArrayList<com.example.ouestnounou.MODEL.Children> childrens;
 
         if(category.equals(getResources().getString(R.string.nurse))){
-            childrens = childrenDAO.getChildrensByNurseId(id_category);
+            childrens = childrenDAO.getChildrensByNurseIdExistingNurse(id_category);
         }
         else{
             childrens = childrenDAO.getChildrensByParentId(id_category);

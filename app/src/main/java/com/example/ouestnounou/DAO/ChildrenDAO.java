@@ -20,7 +20,7 @@ public class ChildrenDAO extends DAOBase{
     private static final String id = "id";
     private static final String id_parents = "id_parents";
 
-    private static final String id_nurse = "id_parents";
+    private static final String id_nurse = "id_nurse";
     private static final String firstName = "first_name";
     private static final String last_name = "last_name";
     private static final String birth = "birth";
@@ -53,15 +53,23 @@ public class ChildrenDAO extends DAOBase{
         values.put(last_name, children.getLast_name());
         values.put(birth, String.valueOf(children.getBirth()));
         values.put(sex, children.getSex());
-        values.put(id_parents, children.getParents().getId());
+        if(children.getParents() != null)
+        {
+            values.put(id_parents, children.getParents().getId());
+        }
+
         if(children.getNurse().getId() == -1){
-            values.put(id_nurse, (Integer) null);
+            values.put(id_nurse, -1);
         }
         else{
             values.put(id_nurse, children.getNurse().getId());
         }
 
-        values.put("nurse_accepted", children.getNurse_accepted());
+        if(children.getNurse_accepted() >= 1)
+        {
+            values.put("nurse_accepted", children.getNurse_accepted());
+        }
+
         mDb.update(nameTableChildren, values, id  + " = ?", new String[] {String.valueOf(children.getId())});
         close();
     }
@@ -229,6 +237,73 @@ public class ChildrenDAO extends DAOBase{
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
+                Nurse nurse = new Nurse();
+                nurse.setId(cursor.getInt(cursor.getColumnIndex("id_nurse")));
+                children.setNurse(nurse);
+
+                Parents parents = new Parents();
+                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                children.setParents(parents);
+
+                allChildren.add(children);
+            } while (cursor.moveToNext());
+            Collections.shuffle(allChildren);
+        } else {
+            close();
+            return null;
+        }
+        close();
+        return allChildren;
+    }
+
+
+
+    public ArrayList<Children> getChildrensByParentIdWithoutNurse(int parentId) {
+        ArrayList<Children> allChildren = new ArrayList<>();
+
+        open();
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
+                        "WHERE c." + id_parents + " = ? AND c.id_nurse IS NULL OR c.id_nurse = -1;",
+                new String[]{String.valueOf(parentId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Children children = new Children();
+                children.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
+                children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
+
+                allChildren.add(children);
+            } while (cursor.moveToNext());
+            Collections.shuffle(allChildren);
+        } else {
+            close();
+            return null;
+        }
+        close();
+        return allChildren;
+    }
+
+    public ArrayList<Children> getChildrensByParentsIdWithNurse(int parentId) {
+        ArrayList<Children> allChildren = new ArrayList<>();
+
+        open();
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
+                        "WHERE c." + id_parents + " = ? AND c.id_nurse IS NOT NULL;",
+                new String[]{String.valueOf(parentId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Children children = new Children();
+                children.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
+                children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
+                children.setNurse_accepted(cursor.getInt(cursor.getColumnIndex("nurse_accepted")));
+
                 allChildren.add(children);
             } while (cursor.moveToNext());
             Collections.shuffle(allChildren);
@@ -257,6 +332,7 @@ public class ChildrenDAO extends DAOBase{
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
+
                 Parents parents = new Parents();
 
                 parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
@@ -273,13 +349,53 @@ public class ChildrenDAO extends DAOBase{
         return allChildren;
     }
 
+    public ArrayList<Children> getChildrensByNurseIdExistingNurse(int nurseId) {
+        ArrayList<Children> allChildren = new ArrayList<>();
+
+        open();
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
+                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted = 1;",
+                new String[]{String.valueOf(nurseId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Children children = new Children();
+                children.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
+                children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
+
+                Nurse nurse = new Nurse();
+
+                nurse.setId(cursor.getInt(cursor.getColumnIndex("id_nurse")));
+                Log.e("test", String.valueOf(nurse.getId()));
+                children.setNurse(nurse);
+
+                Parents parents = new Parents();
+                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                children.setParents(parents);
+
+                allChildren.add(children);
+
+            } while (cursor.moveToNext());
+            Collections.shuffle(allChildren);
+        } else {
+            close();
+            return null;
+        }
+        close();
+        return allChildren;
+    }
+
+
 
     public ArrayList<Children> getChildrensByNurseIdWaiting(int nurseId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted IS NULL;",
+                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted IS NULL OR c.nurse_accepted = -1;",
                 new String[]{String.valueOf(nurseId)});
 
         if (cursor.moveToFirst()) {

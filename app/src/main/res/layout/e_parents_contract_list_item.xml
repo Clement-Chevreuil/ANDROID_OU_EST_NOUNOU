@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/green_1">
+
+    <TextView
+        android:layout_marginLeft="50px"
+        android:id="@+id/name_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@android:color/black"
+        android:padding="10dp"
+        android:text="Enfant informations" />
+
+    <TextView
+        android:layout_marginLeft="50px"
+        android:id="@+id/nurse_informations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_child"
+        android:textColor="@android:color/black"
+        android:padding="10dp"
+        android:text="Enfant informations" />
+
+    <TextView
+        android:id="@+id/waiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="En attente"
+        android:padding="10dp">
+
+
+    </TextView>
+
+</RelativeLayout>

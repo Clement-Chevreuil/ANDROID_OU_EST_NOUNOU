@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="pageShop">
-        <item type="string" >p1</item>
+        <item type="string">p1</item>
         <item type="string">p2</item>
         <item type="string">p3</item>
+        <item type="string">p4</item>
     </array>
 </resources>

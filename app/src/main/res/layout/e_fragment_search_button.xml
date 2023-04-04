@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VISUAL_ACTIVITY_2.Search">
+    tools:context=".VISUAL_ACTIVITY_2.SEARCH.Search">
 
 
-    <Button
-        android:id="@+id/bouton_carte"
+    <TextView
+        android:id="@+id/infos"
         android:layout_width="170dp"
         android:layout_height="80dp"
         android:text="Mon Bouton" />
