@@ -93,12 +93,13 @@ public class Menu extends AppCompatActivity {
                         if( ! category.equals(getResources().getString(R.string.nurse))){
                             ArrayList<Children> childrensVerif = childrenDAO.getChildrensByParentId(id_category);
                             ArrayList<Children> childrensNurse = childrenDAO.getChildrensByParentIdWithoutNurse(id_category);
-                            if(childrensNurse == null)
+
+                            if (childrensVerif == null) {
+                                Toast.makeText(getApplicationContext(), "Il vous faut des enfants pour acceder a cette page", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(childrensNurse == null)
                             {
                                 Toast.makeText(getApplicationContext(), "Tout vos enfants ont deja une nounou", Toast.LENGTH_SHORT).show();
-                            }
-                            else if (childrensVerif == null) {
-                                Toast.makeText(getApplicationContext(), "Il vous faut des enfants pour acceder a cette page", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
