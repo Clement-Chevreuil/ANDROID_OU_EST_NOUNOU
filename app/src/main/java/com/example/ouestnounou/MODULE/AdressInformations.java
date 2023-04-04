@@ -96,9 +96,13 @@ public class AdressInformations extends Fragment {
                     }
                     else
                     {
+                        parents.setAdress(adress_text);
+                        parents.setCity(city_text);
+                        parents.setPostal_code(postal_code_text);
+                        parents.setCountry(country_text);
+
                         parentsDAO.update(parents);
-                        Bundle args = new Bundle();
-                        //Navigation.findNavController(view).navigate(R.id.action_registerP2_to_registerP3, args);
+                        Navigation.findNavController(view).navigate(R.id.action_settings_parents_self);
                     }
 
                     break;
