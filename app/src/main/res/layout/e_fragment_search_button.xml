@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VISUAL_ACTIVITY_2.Search">
+
+
+    <Button
+        android:id="@+id/bouton_carte"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:text="Mon Bouton" />
+
+</FrameLayout>

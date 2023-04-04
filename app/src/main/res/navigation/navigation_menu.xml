@@ -31,7 +31,11 @@
         android:id="@+id/search_parents"
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.Search"
         android:label="e_fragment_search"
-        tools:layout="@layout/e_fragment_search" />
+        tools:layout="@layout/e_fragment_search" >
+        <action
+            android:id="@+id/action_search_parents_to_contractParents"
+            app:destination="@id/contractParents" />
+    </fragment>
     <fragment
         android:id="@+id/calendar_parents_gestionning"
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.CALENDAR.CalendarGestionning"
