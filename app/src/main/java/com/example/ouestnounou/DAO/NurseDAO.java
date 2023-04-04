@@ -125,7 +125,7 @@ public class NurseDAO extends DAOBase{
         ArrayList<Nurse> allNurse = new ArrayList<Nurse>();
 
         this.open();
-        Cursor unCurseur = mDb.rawQuery("SELECT * FROM Nurse WHERE (SELECT COUNT(*) FROM Children WHERE Children.nurse_id = Nurse.id) != Nurse.nb_children;", null);
+        Cursor unCurseur = mDb.rawQuery("SELECT * FROM Nurse WHERE (SELECT COUNT(*) FROM Children WHERE Children.id_nurse = Nurse.id) != Nurse.nb_children;", null);
         if (unCurseur.moveToFirst()) {
             do {
                 Nurse nurse = new Nurse();

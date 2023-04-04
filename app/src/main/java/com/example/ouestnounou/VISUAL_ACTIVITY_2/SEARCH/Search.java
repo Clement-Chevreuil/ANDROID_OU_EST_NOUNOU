@@ -85,54 +85,57 @@ public class Search extends Fragment implements OnMapReadyCallback{
         NurseDAO nurseDAO = new NurseDAO(getContext());
         ArrayList<Nurse> list_nurse = nurseDAO.getNursesNotComplete();
 
-        for(Nurse nurse : list_nurse ) {
+        if(list_nurse != null)
+        {
+            for(Nurse nurse : list_nurse ) {
 
-            List<Address> addresses = null;
-            try {
-                addresses = geocoder.getFromLocationName(nurse.getAdress() + nurse.getCity(), 1);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocationName(nurse.getAdress() + nurse.getCity(), 1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
 
-            if (addresses.size() > 0) {
-                Address address = addresses.get(0);
-                double latitude = address.getLatitude();
-                double longitude = address.getLongitude();
-                LatLng location = new LatLng(latitude, longitude);
-                MarkerOptions markerOptions = new MarkerOptions().position(location);
-                Marker marker = googleMap.addMarker(markerOptions);
-                marker.setTag(nurse);
+                if (addresses.size() > 0) {
+                    Address address = addresses.get(0);
+                    double latitude = address.getLatitude();
+                    double longitude = address.getLongitude();
+                    LatLng location = new LatLng(latitude, longitude);
+                    MarkerOptions markerOptions = new MarkerOptions().position(location);
+                    Marker marker = googleMap.addMarker(markerOptions);
+                    marker.setTag(nurse);
 
-                View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
+                    View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
 
-                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick(Marker marker) {
-                        // Récupérer l'objet Nurse associé au marqueur cliqué
-                        Nurse nurse = (Nurse) marker.getTag();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("nurse_id", nurse.getId());
-                        // Naviguer vers la vue suivante en passant l'objet Nurse à l'aide du Bundle
-                        Navigation.findNavController(getView()).navigate(R.id.action_search_parents_to_parentsSearchNurse, bundle);
-                    }
-                });
+                    googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            // Récupérer l'objet Nurse associé au marqueur cliqué
+                            Nurse nurse = (Nurse) marker.getTag();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("nurse_id", nurse.getId());
+                            // Naviguer vers la vue suivante en passant l'objet Nurse à l'aide du Bundle
+                            Navigation.findNavController(getView()).navigate(R.id.action_search_parents_to_parentsSearchNurse, bundle);
+                        }
+                    });
 
-                googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                    @Override
-                    public View getInfoWindow(Marker marker) {
-                        Nurse nurse = (Nurse) marker.getTag();
-                        View infoWindow = createInfoWindowView(nurse);
-                        return infoWindow;
-                    }
+                    googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                        @Override
+                        public View getInfoWindow(Marker marker) {
+                            Nurse nurse = (Nurse) marker.getTag();
+                            View infoWindow = createInfoWindowView(nurse);
+                            return infoWindow;
+                        }
 
-                    @Override
-                    public View getInfoContents(Marker marker) {
-                        Nurse nurse = (Nurse) marker.getTag();
-                        View infoWindow = createInfoWindowView(nurse);
-                        return infoWindow;
-                    }
-                });
+                        @Override
+                        public View getInfoContents(Marker marker) {
+                            Nurse nurse = (Nurse) marker.getTag();
+                            View infoWindow = createInfoWindowView(nurse);
+                            return infoWindow;
+                        }
+                    });
+                }
             }
         }
     }
