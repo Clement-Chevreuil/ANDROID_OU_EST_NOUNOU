@@ -91,7 +91,6 @@ public class NurseInformations extends Fragment {
                     age_min_int = Integer.valueOf(age_min.getText().toString());
                     age_max_int = Integer.valueOf(age_max.getText().toString());
 
-                    Log.e("test", String.valueOf(listChildren.size()));
 
 
                     if(num_children_int == null || age_max_int == null || age_min_int == null)
