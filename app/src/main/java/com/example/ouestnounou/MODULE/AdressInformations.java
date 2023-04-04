@@ -21,7 +21,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ouestnounou.DAO.NurseDAO;
 import com.example.ouestnounou.DAO.ParentsDAO;
+import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
@@ -38,6 +40,9 @@ public class AdressInformations extends Fragment {
 
     Parents parents;
     ParentsDAO parentsDAO;
+    Nurse nurse;
+    NurseDAO nurseDAO;
+    String category;
 
     public AdressInformations() {
         // Required empty public constructor
@@ -58,9 +63,7 @@ public class AdressInformations extends Fragment {
 
         SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
         int id_parents = prefs.getInt("id", -1);
-
-        parentsDAO = new ParentsDAO(getContext());
-        parents = parentsDAO.getParent(id_parents);
+        category = prefs.getString("category", "");
 
         validation = v.findViewById(R.id.validation);
         validation.setOnClickListener(click_event);
@@ -71,10 +74,27 @@ public class AdressInformations extends Fragment {
         postal_code = v.findViewById(R.id.postal_code);
         error = v.findViewById(R.id.error);
 
-        city.setText(parents.getCity());
-        country.setText(parents.getCountry());
-        adress.setText(parents.getAdress());
-        postal_code.setText(parents.getPostal_code());
+
+
+        if(category.equals(getResources().getString(R.string.nurse))){
+            nurseDAO = new NurseDAO(getContext());
+            nurse = nurseDAO.getNurseById(id_parents);
+            city.setText(nurse.getCity());
+            country.setText(nurse.getCountry());
+            adress.setText(nurse.getAdress());
+            postal_code.setText(nurse.getPostal_code());
+
+        }
+        else{
+            parentsDAO = new ParentsDAO(getContext());
+            parents = parentsDAO.getParent(id_parents);
+            city.setText(parents.getCity());
+            country.setText(parents.getCountry());
+            adress.setText(parents.getAdress());
+            postal_code.setText(parents.getPostal_code());
+
+        }
+
 
         return v;
     }
@@ -97,12 +117,23 @@ public class AdressInformations extends Fragment {
                     }
                     else
                     {
-                        parents.setAdress(adress_text);
-                        parents.setCity(city_text);
-                        parents.setPostal_code(postal_code_text);
-                        parents.setCountry(country_text);
+                        if(category.equals(getResources().getString(R.string.nurse))){
+                            nurse.setAdress(adress_text);
+                            nurse.setCity(city_text);
+                            nurse.setPostal_code(postal_code_text);
+                            nurse.setCountry(country_text);
+                            nurseDAO.update(nurse);
 
-                        parentsDAO.update(parents);
+                        }
+                        else{
+                            parents.setAdress(adress_text);
+                            parents.setCity(city_text);
+                            parents.setPostal_code(postal_code_text);
+                            parents.setCountry(country_text);
+                            parentsDAO.update(parents);
+
+                        }
+
                         Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                     }
 

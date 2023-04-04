@@ -18,7 +18,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ouestnounou.DAO.NurseDAO;
 import com.example.ouestnounou.DAO.ParentsDAO;
+import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
@@ -34,7 +36,10 @@ public class BaseInformations extends Fragment {
     DatePicker birth;
     String first_name_text, last_name_text, birth_text, sex_text;
     Parents parents;
+    Nurse nurse;
     ParentsDAO parentsDAO;
+    NurseDAO nurseDAO;
+    String category;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     @Override
@@ -51,9 +56,9 @@ public class BaseInformations extends Fragment {
 
         SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
         int id_parents = prefs.getInt("id", -1);
+        category = prefs.getString("category", "");
 
-        parentsDAO = new ParentsDAO(getContext());
-        parents = parentsDAO.getParent(id_parents);
+
 
         validation = v.findViewById(R.id.validation);
         validation.setOnClickListener(click_event);
@@ -72,20 +77,42 @@ public class BaseInformations extends Fragment {
         error = v.findViewById(R.id.error);
         birth = v.findViewById(R.id.birth);
 
-        first_name.setText(parents.getFist_name());
-        last_name.setText(parents.getLast_name());
 
-        if(parents.getSex().equals(getResources().getString(R.string.boy)))
-        {
-            boy.setChecked(true);
-        }
-        else if (parents.getSex().equals(getResources().getString(R.string.girl)))
-        {
-            girl.setChecked(true);
-        }
 
-        String[] date_array = parents.getBirth().split("/");
-        birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
+        if(category.equals(getResources().getString(R.string.nurse))){
+            nurseDAO = new NurseDAO(getContext());
+            nurse = nurseDAO.getNurseById(id_parents);
+            first_name.setText(nurse.getFist_name());
+            last_name.setText(nurse.getLast_name());
+            if(nurse.getSex().equals(getResources().getString(R.string.boy)))
+            {
+                boy.setChecked(true);
+            }
+            else if (nurse.getSex().equals(getResources().getString(R.string.girl)))
+            {
+                girl.setChecked(true);
+            }
+            String[] date_array = nurse.getBirth().split("/");
+            birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
+
+        }
+        else{
+            parentsDAO = new ParentsDAO(getContext());
+            parents = parentsDAO.getParent(id_parents);
+            first_name.setText(parents.getFist_name());
+            last_name.setText(parents.getLast_name());
+            if(parents.getSex().equals(getResources().getString(R.string.boy)))
+            {
+                boy.setChecked(true);
+            }
+            else if (parents.getSex().equals(getResources().getString(R.string.girl)))
+            {
+                girl.setChecked(true);
+            }
+            String[] date_array = parents.getBirth().split("/");
+            birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
+
+        }
 
         return v;
     }
@@ -108,11 +135,21 @@ public class BaseInformations extends Fragment {
                     }
                     else
                     {
-                        parents.setFist_name(first_name_text);
-                        parents.setLast_name(last_name_text);
-                        parents.setBirth(birth_text);
-                        parentsDAO.update(parents);
-                        Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
+                        if(category.equals(getResources().getString(R.string.nurse))){
+                            nurse.setFist_name(first_name_text);
+                            nurse.setLast_name(last_name_text);
+                            nurse.setBirth(birth_text);
+                            nurseDAO.update(nurse);
+                            Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            parents.setFist_name(first_name_text);
+                            parents.setLast_name(last_name_text);
+                            parents.setBirth(birth_text);
+                            parentsDAO.update(parents);
+                            Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                     break;
 

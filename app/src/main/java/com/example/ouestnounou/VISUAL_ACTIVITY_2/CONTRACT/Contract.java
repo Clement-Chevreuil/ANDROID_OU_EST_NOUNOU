@@ -51,13 +51,22 @@ public class Contract extends Fragment {
 
         if(category.equals(getResources().getString(R.string.nurse))){
             ArrayList<Children> childrens = childrenDAO.getChildrensByNurseIdWaiting(id);
-            ChildrenNurseAdapter adapter = new ChildrenNurseAdapter(getContext(), childrens);
-            children_list.setAdapter(adapter);
+            if(childrens != null)
+            {
+                ChildrenNurseAdapter adapter = new ChildrenNurseAdapter(getContext(), childrens);
+                children_list.setAdapter(adapter);
+            }
+
         }
         else{
+
             ArrayList<Children> childrens = childrenDAO.getChildrensByParentsIdWithNurse(id);
-            ChildrenParentsAdapter adapter = new ChildrenParentsAdapter(getContext(), childrens);
-            children_list.setAdapter(adapter);
+            if(childrens != null)
+            {
+                ChildrenParentsAdapter adapter = new ChildrenParentsAdapter(getContext(), childrens);
+                children_list.setAdapter(adapter);
+            }
+
         }
 
         return v;

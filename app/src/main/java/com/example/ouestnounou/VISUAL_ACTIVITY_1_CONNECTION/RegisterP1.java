@@ -160,7 +160,7 @@ public class RegisterP1 extends Fragment {
                     else
                     {
                         args.putString(ARG_CATEGORY, category_text);
-                        args.putString(ARG_FIRST_NAME, last_name_text);
+                        args.putString(ARG_FIRST_NAME, first_name_text);
                         args.putString(ARG_LAST_NAME, last_name.getText().toString());
                         args.putString(ARG_DATE_BIRTH, birth_text);
                         args.putString(ARG_SEX, sex_text);

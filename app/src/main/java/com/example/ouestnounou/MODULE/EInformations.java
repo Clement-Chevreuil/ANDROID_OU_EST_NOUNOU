@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ouestnounou.DAO.NurseDAO;
 import com.example.ouestnounou.DAO.ParentsDAO;
+import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
@@ -30,6 +32,9 @@ public class EInformations extends Fragment {
     String mail_text, password_text, phone_text;
     Parents parents;
     ParentsDAO parentsDAO;
+    Nurse nurse;
+    NurseDAO nurseDAO;
+    String category;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +59,24 @@ public class EInformations extends Fragment {
 
         SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
         int id_parents = prefs.getInt("id", -1);
+        category = prefs.getString("category", "");
 
-        parentsDAO = new ParentsDAO(getContext());
-        parents = parentsDAO.getParent(id_parents);
 
-        phone.setText(parents.getPhone());
-        mail.setText(parents.getMail());
+
+        if(category.equals(getResources().getString(R.string.nurse))){
+            nurseDAO = new NurseDAO(getContext());
+            nurse = nurseDAO.getNurseById(id_parents);
+            phone.setText(nurse.getPhone());
+            mail.setText(nurse.getMail());
+
+        }
+        else{
+            parentsDAO = new ParentsDAO(getContext());
+            parents = parentsDAO.getParent(id_parents);
+            phone.setText(parents.getPhone());
+            mail.setText(parents.getMail());
+
+        }
 
         return v;
     }
@@ -80,15 +97,35 @@ public class EInformations extends Fragment {
                     {
                         error.setText("Veuillez remplir les champs correctements");
                     }
-                    else if ( ! parents.getPassword().equals(old_password.getText().toString()))
-                    {
-                        error.setText("LEs mots de passe ne sont pas les mêmes");
-                    }
+
                     else
                     {
-                        parents.setMail(mail_text);
-                        parents.setPassword(password_text);
-                        parentsDAO.update(parents);
+
+                        if(category.equals(getResources().getString(R.string.nurse))){
+                            if ( ! nurse.getPassword().equals(old_password.getText().toString()))
+                            {
+                                error.setText("Les mots de passe ne sont pas les mêmes");
+                            }
+                            else{
+                                nurse.setMail(mail_text);
+                                nurse.setPassword(password_text);
+                                nurseDAO.update(nurse);
+                            }
+                        }
+                        else{
+                            if ( ! parents.getPassword().equals(old_password.getText().toString()))
+                            {
+                                error.setText("Les mots de passe ne sont pas les mêmes");
+                            }
+                            else{
+                                parents.setMail(mail_text);
+                                parents.setPassword(password_text);
+                                parentsDAO.update(parents);
+                            }
+
+
+                        }
+
                         Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         //Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
                     }
