@@ -55,7 +55,7 @@ public class ContractNurse extends Fragment {
         ArrayList<Children> childrens = childrenDAO.getChildrensByNurseIdWaiting(id_nurse);
 
         // Créer l'adapter pour les événements
-        ChildrenAdapter adapter = new ChildrenAdapter(getContext(), childrens);
+        ChildrenNurseAdapter adapter = new ChildrenNurseAdapter(getContext(), childrens);
 
         // Associer l'adapter à la ListView
         children_list.setAdapter(adapter);
