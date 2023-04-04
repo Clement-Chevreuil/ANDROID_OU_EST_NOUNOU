@@ -7,10 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.ouestnounou.DAO.NurseDAO;
 import com.example.ouestnounou.MODEL.Nurse;
@@ -20,6 +25,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -31,7 +37,6 @@ public class Search extends Fragment implements OnMapReadyCallback{
 
     private MapView mapView;
     private GoogleMap googleMap;
-
 
 
 
@@ -66,7 +71,6 @@ public class Search extends Fragment implements OnMapReadyCallback{
         mapFragment.getMapAsync(this);
 
 
-
         return view;
     }
 
@@ -76,6 +80,7 @@ public class Search extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap map) {
         googleMap = map;
 
+        googleMap.setOnInfoWindowClickListener(null);
         Geocoder geocoder = new Geocoder(getContext());
 
         NurseDAO nurseDAO = new NurseDAO(getContext());
@@ -98,14 +103,47 @@ public class Search extends Fragment implements OnMapReadyCallback{
                 double latitude = address.getLatitude();
                 double longitude = address.getLongitude();
                 LatLng location = new LatLng(latitude, longitude);
-                MarkerOptions markerOptions = new MarkerOptions().position(location).title(nurse.getFist_name() + " " + nurse.getLast_name()).snippet(nurse.getAdress() + " " + nurse.getCity());
-                googleMap.addMarker(markerOptions);
+                MarkerOptions markerOptions = new MarkerOptions().position(location);
+                Marker marker = googleMap.addMarker(markerOptions);
+                marker.setTag(nurse);
+
+
+                View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
+
+
+
+                googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                    @Override
+                    public View getInfoWindow(Marker marker) {
+                        Nurse nurse = (Nurse) marker.getTag();
+                        View infoWindow = createInfoWindowView(nurse);
+                        return infoWindow;
+                    }
+
+                    @Override
+                    public View getInfoContents(Marker marker) {
+                        Nurse nurse = (Nurse) marker.getTag();
+                        View infoWindow = createInfoWindowView(nurse);
+                        return infoWindow;
+                    }
+                });
+
+
             }
         }
-
-
-
     }
+
+    private View createInfoWindowView(Nurse nurse) {
+        Log.e("test","test");
+        View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
+        Button myButton = (Button) infoWindow.findViewById(R.id.bouton_carte);
+        myButton.setText(nurse.getFist_name() + " " + nurse.getLast_name() + "\n" + nurse.getAdress() + " " + nurse.getCity());
+        Log.e("test2","test2");
+        myButton.setOnClickListener(click_event);
+        Log.e("test3","test3");
+        return infoWindow;
+    }
+
 
 
     @Override
@@ -123,4 +161,16 @@ public class Search extends Fragment implements OnMapReadyCallback{
             googleMap.clear();
         }
     }
+
+    private View.OnClickListener click_event = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.e("test4","test4");
+            // Code à exécuter lorsque le bouton est cliqué
+            FragmentActivity activity = getActivity();
+            NavHostFragment navHostFragment = (NavHostFragment) activity.getSupportFragmentManager().findFragmentById(R.id.navigation_menu_parents);
+            NavController navController = navHostFragment.getNavController();
+            navController.navigate(R.id.contractParents);
+        }
+    };
 }
