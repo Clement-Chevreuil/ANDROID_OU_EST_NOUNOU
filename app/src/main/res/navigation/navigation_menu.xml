@@ -33,8 +33,8 @@
         android:label="e_fragment_search"
         tools:layout="@layout/e_fragment_search" >
         <action
-            android:id="@+id/action_search_parents_to_contractParents"
-            app:destination="@id/contractParents" />
+            android:id="@+id/action_search_parents_to_parentsSearchNurse"
+            app:destination="@id/parentsSearchNurse" />
     </fragment>
     <fragment
         android:id="@+id/calendar_parents_gestionning"
@@ -67,4 +67,8 @@
         android:id="@+id/contractParents"
         android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.ContractParents"
         android:label="ContractParents" />
+    <fragment
+        android:id="@+id/parentsSearchNurse"
+        android:name="com.example.ouestnounou.VISUAL_ACTIVITY_2.ParentsSearchNurse"
+        android:label="ParentsSearchNurse" />
 </navigation>

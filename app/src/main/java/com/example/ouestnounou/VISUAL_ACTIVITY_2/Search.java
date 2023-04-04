@@ -111,6 +111,15 @@ public class Search extends Fragment implements OnMapReadyCallback{
                 View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
 
 
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        // Récupérer l'objet Nurse associé au marqueur cliqué
+                        Nurse nurse = (Nurse) marker.getTag();
+                        // Naviguer vers la vue suivante en passant l'objet Nurse à l'aide du Bundle
+                        Navigation.findNavController(getView()).navigate(R.id.action_search_parents_to_parentsSearchNurse);
+                    }
+                });
 
                 googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                     @Override
