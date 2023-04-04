@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ouestnounou.DAO.NurseDAO;
 import com.example.ouestnounou.MODEL.Nurse;
@@ -125,7 +126,9 @@ public class RegisterP4Nurse extends Fragment {
                     args_back.putString(ARG_PASSWORD, password_text);
                     args_back.putString(ARG_PHONE, phone_text);
                     args_back.putString(ARG_SEX, sex_text);
+                    Toast.makeText(getContext(), "Inscription reussi, veuillez maintenant vous connecter", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(view).navigate(R.id.action_registerP4Nurse_to_registerP3);
+
                     break;
 
                 case R.id.connexion:

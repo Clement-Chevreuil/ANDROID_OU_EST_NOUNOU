@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ouestnounou.DAO.ParentsDAO;
 import com.example.ouestnounou.MODEL.Parents;
@@ -107,8 +108,11 @@ public class BaseInformations extends Fragment {
                     }
                     else
                     {
+                        parents.setFist_name(first_name_text);
+                        parents.setLast_name(last_name_text);
+                        parents.setBirth(birth_text);
                         parentsDAO.update(parents);
-                        //Navigation.findNavController(view).navigate(R.id.action_registerP1_to_registerP2, args);
+                        Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                     }
                     break;
 

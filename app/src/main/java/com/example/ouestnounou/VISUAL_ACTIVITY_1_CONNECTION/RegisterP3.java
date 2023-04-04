@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ouestnounou.DAO.ParentsDAO;
 import com.example.ouestnounou.MODEL.Parents;
@@ -163,8 +164,10 @@ public class RegisterP3 extends Fragment {
                             Parents new_parents = new Parents(first_name_text, last_name_text, date_birth_text, city_text, country_text, adress_text, postal_code_text, mail_text, password_text, phone_text, sex_text);
                             ParentsDAO parentsDAO = new ParentsDAO(getContext());
                             parentsDAO.add(new_parents);
+                            Toast.makeText(getContext(), "Inscription reussi, veuillez maintenant vous connecter", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(view).navigate(R.id.action_registerP3_to_login);
 
-                            Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
+
                         }
                     }
 

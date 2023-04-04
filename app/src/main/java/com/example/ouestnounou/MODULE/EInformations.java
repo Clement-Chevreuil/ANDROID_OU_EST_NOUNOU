@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ouestnounou.DAO.ParentsDAO;
 import com.example.ouestnounou.MODEL.Parents;
@@ -85,7 +86,10 @@ public class EInformations extends Fragment {
                     }
                     else
                     {
+                        parents.setMail(mail_text);
+                        parents.setPassword(password_text);
                         parentsDAO.update(parents);
+                        Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         //Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
                     }
                     break;
