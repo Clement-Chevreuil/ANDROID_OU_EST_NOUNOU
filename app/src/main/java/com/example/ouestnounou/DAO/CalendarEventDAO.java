@@ -53,6 +53,7 @@ public class CalendarEventDAO extends DAOBase {
         close();
     }
 
+
     public List<CalendarEvent> getAllEvents() {
         List<CalendarEvent> events = new ArrayList<CalendarEvent>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;

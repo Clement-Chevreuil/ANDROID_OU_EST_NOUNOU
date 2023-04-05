@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.ouestnounou.MODEL.CalendarEvent;
 import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.MODEL.Nurse;
 import com.example.ouestnounou.MODEL.Parents;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ChildrenDAO extends DAOBase{
 
@@ -76,8 +78,29 @@ public class ChildrenDAO extends DAOBase{
 
     public void delete(long id_children) {
         open();
+        getAllEventsByDateAndChild(id_children);
         mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(id_children)});
         close();
+    }
+
+    public void deleteEvent(long id) {
+        mDb.delete("CalendarEvent",  "id_children" +  " = ?", new String[] { String.valueOf(id) });
+    }
+
+    public void getAllEventsByDateAndChild(long id_children) {
+        String selectQuery = "SELECT * FROM CalendarEvent WHERE " + " id_children " + " = ?";
+
+
+        Cursor cursor;
+        cursor = mDb.rawQuery(selectQuery, new String[] { String.valueOf(id_children) });
+
+        if (cursor.moveToFirst()) {
+            do {
+                deleteEvent(cursor.getInt(cursor.getColumnIndex("id_children")));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
     }
 
     public ArrayList<Children> getChildrens() {
