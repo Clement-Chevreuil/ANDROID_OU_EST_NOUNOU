@@ -151,7 +151,7 @@ public class RegisterP3 extends Fragment {
                         args.putString(ARG_COUNTRY, country_text);
                         args.putString(ARG_PASSWORD, password_text);
                         args.putString(ARG_MAIL, mail_text);
-                        args.putString(ARG_PHONE, ARG_PHONE);
+                        args.putString(ARG_PHONE, phone_text);
 
                         if(category_text.equals(getResources().getString(R.string.nurse)))
                         {
