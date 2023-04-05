@@ -23,11 +23,6 @@ import com.example.ouestnounou.MODEL.Children;
 import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddChildren#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddChildren extends Fragment {
 
     Button validation;
@@ -77,6 +72,8 @@ public class AddChildren extends Fragment {
         boy.setOnClickListener(click_event);
 
         birth = v.findViewById(R.id.birth);
+
+        error = v.findViewById(R.id.error);
 
         if(getArguments() != null)
         {

@@ -123,9 +123,7 @@ public class Search extends Fragment implements OnMapReadyCallback{
                     googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                         @Override
                         public View getInfoWindow(Marker marker) {
-                            Nurse nurse = (Nurse) marker.getTag();
-                            View infoWindow = createInfoWindowView(nurse);
-                            return infoWindow;
+                            return null;
                         }
 
                         @Override

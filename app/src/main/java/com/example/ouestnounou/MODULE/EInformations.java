@@ -108,6 +108,7 @@ public class EInformations extends Fragment {
                             }
                             else{
                                 nurse.setMail(mail_text);
+                                nurse.setPhone(phone_text);
                                 nurse.setPassword(password_text);
                                 nurseDAO.update(nurse);
                             }
@@ -119,6 +120,7 @@ public class EInformations extends Fragment {
                             }
                             else{
                                 parents.setMail(mail_text);
+                                parents.setPhone(phone_text);
                                 parents.setPassword(password_text);
                                 parentsDAO.update(parents);
                             }

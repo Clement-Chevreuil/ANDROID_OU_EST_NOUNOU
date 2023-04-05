@@ -3,11 +3,13 @@ package com.example.ouestnounou.VISUAL_ACTIVITY_2.CHILDREN;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,20 +137,26 @@ public class ChildrenAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-
-                if(category.equals(parent.getRootView().getResources().getString(R.string.nurse))){
-                    callIntent.setData(Uri.parse("tel:" + parents.getPhone()));
+                Activity activity = (Activity) v.getContext();
+                if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("here", "in check");
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE}, 1);
                 }
-                else{
-                    if(nurse != null){
-                        callIntent.setData(Uri.parse("tel:" + nurse.getPhone()));
+                else {
+                    Log.e("here", "in function");
+                    if(category.equals(parent.getRootView().getResources().getString(R.string.nurse))){
+                        callIntent.setData(Uri.parse("tel:" + parents.getPhone()));
+                        v.getContext().startActivity(callIntent);
+                    }
+                    else{
+                        if(nurse != null){
+                            callIntent.setData(Uri.parse("tel:" + nurse.getPhone()));
+                            v.getContext().startActivity(callIntent);
+                        }
                     }
                 }
 
-                if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                v.getContext().startActivity(callIntent);
+                //v.getContext().startActivity(callIntent);
             }
         });
 

@@ -28,7 +28,20 @@ public class Menu extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_menu_parents);
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView menu = (BottomNavigationView) findViewById(R.id.BottomNavigation);
-        menu.setSelectedItemId(R.id.settings);
+
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("session", MODE_PRIVATE);
+        String category = prefs.getString("category", "");
+        int id_category = prefs.getInt("id", 0);
+
+        if(category.equals(getResources().getString(R.string.nurse))){
+            menu.setSelectedItemId(R.id.pay);
+            navController.navigate(R.id.contract);
+        }
+        else{
+            menu.setSelectedItemId(R.id.childrens);
+            navController.navigate(R.id.children);
+        }
+
 
         menu.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             SharedPreferences prefs = getApplicationContext().getSharedPreferences("session", MODE_PRIVATE);
