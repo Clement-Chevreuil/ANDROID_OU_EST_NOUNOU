@@ -40,11 +40,13 @@ public class CalendarGestionningAdd extends Fragment {
     private Button buttonStartTime, buttonEndTime, buttonSubmit;
     private String selectedDateString, selectedStartTime, selectedEndTime;
     private static final String ARG_DATE = "date";
-
     private Spinner spinner;
     private ChildrenDAO childrenDAO;
 
     Children child;
+    ArrayAdapter<String> adapter;
+    SharedPreferences prefs;
+    int idCategory;
 
 
 
@@ -52,24 +54,10 @@ public class CalendarGestionningAdd extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.e_fragment_calendar_gestion, container, false);
-
-        spinner = view.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        int id_parents = prefs.getInt("id", 0);
-
-        // Ajout des éléments au ArrayAdapter
-
         childrenDAO = new ChildrenDAO(getContext());
-        ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(id_parents);
 
-        for (Children child : childrens) {
-            adapter.add(child.getFist_name() + " " + child.getLast_name());
-        }
-
-        // Associer l'adapter au spinner
-        spinner.setAdapter(adapter);
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        idCategory = prefs.getInt("id", 0);
 
         // Find views
         calendarView = view.findViewById(R.id.calendarView);
@@ -78,26 +66,28 @@ public class CalendarGestionningAdd extends Fragment {
         buttonStartTime = view.findViewById(R.id.buttonStartTime);
         buttonEndTime = view.findViewById(R.id.buttonEndTime);
         buttonSubmit = view.findViewById(R.id.buttonSubmit);
+        spinner = view.findViewById(R.id.spinner);
 
-        // Set default values for start and end time text views
         textViewStartTime.setText("Start Time: Not Selected");
         textViewEndTime.setText("End Time: Not Selected");
 
+        //GESTION SPINNER
+        ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(idCategory);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+        for (Children child : childrens) {
+            adapter.add(child.getFirstName() + " " + child.getLastName());
+        }
+        spinner.setAdapter(adapter);
 
+        //GESTION DE LA DATE DU CALENDRIER A PARTIR DE LA PAGE CALENDARGESTIONNING
         if (getArguments() != null) {
-
             selectedDateString = getArguments().getString(ARG_DATE);
             String[] date_array = selectedDateString.split("/");
-            // Create a Calendar instance and set the selected date
-
             Calendar calendar = Calendar.getInstance();
-
-            Calendar cal = Calendar.getInstance();
-            cal.set(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]) - 1, Integer.valueOf(date_array[0]));
-            Date date = cal.getTime();
+            calendar.set(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]) - 1, Integer.valueOf(date_array[0]));
+            Date date = calendar.getTime();
             calendarView.setDate(date.getTime());
         }
-
 
         // Set click listeners for start and end time buttons
         buttonStartTime.setOnClickListener(new View.OnClickListener() {

@@ -63,7 +63,7 @@ public class ChildrenNurseAdapter extends BaseAdapter {
         childrenDAO = new ChildrenDAO(parent.getContext());
 
         Children children = children_list.get(position);
-        holder.timeTextView.setText( children.getFist_name() + " - " + children.getLast_name());
+        holder.timeTextView.setText( children.getFirstName() + " - " + children.getLastName());
 
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class ChildrenNurseAdapter extends BaseAdapter {
                 Nurse nurse =new Nurse();
                 nurse.setId(id_category);
                 children.setNurse(nurse);
-                children.setNurse_accepted(1);
+                children.setNurseAccepted(1);
                 childrenDAO.update(children);
                 children_list.remove(position);
                 notifyDataSetChanged();

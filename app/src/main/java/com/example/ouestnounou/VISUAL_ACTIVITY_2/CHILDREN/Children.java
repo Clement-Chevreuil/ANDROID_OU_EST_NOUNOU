@@ -19,34 +19,24 @@ import com.example.ouestnounou.R;
 import java.util.ArrayList;
 
 public class Children extends Fragment {
-        ChildrenDAO childrenDAO;
-        ListView children_list;
-        Button add_children;
-    public Children() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
+    ChildrenDAO childrenDAO;
+    ListView children_list;
+    Button add_children;
+    SharedPreferences prefs;
+    String category;
+    int id_category;
+    ArrayList<com.example.ouestnounou.MODEL.Children> childrens;
+    ChildrenAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        String category = prefs.getString("category", "");
-        int id_category = prefs.getInt("id", 0);
-
-
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v =  inflater.inflate(R.layout.e_fragment_children, container, false);
+        childrenDAO = new ChildrenDAO(getContext());
+
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        category = prefs.getString("category", "");
+        id_category = prefs.getInt("id", 0);
 
         children_list = v.findViewById(R.id.children_list);
         add_children = v.findViewById(R.id.add_children);
@@ -54,24 +44,14 @@ public class Children extends Fragment {
 
         if(category.equals(getResources().getString(R.string.nurse))){
             add_children.setVisibility(View.GONE);
-        }
-
-        childrenDAO = new ChildrenDAO(getContext());
-
-        ArrayList<com.example.ouestnounou.MODEL.Children> childrens;
-
-        if(category.equals(getResources().getString(R.string.nurse))){
             childrens = childrenDAO.getChildrensByNurseIdExistingNurse(id_category);
         }
         else{
             childrens = childrenDAO.getChildrensByParentId(id_category);
         }
 
-
-        // Créer l'adapter pour les événements
-        ChildrenAdapter adapter = new ChildrenAdapter(getContext(), childrens);
-
-        // Associer l'adapter à la ListView
+        //BACKDROP
+        adapter = new ChildrenAdapter(getContext(), childrens);
         children_list.setAdapter(adapter);
 
         return v;

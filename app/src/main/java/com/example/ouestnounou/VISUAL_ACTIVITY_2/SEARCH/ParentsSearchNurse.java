@@ -68,7 +68,7 @@ public class ParentsSearchNurse extends Fragment {
         ArrayList<Children> childrens = childrenDAO.getChildrensByParentIdWithoutNurse(id_parents);
 
         for (Children child : childrens) {
-            adapter.add(child.getFist_name() + " " + child.getLast_name());
+            adapter.add(child.getFirstName() + " " + child.getLastName());
         }
 
         // Associer l'adapter au spinner
@@ -102,7 +102,7 @@ public class ParentsSearchNurse extends Fragment {
                     Nurse nurse = new Nurse();
                     nurse.setId(id_nurse);
                     child.setNurse(nurse);
-                    child.setNurse_accepted(-1);
+                    child.setNurseAccepted(-1);
                     childrenDAO.update(child);
                     Navigation.findNavController(getView()).navigate(R.id.action_parentsSearchNurse_to_contract);
 

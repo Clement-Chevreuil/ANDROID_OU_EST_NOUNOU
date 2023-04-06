@@ -24,27 +24,20 @@ import com.example.ouestnounou.R;
 
 public class RegisterP2 extends Fragment {
 
-    Button validation, connexion;
-    ImageButton back;
-    EditText adress, city, postal_code, country;
-    TextView error, step;
-    ImageView logo;
+    Button validationButton, connexionButton;
+    ImageButton backImageButton;
+    EditText addressEditText, cityEditText, postalCodeEditText, countryEditText;
+    TextView errorTextView, stepTextView;
+    String firstNameTextString, lastNameString, categoryString, dateBirthString, addressString, cityString, postalCodeString, countryString, sexString;
 
-    String first_name_text, last_name_text, category_text, date_birth_text, adress_text, city_text, postal_code_text, country_text, sex_text;
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-    //REGISTER PAGE 1 INFORMATIONS RECUPERATIONS
     private static final String ARG_CATEGORY = "category";
-    private static final String ARG_FIRST_NAME = "first_name";
-    private static final String ARG_LAST_NAME = "last_name";
-    private static final String ARG_DATE_BIRTH = "date_birth";
+    private static final String ARG_FIRST_NAME = "firstName";
+    private static final String ARG_LAST_NAME = "lastName";
+    private static final String ARG_DATE_BIRTH = "dateBirth";
     private static final String ARG_SEX = "sex";
-
-    //REGISTER PAGE 2 INFORMATIONS
-    private static final String ARG_ADRESS = "adress";
+    private static final String ARG_ADDRESS = "address";
     private static final String ARG_CITY = "city";
-    private static final String ARG_POSTAL_CODE = "postal_code";
+    private static final String ARG_POSTAL_CODE = "postalCode";
     private static final String ARG_COUNTRY = "country";
 
     public RegisterP2() {
@@ -55,16 +48,15 @@ public class RegisterP2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            first_name_text = getArguments().getString(ARG_FIRST_NAME);
-            last_name_text = getArguments().getString(ARG_LAST_NAME);
-            date_birth_text = getArguments().getString(ARG_DATE_BIRTH);
-            category_text = getArguments().getString(ARG_CATEGORY);
-            sex_text = getArguments().getString(ARG_SEX);
-
-            city_text = getArguments().getString(ARG_CITY);
-            country_text = getArguments().getString(ARG_COUNTRY);
-            adress_text = getArguments().getString(ARG_ADRESS);
-            postal_code_text = getArguments().getString(ARG_POSTAL_CODE);
+            firstNameTextString = getArguments().getString(ARG_FIRST_NAME);
+            lastNameString = getArguments().getString(ARG_LAST_NAME);
+            dateBirthString = getArguments().getString(ARG_DATE_BIRTH);
+            categoryString = getArguments().getString(ARG_CATEGORY);
+            sexString = getArguments().getString(ARG_SEX);
+            cityString = getArguments().getString(ARG_CITY);
+            countryString = getArguments().getString(ARG_COUNTRY);
+            addressString = getArguments().getString(ARG_ADDRESS);
+            postalCodeString = getArguments().getString(ARG_POSTAL_CODE);
         }
     }
 
@@ -73,38 +65,35 @@ public class RegisterP2 extends Fragment {
 
         View v = inflater.inflate(R.layout.b_fragment_register_p2, container, false);
 
-        validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(click_event);
+        stepTextView = v.findViewById(R.id.step);
+        cityEditText = v.findViewById(R.id.city);
+        countryEditText = v.findViewById(R.id.country);
+        addressEditText = v.findViewById(R.id.address);
+        postalCodeEditText = v.findViewById(R.id.postal_code);
+        errorTextView = v.findViewById(R.id.error);
+        validationButton = v.findViewById(R.id.validation);
+        connexionButton = v.findViewById(R.id.connexion);
+        backImageButton = v.findViewById(R.id.back);
 
-        connexion = v.findViewById(R.id.connexion);
-        connexion.setOnClickListener(click_event);
+        validationButton.setOnClickListener(click_event);
+        connexionButton.setOnClickListener(click_event);
+        backImageButton.setOnClickListener(click_event);
 
-        back = v.findViewById(R.id.back);
-        back.setOnClickListener(click_event);
-
-        step = v.findViewById(R.id.step);
-
-        city = v.findViewById(R.id.city);
-        country = v.findViewById(R.id.country);
-        adress = v.findViewById(R.id.address);
-        postal_code = v.findViewById(R.id.postal_code);
-        error = v.findViewById(R.id.error);
-
-        if(category_text.equals(getResources().getString(R.string.parents)))
+        if(categoryString.equals(getResources().getString(R.string.parents)))
         {
-            step.setText("Etape 2/3");
+            stepTextView.setText("Etape 2/3");
         }
-        else if(category_text.equals(getResources().getString(R.string.nurse)))
+        else if(categoryString.equals(getResources().getString(R.string.nurse)))
         {
-            step.setText("Etape 2/4");
+            stepTextView.setText("Etape 2/4");
         }
 
-        if(getArguments() != null && adress_text != null && city_text != null && postal_code_text != null && country_text != null)
+        if(getArguments() != null && addressString != null && cityString != null && postalCodeString != null && countryString != null)
         {
-            adress.setText(adress_text);
-            city.setText(city_text);
-            postal_code.setText(postal_code_text);
-            country.setText(country_text);
+            addressEditText.setText(addressString);
+            cityEditText.setText(cityString);
+            postalCodeEditText.setText(postalCodeString);
+            countryEditText.setText(countryString);
         }
 
         return v;
@@ -116,40 +105,38 @@ public class RegisterP2 extends Fragment {
             switch (view.getId())
             {
                 case R.id.validation:
+                    addressString = addressEditText.getText().toString() ;
+                    cityString = cityEditText.getText().toString();
+                    postalCodeString =  postalCodeEditText.getText().toString();
+                    countryString = countryEditText.getText().toString();
 
-                    adress_text = adress.getText().toString() ;
-                    city_text = city.getText().toString();
-                    postal_code_text =  postal_code.getText().toString();
-                    country_text = country.getText().toString();
-
-                    if(adress_text.isEmpty() || city_text.isEmpty() || postal_code_text.isEmpty() || country_text.isEmpty())
+                    if(addressString.isEmpty() || cityString.isEmpty() || postalCodeString.isEmpty() || countryString.isEmpty())
                     {
-                        error.setText("Veuillez remplir les champs correctement");
+                        errorTextView.setText("Veuillez remplir les champs correctement");
                     }
                     else
                     {
                         Bundle args = new Bundle();
-                        args.putString(ARG_FIRST_NAME, first_name_text);
-                        args.putString(ARG_LAST_NAME, last_name_text);
-                        args.putString(ARG_CATEGORY, category_text);
-                        args.putString(ARG_DATE_BIRTH, date_birth_text);
-                        args.putString(ARG_SEX, sex_text);
-                        args.putString(ARG_ADRESS, adress_text);
-                        args.putString(ARG_CITY, city_text);
-                        args.putString(ARG_POSTAL_CODE,postal_code_text);
-                        args.putString(ARG_COUNTRY, country_text);
+                        args.putString(ARG_FIRST_NAME, firstNameTextString);
+                        args.putString(ARG_LAST_NAME, lastNameString);
+                        args.putString(ARG_CATEGORY, categoryString);
+                        args.putString(ARG_DATE_BIRTH, dateBirthString);
+                        args.putString(ARG_SEX, sexString);
+                        args.putString(ARG_ADDRESS, addressString);
+                        args.putString(ARG_CITY, cityString);
+                        args.putString(ARG_POSTAL_CODE,postalCodeString);
+                        args.putString(ARG_COUNTRY, countryString);
                         Navigation.findNavController(view).navigate(R.id.action_registerP2_to_registerP3, args);
                     }
-
                     break;
 
                 case R.id.back:
                     Bundle args_back = new Bundle();
-                    args_back.putString(ARG_FIRST_NAME, first_name_text);
-                    args_back.putString(ARG_LAST_NAME, last_name_text);
-                    args_back.putString(ARG_CATEGORY, category_text);
-                    args_back.putString(ARG_DATE_BIRTH, date_birth_text);
-                    args_back.putString(ARG_SEX, sex_text);
+                    args_back.putString(ARG_FIRST_NAME, firstNameTextString);
+                    args_back.putString(ARG_LAST_NAME, lastNameString);
+                    args_back.putString(ARG_CATEGORY, categoryString);
+                    args_back.putString(ARG_DATE_BIRTH, dateBirthString);
+                    args_back.putString(ARG_SEX, sexString);
                     Navigation.findNavController(view).navigate(R.id.action_registerP2_to_registerP1, args_back);
                     break;
 

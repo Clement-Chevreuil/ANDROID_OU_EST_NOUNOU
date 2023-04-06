@@ -13,60 +13,61 @@ import java.util.List;
 
 public class CalendarEventDAO extends DAOBase {
 
-    private static final String TABLE_NAME = "CalendarEvent";
-    private static final String KEY_ID = "id";
-    private static final String KEY_DATE = "datePropose";
-    private static final String KEY_START_TIME = "startTime";
-    private static final String KEY_END_TIME = "endTime";
-    private static final String KEY_ACCEPTED = "accepted";
+    private static final String nameTableChildren = "CalendarEvent";
+    private static final String id = "id";
+    private static final String datePropose = "date_propose";
+    private static final String startTime = "start_time";
+    private static final String endTime = "end_time";
+    private static final String accepted = "accepted";
+    private static final String idChildren = "idChildren";
 
     public CalendarEventDAO(Context context) {
         super(context);
     }
-    
 
     public void addEvent(CalendarEvent event) {
         open();
         ContentValues values = new ContentValues();
-        values.put(KEY_DATE, event.getDate());
-        values.put(KEY_START_TIME, event.getStartTime());
-        values.put(KEY_END_TIME, event.getEndTime());
-        values.put("id_children", event.getChildren().getId());
-        mDb.insert(TABLE_NAME, null, values);
+        values.put(datePropose, event.getDate());
+        values.put(startTime, event.getStartTime());
+        values.put(endTime, event.getEndTime());
+        values.put(idChildren, event.getChildren().getId());
+        mDb.insert(nameTableChildren, null, values);
         close();
     }
-
-/*    public void updateEvent(CalendarEvent event) {
+    public void updateEvent(CalendarEvent event) {
         open();
         ContentValues values = new ContentValues();
-        values.put(KEY_DATE, event.getDate());
-        values.put(KEY_START_TIME, event.getStartTime());
-        values.put(KEY_END_TIME, event.getEndTime());
-        values.put(KEY_ACCEPTED, event.isAccepted() ? 1 : 0);
-        mDb.update(TABLE_NAME, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
-        close();
-    }*/
-
-    public void deleteEvent(CalendarEvent event) {
-        open();
-        mDb.delete(TABLE_NAME, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
+        values.put(datePropose, event.getDate());
+        values.put(startTime, event.getStartTime());
+        values.put(endTime, event.getEndTime());
+        values.put(accepted, event.isAccepted() ? 1 : 0);
+        mDb.update(nameTableChildren, values, id + " = ?", new String[] { String.valueOf(event.getId()) });
         close();
     }
-
-
+    public void deleteEvent(CalendarEvent event) {
+        open();
+        mDb.delete(nameTableChildren, id + " = ?", new String[] { String.valueOf(event.getId()) });
+        close();
+    }
     public List<CalendarEvent> getAllEvents() {
         List<CalendarEvent> events = new ArrayList<CalendarEvent>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + nameTableChildren;
         open();
         Cursor cursor = mDb.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
                 CalendarEvent event = new CalendarEvent();
-                event.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                event.setDate(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                event.setStartTime(cursor.getString(cursor.getColumnIndex(KEY_START_TIME)));
-                event.setEndTime(cursor.getString(cursor.getColumnIndex(KEY_END_TIME)));
-                event.setAccepted(cursor.getInt(cursor.getColumnIndex(KEY_ACCEPTED)) == 1);
+                event.setId(cursor.getInt(cursor.getColumnIndex(id)));
+                event.setDate(cursor.getString(cursor.getColumnIndex(datePropose)));
+                event.setStartTime(cursor.getString(cursor.getColumnIndex(startTime)));
+                event.setEndTime(cursor.getString(cursor.getColumnIndex(endTime)));
+                event.setAccepted(cursor.getInt(cursor.getColumnIndex(accepted)) == 1);
+
+                Children child = new Children();
+                child.setId(cursor.getInt(cursor.getColumnIndex(idChildren)));
+                event.setChildren(child);
+
                 events.add(event);
             } while (cursor.moveToNext());
         }
@@ -74,23 +75,22 @@ public class CalendarEventDAO extends DAOBase {
         close();
         return events;
     }
-
     public List<CalendarEvent> getAllEventsByDate(String date) {
         List<CalendarEvent> events = new ArrayList<CalendarEvent>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_DATE + " = ?";
+        String selectQuery = "SELECT * FROM " + nameTableChildren + " WHERE " + datePropose + " = ?";
         open();
         Cursor cursor = mDb.rawQuery(selectQuery, new String[] { date });
         if (cursor.moveToFirst()) {
             do {
                 CalendarEvent event = new CalendarEvent();
-                event.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                event.setDate(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                event.setStartTime(cursor.getString(cursor.getColumnIndex(KEY_START_TIME)));
-                event.setEndTime(cursor.getString(cursor.getColumnIndex(KEY_END_TIME)));
-                event.setAccepted(cursor.getInt(cursor.getColumnIndex(KEY_ACCEPTED)) == 1);
+                event.setId(cursor.getInt(cursor.getColumnIndex(id)));
+                event.setDate(cursor.getString(cursor.getColumnIndex(datePropose)));
+                event.setStartTime(cursor.getString(cursor.getColumnIndex(startTime)));
+                event.setEndTime(cursor.getString(cursor.getColumnIndex(endTime)));
+                event.setAccepted(cursor.getInt(cursor.getColumnIndex(accepted)) == 1);
 
                 Children child = new Children();
-                child.setId(cursor.getInt(cursor.getColumnIndex("id_children")));
+                child.setId(cursor.getInt(cursor.getColumnIndex(idChildren)));
 
                 event.setChildren(child);
 
@@ -101,31 +101,26 @@ public class CalendarEventDAO extends DAOBase {
         close();
         return events;
     }
-
-    public List<CalendarEvent> getAllEventsByDateAndChild(String date, Integer id_children) {
+    public List<CalendarEvent> getAllEventsByDateAndChild(String date, Integer idChildrenData) {
         List<CalendarEvent> events = new ArrayList<CalendarEvent>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_DATE + " = ?";
-        if (id_children != -1) {
-            selectQuery += " AND " + "id_children" + " = ?";
-        }
+        String selectQuery = "SELECT * FROM " + nameTableChildren + " WHERE " + datePropose + " = ?";
+        selectQuery += " AND " + idChildrenData + " = ?";
+
         open();
         Cursor cursor;
-        if (id_children != -1 ) {
-            cursor = mDb.rawQuery(selectQuery, new String[] { date, String.valueOf(id_children) });
-        } else {
-            cursor = mDb.rawQuery(selectQuery, new String[] { date });
-        }
+        cursor = mDb.rawQuery(selectQuery, new String[] { date, String.valueOf(idChildren) });
+
         if (cursor.moveToFirst()) {
             do {
                 CalendarEvent event = new CalendarEvent();
-                event.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                event.setDate(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                event.setStartTime(cursor.getString(cursor.getColumnIndex(KEY_START_TIME)));
-                event.setEndTime(cursor.getString(cursor.getColumnIndex(KEY_END_TIME)));
-                event.setAccepted(cursor.getInt(cursor.getColumnIndex(KEY_ACCEPTED)) == 1);
+                event.setId(cursor.getInt(cursor.getColumnIndex(id)));
+                event.setDate(cursor.getString(cursor.getColumnIndex(datePropose)));
+                event.setStartTime(cursor.getString(cursor.getColumnIndex(startTime)));
+                event.setEndTime(cursor.getString(cursor.getColumnIndex(endTime)));
+                event.setAccepted(cursor.getInt(cursor.getColumnIndex(accepted)) == 1);
 
                 Children child = new Children();
-                child.setId(cursor.getInt(cursor.getColumnIndex("id_children")));
+                child.setId(cursor.getInt(cursor.getColumnIndex(idChildren)));
                 event.setChildren(child);
 
                 events.add(event);
@@ -134,68 +129,5 @@ public class CalendarEventDAO extends DAOBase {
         cursor.close();
         close();
         return events;
-    }
-
-    public ArrayList<CalendarEvent> getAllCalendarGestions() {
-        ArrayList<CalendarEvent> allCalendarGestions = new ArrayList<>();
-
-        open();
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                CalendarEvent calendarEvent = new CalendarEvent();
-                calendarEvent.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                calendarEvent.setDate(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                calendarEvent.setStartTime(cursor.getString(cursor.getColumnIndex(KEY_START_TIME)));
-                calendarEvent.setEndTime(cursor.getString(cursor.getColumnIndex(KEY_END_TIME)));
-                calendarEvent.setAccepted(cursor.getInt(cursor.getColumnIndex(KEY_ACCEPTED)) > 0);
-                allCalendarGestions.add(calendarEvent);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        close();
-        return allCalendarGestions;
-    }
-
-    public ArrayList<CalendarEvent> getAllCalendarGestionsByDate(String date) {
-        ArrayList<CalendarEvent> allCalendarGestions = new ArrayList<>();
-
-        open();
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_DATE + " = ?", new String[]{date});
-
-        if (cursor.moveToFirst()) {
-            do {
-                CalendarEvent calendarEvent = new CalendarEvent();
-                calendarEvent.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                calendarEvent.setDate(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
-                calendarEvent.setStartTime(cursor.getString(cursor.getColumnIndex(KEY_START_TIME)));
-                calendarEvent.setEndTime(cursor.getString(cursor.getColumnIndex(KEY_END_TIME)));
-                calendarEvent.setAccepted(cursor.getInt(cursor.getColumnIndex(KEY_ACCEPTED)) > 0);
-                allCalendarGestions.add(calendarEvent);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        close();
-        return allCalendarGestions;
-    }
-
-    public void updateCalendarGestion(CalendarEvent calendarEvent) {
-        open();
-        ContentValues values = new ContentValues();
-        values.put(KEY_DATE, calendarEvent.getDate());
-        values.put(KEY_START_TIME, calendarEvent.getStartTime());
-        values.put(KEY_END_TIME, calendarEvent.getEndTime());
-        values.put(KEY_ACCEPTED, calendarEvent.isAccepted() ? 1 : 0);
-
-        mDb.update(TABLE_NAME, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(calendarEvent.getId())});
-        close();
-    }
-
-    public void deleteCalendarGestion(int id) {
-        open();
-        mDb.delete(TABLE_NAME, KEY_ID + " = ?", new String[]{String.valueOf(id)});
-        close();
     }
 }

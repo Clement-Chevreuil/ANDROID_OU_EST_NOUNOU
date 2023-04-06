@@ -25,16 +25,17 @@ import com.example.ouestnounou.MODEL.Parents;
 import com.example.ouestnounou.R;
 
 public class EInformations extends Fragment {
-
-    Button validation;
-    EditText mail, new_password, old_password, phone;
-    TextView error;
-    String mail_text, password_text, phone_text;
-    Parents parents;
+    Button validationButton;
+    EditText mailEditText, newPasswordEditText, oldPasswordEditText, phoneEditText;
+    TextView errorTextView;
+    String mailString, passwordString, phoneString, categoryString;
     ParentsDAO parentsDAO;
-    Nurse nurse;
     NurseDAO nurseDAO;
-    String category;
+    Nurse nurse;
+    Parents parents;
+    int idCategoryInt;
+    SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,36 +49,32 @@ public class EInformations extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.z_fragment_e_informations, container, false);
 
-        validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(click_event);
+        validationButton = v.findViewById(R.id.validation);
+        validationButton.setOnClickListener(click_event);
 
-        phone = v.findViewById(R.id.phone);
-        mail = v.findViewById(R.id.mail);
-        new_password = v.findViewById(R.id.new_password);
-        old_password = v.findViewById(R.id.old_password);
-        error = v.findViewById(R.id.error);
+        phoneEditText = v.findViewById(R.id.phone);
+        mailEditText = v.findViewById(R.id.mail);
+        newPasswordEditText = v.findViewById(R.id.new_password);
+        oldPasswordEditText = v.findViewById(R.id.old_password);
+        errorTextView = v.findViewById(R.id.error);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        int id_parents = prefs.getInt("id", -1);
-        category = prefs.getString("category", "");
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        idCategoryInt = prefs.getInt("id", -1);
+        categoryString = prefs.getString("categoryString", "");
 
-
-
-        if(category.equals(getResources().getString(R.string.nurse))){
+        if(categoryString.equals(getResources().getString(R.string.nurse))){
             nurseDAO = new NurseDAO(getContext());
-            nurse = nurseDAO.getNurseById(id_parents);
-            phone.setText(nurse.getPhone());
-            mail.setText(nurse.getMail());
+            nurse = nurseDAO.getNurseById(idCategoryInt);
+            phoneEditText.setText(nurse.getPhone());
+            mailEditText.setText(nurse.getMail());
 
         }
         else{
             parentsDAO = new ParentsDAO(getContext());
-            parents = parentsDAO.getParent(id_parents);
-            phone.setText(parents.getPhone());
-            mail.setText(parents.getMail());
-
+            parents = parentsDAO.getParent(idCategoryInt);
+            phoneEditText.setText(parents.getPhone());
+            mailEditText.setText(parents.getMail());
         }
-
         return v;
     }
 
@@ -87,49 +84,42 @@ public class EInformations extends Fragment {
             switch (view.getId())
             {
                 case R.id.validation:
+                    mailString = mailEditText.getText().toString();
+                    passwordString = newPasswordEditText.getText().toString();
+                    phoneString = phoneEditText.getText().toString();
 
-
-                    mail_text = mail.getText().toString();
-                    password_text = new_password.getText().toString();
-                    phone_text = phone.getText().toString();
-
-                    if(mail_text.isEmpty() || password_text.isEmpty() || old_password.getText().toString().isEmpty() || phone_text.isEmpty())
+                    if(mailString.isEmpty() || passwordString.isEmpty() || oldPasswordEditText.getText().toString().isEmpty() || phoneString.isEmpty())
                     {
-                        error.setText("Veuillez remplir les champs correctements");
+                        errorTextView.setText("Veuillez remplir les champs correctements");
                     }
 
                     else
                     {
-
-                        if(category.equals(getResources().getString(R.string.nurse))){
-                            if ( ! nurse.getPassword().equals(old_password.getText().toString()))
+                        if(categoryString.equals(getResources().getString(R.string.nurse))){
+                            if ( ! nurse.getPassword().equals(oldPasswordEditText.getText().toString()))
                             {
-                                error.setText("Les mots de passe ne sont pas les mêmes");
+                                errorTextView.setText("Les mots de passe ne sont pas les mêmes");
                             }
                             else{
-                                nurse.setMail(mail_text);
-                                nurse.setPhone(phone_text);
-                                nurse.setPassword(password_text);
+                                nurse.setMail(mailString);
+                                nurse.setPhone(phoneString);
+                                nurse.setPassword(passwordString);
                                 nurseDAO.update(nurse);
                             }
                         }
                         else{
-                            if ( ! parents.getPassword().equals(old_password.getText().toString()))
+                            if ( ! parents.getPassword().equals(oldPasswordEditText.getText().toString()))
                             {
-                                error.setText("Les mots de passe ne sont pas les mêmes");
+                                errorTextView.setText("Les mots de passe ne sont pas les mêmes");
                             }
                             else{
-                                parents.setMail(mail_text);
-                                parents.setPhone(phone_text);
-                                parents.setPassword(password_text);
+                                parents.setMail(mailString);
+                                parents.setPhone(phoneString);
+                                parents.setPassword(passwordString);
                                 parentsDAO.update(parents);
                             }
-
-
                         }
-
                         Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
-                        //Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
                     }
                     break;
 

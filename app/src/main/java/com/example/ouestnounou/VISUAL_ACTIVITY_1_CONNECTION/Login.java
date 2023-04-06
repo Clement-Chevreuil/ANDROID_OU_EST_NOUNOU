@@ -34,22 +34,13 @@ import com.example.ouestnounou.R;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Login#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Login extends Fragment {
 
-    FrameLayout frame;
-    Button validation, register_link, forget_password_link;
-    EditText mail, password;
-    TextView error;
-    RelativeLayout relative_first, form, bottom;
-    ImageView logo, bar;
-    RadioGroup category;
-    RadioButton nurse, parents;
-    String category_text;
+    Button validationButton, registerLinkButton;
+    EditText mailEditText, passwordEditText;
+    TextView errorTextView;
+    RadioButton nurseRadioButton, parentsRadioButton;
+    String selectedCategory;
 
     public Login() {
 
@@ -69,72 +60,72 @@ public class Login extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.b_fragment_login, container, false);
+        View view = inflater.inflate(R.layout.b_fragment_login, container, false);
 
-        error = v.findViewById(R.id.error);
-        mail = v.findViewById(R.id.mail);
-        password = v.findViewById(R.id.password);
+        errorTextView = view.findViewById(R.id.error);
+        mailEditText = view.findViewById(R.id.mail);
+        passwordEditText = view.findViewById(R.id.password);
 
-        validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(click_event);
+        validationButton = view.findViewById(R.id.validation);
+        validationButton.setOnClickListener(clickListener);
 
-        nurse = v.findViewById(R.id.nurse);
-        nurse.setOnClickListener(click_event);
+        nurseRadioButton = view.findViewById(R.id.nurse);
+        nurseRadioButton.setOnClickListener(clickListener);
 
-        parents = v.findViewById(R.id.parents);
-        parents.setOnClickListener(click_event);
+        parentsRadioButton = view.findViewById(R.id.parents);
+        parentsRadioButton.setOnClickListener(clickListener);
 
-        register_link = v.findViewById(R.id.register_link);
-        register_link.setOnClickListener(click_event);
+        registerLinkButton = view.findViewById(R.id.register_link);
+        registerLinkButton.setOnClickListener(clickListener);
 
-        if(nurse.isChecked()){
-            category_text = nurse.getText().toString();
+        selectedCategory = "";
+
+        if(nurseRadioButton.isChecked()){
+            selectedCategory = nurseRadioButton.getText().toString();
         }
-        else if(parents.isChecked()){
-            category_text = parents.getText().toString();
+        else if(parentsRadioButton.isChecked()){
+            selectedCategory = parentsRadioButton.getText().toString();
         }
 
-        return v;
+        return view;
     }
 
-    private View.OnClickListener click_event = new View.OnClickListener() {
+    private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId())
             {
                 case R.id.nurse :
-                    category_text = nurse.getText().toString();
+                    selectedCategory = nurseRadioButton.getText().toString();
                     break;
 
                 case R.id.parents:
-                    category_text = parents.getText().toString();
+                    selectedCategory = parentsRadioButton.getText().toString();
                     break;
 
                 case R.id.validation :
-
-                    String mail_validation = mail.getText().toString();
-                    String password_validation = password.getText().toString();
+                    String mailValidation = mailEditText.getText().toString();
+                    String passwordValidation = passwordEditText.getText().toString();
 
                     Nurse nurse = null;
                     Parents parents = null;
 
-                    if(! mail_validation.isEmpty() && ! password_validation.isEmpty()) {
-                        if(category_text.equals(getResources().getString(R.string.nurse)))
+                    if(!mailValidation.isEmpty() && !passwordValidation.isEmpty()) {
+                        if(selectedCategory.equals(getResources().getString(R.string.nurse)))
                         {
                             NurseDAO nurseDAO = new NurseDAO(getContext());
-                            nurse = nurseDAO.connexion(mail_validation, password_validation);
+                            nurse = nurseDAO.connexion(mailValidation, passwordValidation);
                         }
-                        else if(category_text.equals(getResources().getString(R.string.parents)))
+                        else if(selectedCategory.equals(getResources().getString(R.string.parents)))
                         {
                             ParentsDAO parentsDAO = new ParentsDAO(getContext());
-                            parents = parentsDAO.connexion(mail_validation, password_validation);
+                            parents = parentsDAO.connexion(mailValidation, passwordValidation);
                         }
                         if(nurse != null)
                         {
                             SharedPreferences prefs = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
                             SharedPreferences.Editor shared = prefs.edit();
-                            shared.putString("category", category_text);
+                            shared.putString("category", selectedCategory);
                             shared.putInt("id", nurse.getId());
                             shared.apply();
 
@@ -144,15 +135,19 @@ public class Login extends Fragment {
                         {
                             SharedPreferences prefs = getContext().getSharedPreferences("session", Context.MODE_PRIVATE);
                             SharedPreferences.Editor shared = prefs.edit();
-                            shared.putString("category", category_text);
+                            shared.putString("category", selectedCategory);
                             shared.putInt("id", parents.getId());
                             shared.apply();
 
                             Navigation.findNavController(view).navigate(R.id.action_login_to_parents2);
                         }
-                        else{ erreurConnexion(); }
+                        else{
+                            showLoginError();
+                        }
                     }
-                    else { erreurNonRemplie(); }
+                    else {
+                        showIncompleteFieldsError();
+                    }
                     break;
 
                 case R.id.register_link:
@@ -163,11 +158,11 @@ public class Login extends Fragment {
         }
     };
 
-    public void erreurNonRemplie() {
-        error.setText("Veuillez remplir correctement les champs.");
+    public void showIncompleteFieldsError() {
+        errorTextView.setText("Veuillez remplir correctement les champs.");
     }
-    public void erreurConnexion() {
-        error.setText("Les identifiants ne sont pas les bons.");
+    public void showLoginError() {
+        errorTextView.setText("Les identifiants ne sont pas les bons.");
     }
 
 }

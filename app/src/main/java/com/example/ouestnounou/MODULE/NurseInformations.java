@@ -33,10 +33,13 @@ public class NurseInformations extends Fragment {
 
     Button validation;
     TextView error;
-    Nurse nurse;
     NurseDAO nurseDAO;
-    Integer num_children_int, age_min_int, age_max_int;
-    EditText num_children, age_min, age_max;
+    Nurse nurse;
+    Integer numChildrenInteger, ageMinInteger, ageMaxInteger;
+    EditText numChildrenEditText, ageMinEditText, ageMaxEditText;
+    SharedPreferences prefs;
+    String categoryString;
+    int idCategoryInt;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,22 +53,23 @@ public class NurseInformations extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.z_fragment_nurse_informations, container, false);
 
-        num_children = v.findViewById(R.id.num_children);
-        age_max = v.findViewById(R.id.age_max);
-        age_min = v.findViewById(R.id.age_min);
+        numChildrenEditText = v.findViewById(R.id.num_children);
+        ageMaxEditText = v.findViewById(R.id.age_max);
+        ageMinEditText = v.findViewById(R.id.age_min);
         error = v.findViewById(R.id.error);
         validation = v.findViewById(R.id.validation);
         validation.setOnClickListener(click_event);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        int id_parents = prefs.getInt("id", -1);
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        idCategoryInt = prefs.getInt("id", -1);
+        categoryString = prefs.getString("category", "");
 
         nurseDAO = new NurseDAO(getContext());
-        nurse = nurseDAO.getNurseById(id_parents);
+        nurse = nurseDAO.getNurseById(idCategoryInt);
 
-        age_min.setText(String.valueOf(nurse.getAge_min()));
-        age_max.setText(String.valueOf(nurse.getAge_max()));
-        num_children.setText(String.valueOf(nurse.getNb_children()));
+        ageMinEditText.setText(String.valueOf(nurse.getAgeMin()));
+        ageMaxEditText.setText(String.valueOf(nurse.getAgeMax()));
+        numChildrenEditText.setText(String.valueOf(nurse.getNbChildren()));
 
         return v;
     }
@@ -77,45 +81,32 @@ public class NurseInformations extends Fragment {
             {
                 case R.id.validation:
 
-                    SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-                    String category = prefs.getString("category", "");
-                    int id_category = prefs.getInt("id", 0);
-
                     ChildrenDAO childrenDAO = new ChildrenDAO(getContext());
-                    ArrayList<Children> listChildren = childrenDAO.getChildrensByNurseId(id_category);
+                    ArrayList<Children> listChildren = childrenDAO.getChildrensByNurseId(idCategoryInt);
 
+                    numChildrenInteger = Integer.valueOf(numChildrenEditText.getText().toString());
+                    ageMinInteger = Integer.valueOf(ageMinEditText.getText().toString());
+                    ageMaxInteger = Integer.valueOf(ageMaxEditText.getText().toString());
 
-
-
-                    num_children_int = Integer.valueOf(num_children.getText().toString());
-                    age_min_int = Integer.valueOf(age_min.getText().toString());
-                    age_max_int = Integer.valueOf(age_max.getText().toString());
-
-
-
-                    if(num_children_int == null || age_max_int == null || age_min_int == null)
+                    if(numChildrenInteger == null || ageMaxInteger == null || ageMinInteger == null)
                     {
                         error.setText("Veuillez remplir les champs correctements");
                     }
                     else
                     {
-                        if(listChildren != null && listChildren.size() > num_children_int)
+                        if(listChildren != null && listChildren.size() > numChildrenInteger)
                         {
                             error.setText("Le nombre est inférieur au enfant que vous avez actuellement (" + listChildren.size() + ")" );
                         }
-
                         else{
-                            nurse.setNb_children(num_children_int);
-                            nurse.setAge_min(age_min_int);
-                            nurse.setAge_max(age_max_int);
+                            nurse.setNbChildren(numChildrenInteger);
+                            nurse.setAgeMin(ageMinInteger);
+                            nurse.setAgeMax(ageMaxInteger);
                             nurseDAO.update(nurse);
                             Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         }
-                        //Navigation.findNavController(view).navigate(R.id.action_registerP3_to_registerP4Parents);
                     }
-
                     break;
-
             }
 
         }

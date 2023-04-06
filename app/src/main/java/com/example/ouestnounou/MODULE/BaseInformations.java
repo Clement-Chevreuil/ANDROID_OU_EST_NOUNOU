@@ -29,88 +29,75 @@ import java.util.Date;
 
 public class BaseInformations extends Fragment {
 
-    Button validation, log_out;
-    EditText first_name, last_name;
-    TextView error;
-    RadioButton boy, girl;
-    DatePicker birth;
-    String first_name_text, last_name_text, birth_text, sex_text;
-    Parents parents;
-    Nurse nurse;
+    Button validationButton, logOutButton;
+    EditText firstNameEditText, lastNameEditText;
+    TextView errorTextView;
+    RadioButton boyRadioButton, girlRadioButton;
+    DatePicker birthDatePicker;
+    String firstNameString, lastNameString, birthString, sexString, categoryString;
+    int idCategoryInt;
     ParentsDAO parentsDAO;
     NurseDAO nurseDAO;
-    String category;
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    Parents parents;
+    Nurse nurse;
+    SharedPreferences prefs;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.z_fragment_base_informations, container, false);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        int id_parents = prefs.getInt("id", -1);
-        category = prefs.getString("category", "");
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        idCategoryInt = prefs.getInt("id", -1);
+        categoryString = prefs.getString("categoryString", "");
 
+        validationButton = v.findViewById(R.id.validation);
+        logOutButton = v.findViewById(R.id.log_out);
+        girlRadioButton = v.findViewById(R.id.girl);
+        boyRadioButton = v.findViewById(R.id.boy);
+        firstNameEditText = v.findViewById(R.id.first_name);
+        lastNameEditText = v.findViewById(R.id.last_name);
+        errorTextView = v.findViewById(R.id.error);
+        birthDatePicker = v.findViewById(R.id.birth);
 
+        validationButton.setOnClickListener(click_event);
+        boyRadioButton.setOnClickListener(click_event);
+        girlRadioButton.setOnClickListener(click_event);
+        logOutButton.setOnClickListener(click_event);
 
-        validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(click_event);
-
-        log_out = v.findViewById(R.id.log_out);
-        log_out.setOnClickListener(click_event);
-
-        girl = v.findViewById(R.id.girl);
-        girl.setOnClickListener(click_event);
-
-        boy = v.findViewById(R.id.boy);
-        boy.setOnClickListener(click_event);
-
-        first_name = v.findViewById(R.id.first_name);
-        last_name = v.findViewById(R.id.last_name);
-        error = v.findViewById(R.id.error);
-        birth = v.findViewById(R.id.birth);
-
-
-
-        if(category.equals(getResources().getString(R.string.nurse))){
+        if(categoryString.equals(getResources().getString(R.string.nurse))){
             nurseDAO = new NurseDAO(getContext());
-            nurse = nurseDAO.getNurseById(id_parents);
-            first_name.setText(nurse.getFist_name());
-            last_name.setText(nurse.getLast_name());
+            nurse = nurseDAO.getNurseById(idCategoryInt);
+            firstNameEditText.setText(nurse.getFirstName());
+            lastNameEditText.setText(nurse.getLastName());
             if(nurse.getSex().equals(getResources().getString(R.string.boy)))
             {
-                boy.setChecked(true);
+                boyRadioButton.setChecked(true);
             }
             else if (nurse.getSex().equals(getResources().getString(R.string.girl)))
             {
-                girl.setChecked(true);
+                girlRadioButton.setChecked(true);
             }
             String[] date_array = nurse.getBirth().split("/");
-            birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
+            birthDatePicker.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
 
         }
         else{
             parentsDAO = new ParentsDAO(getContext());
-            parents = parentsDAO.getParent(id_parents);
-            first_name.setText(parents.getFist_name());
-            last_name.setText(parents.getLast_name());
+            parents = parentsDAO.getParent(idCategoryInt);
+            firstNameEditText.setText(parents.getFirstName());
+            lastNameEditText.setText(parents.getLastName());
             if(parents.getSex().equals(getResources().getString(R.string.boy)))
             {
-                boy.setChecked(true);
+                boyRadioButton.setChecked(true);
             }
             else if (parents.getSex().equals(getResources().getString(R.string.girl)))
             {
-                girl.setChecked(true);
+                girlRadioButton.setChecked(true);
             }
             String[] date_array = parents.getBirth().split("/");
-            birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
+            birthDatePicker.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
 
         }
 
@@ -125,27 +112,27 @@ public class BaseInformations extends Fragment {
                 case R.id.validation:
                     Bundle args = new Bundle();
 
-                    first_name_text = first_name.getText().toString();
-                    last_name_text = last_name.getText().toString();
-                    birth_text = String.valueOf(birth.getDayOfMonth()) + "/" + String.valueOf(birth.getMonth()) + "/" + String.valueOf(birth.getYear());
+                    firstNameString = firstNameEditText.getText().toString();
+                    lastNameString = lastNameEditText.getText().toString();
+                    birthString = String.valueOf(birthDatePicker.getDayOfMonth()) + "/" + String.valueOf(birthDatePicker.getMonth()) + "/" + String.valueOf(birthDatePicker.getYear());
 
-                    if(first_name_text.isEmpty() || last_name_text.isEmpty())
+                    if(firstNameString.isEmpty() || lastNameString.isEmpty())
                     {
-                        error.setText("Vueillez remplir les champs correctement");
+                        errorTextView.setText("Vueillez remplir les champs correctement");
                     }
                     else
                     {
-                        if(category.equals(getResources().getString(R.string.nurse))){
-                            nurse.setFist_name(first_name_text);
-                            nurse.setLast_name(last_name_text);
-                            nurse.setBirth(birth_text);
+                        if(categoryString.equals(getResources().getString(R.string.nurse))){
+                            nurse.setFirstName(firstNameString);
+                            nurse.setLastName(lastNameString);
+                            nurse.setBirth(birthString);
                             nurseDAO.update(nurse);
                             Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            parents.setFist_name(first_name_text);
-                            parents.setLast_name(last_name_text);
-                            parents.setBirth(birth_text);
+                            parents.setFirstName(firstNameString);
+                            parents.setLastName(lastNameString);
+                            parents.setBirth(birthString);
                             parentsDAO.update(parents);
                             Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         }
@@ -154,13 +141,12 @@ public class BaseInformations extends Fragment {
                     break;
 
                 case R.id.boy:
-                    sex_text = boy.getText().toString();
+                    sexString = boyRadioButton.getText().toString();
                     break;
                 case R.id.girl:
-                    sex_text = girl.getText().toString();
+                    sexString = girlRadioButton.getText().toString();
                     break;
                 case R.id.log_out:
-                    SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
                     prefs = null;
                     getActivity().finish();
                     break;

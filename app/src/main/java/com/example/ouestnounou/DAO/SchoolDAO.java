@@ -26,7 +26,6 @@ public class SchoolDAO extends DAOBase{
     public SchoolDAO(Context pContext) {
         super(pContext);
     }
-
     public void add(School school) {
 
         open();
@@ -37,13 +36,12 @@ public class SchoolDAO extends DAOBase{
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
         values.put(address, school.getAddress());
-        values.put(postalCode, school.getPostal_code());
+        values.put(postalCode, school.getPostalCode());
         values.put(phone, school.getPhone().toString());
 
         mDb.insert(nameTableSchool, null, values);
         close();
     }
-
     public void update(School school) {
         open();
         ContentValues values = new ContentValues();
@@ -52,19 +50,16 @@ public class SchoolDAO extends DAOBase{
         values.put(city, school.getCity());
         values.put(country, school.getCountry());
         values.put(address, school.getAddress());
-        values.put(postalCode, school.getPostal_code());
+        values.put(postalCode, school.getPostalCode());
         values.put(phone, school.getPhone().toString());
         mDb.update(nameTableSchool, values, id  + " = ?", new String[] {String.valueOf(school.getId())});
         close();
     }
-
     public void delete(long id) {
         open();
         mDb.delete(nameTableSchool, id + " = ?", new String[] {String.valueOf(id)});
         close();
     }
-
-    @SuppressLint("Range")
     public ArrayList<School> getSchools() {
         ArrayList<School> allSchool = new ArrayList<School>();
 
@@ -74,7 +69,13 @@ public class SchoolDAO extends DAOBase{
             do {
                 School school = new School();
                 school.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
+                school.setName(unCurseur.getString(unCurseur.getColumnIndex(name)));
                 school.setMail(unCurseur.getString(unCurseur.getColumnIndex(mail)));
+                school.setCity(unCurseur.getString(unCurseur.getColumnIndex(city)));
+                school.setCountry(unCurseur.getString(unCurseur.getColumnIndex(country)));
+                school.setAddress(unCurseur.getString(unCurseur.getColumnIndex(address)));
+                school.setPostalCode(unCurseur.getString(unCurseur.getColumnIndex(postalCode)));
+                school.setPhone(unCurseur.getString(unCurseur.getColumnIndex(phone)));
                 allSchool.add(school);
             }
             while (unCurseur.moveToNext());

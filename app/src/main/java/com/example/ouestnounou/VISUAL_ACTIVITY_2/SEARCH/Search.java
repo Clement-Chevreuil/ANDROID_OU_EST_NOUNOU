@@ -91,7 +91,7 @@ public class Search extends Fragment implements OnMapReadyCallback{
 
                 List<Address> addresses = null;
                 try {
-                    addresses = geocoder.getFromLocationName(nurse.getAdress() + nurse.getCity(), 1);
+                    addresses = geocoder.getFromLocationName(nurse.getaddress() + nurse.getCity(), 1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -141,7 +141,7 @@ public class Search extends Fragment implements OnMapReadyCallback{
     private View createInfoWindowView(Nurse nurse) {
         View infoWindow = getLayoutInflater().inflate(R.layout.e_fragment_search_button, null);
         TextView informations = (TextView) infoWindow.findViewById(R.id.infos);
-        informations.setText(nurse.getFist_name() + " " + nurse.getLast_name() + "\n" + nurse.getAdress() + " " + nurse.getCity());
+        informations.setText(nurse.getFirstName() + " " + nurse.getLastName() + "\n" + nurse.getaddress() + " " + nurse.getCity());
         return infoWindow;
     }
 

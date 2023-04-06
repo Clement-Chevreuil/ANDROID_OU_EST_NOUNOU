@@ -28,7 +28,7 @@ public class AddSchool extends Fragment {
     EditText name, phone, address, city, postal_code;
     TextView error, step;
 
-    String name_text, phone_text, address_text, city_text, postal_code_text;
+    String name_text, phoneString, address_text, cityString, postalCodeString;
 
     private static final String ARG_NAME = "name";
     private static final String ARG_PHONE = "phone";
@@ -47,10 +47,10 @@ public class AddSchool extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             name_text = getArguments().getString(ARG_NAME);
-            phone_text = getArguments().getString(ARG_PHONE);
+            phoneString = getArguments().getString(ARG_PHONE);
             address_text = getArguments().getString(ARG_ADDRESS);
-            city_text = getArguments().getString(ARG_CITY);
-            postal_code_text = getArguments().getString(ARG_POSTAL_CODE);
+            cityString = getArguments().getString(ARG_CITY);
+            postalCodeString = getArguments().getString(ARG_POSTAL_CODE);
         }
     }
 
@@ -72,10 +72,10 @@ public class AddSchool extends Fragment {
         if(getArguments() != null)
         {
             name.setText(name_text);
-            phone.setText(phone_text);
+            phone.setText(phoneString);
             address.setText(address_text);
-            city.setText(city_text);
-            postal_code.setText(postal_code_text);
+            city.setText(cityString);
+            postal_code.setText(postalCodeString);
         }
 
 
@@ -91,26 +91,26 @@ public class AddSchool extends Fragment {
                     Bundle args = new Bundle();
 
                     name_text = name.getText().toString();
-                    phone_text = phone.getText().toString();
+                    phoneString = phone.getText().toString();
                     address_text = address.getText().toString();
-                    city_text = city.getText().toString();
-                    postal_code_text = postal_code.getText().toString();
+                    cityString = city.getText().toString();
+                    postalCodeString = postal_code.getText().toString();
 
-                    if(name_text.isEmpty() || phone_text.isEmpty() || address_text.isEmpty() || city_text.isEmpty() || postal_code_text.isEmpty())
+                    if(name_text.isEmpty() || phoneString.isEmpty() || address_text.isEmpty() || cityString.isEmpty() || postalCodeString.isEmpty())
                     {
                         error.setText("Veuillez remplir les champs correctement");
                     }
                     else
                     {
                         args.putString(ARG_NAME, name_text);
-                        args.putString(ARG_PHONE, phone_text);
+                        args.putString(ARG_PHONE, phoneString);
                         args.putString(ARG_ADDRESS, address_text);
-                        args.putString(ARG_CITY, city_text);
-                        args.putString(ARG_POSTAL_CODE, postal_code_text);
+                        args.putString(ARG_CITY, cityString);
+                        args.putString(ARG_POSTAL_CODE, postalCodeString);
 
-                        School new_school = new School(name_text, phone_text, address_text, city_text, postal_code_text);
-                        SchoolDAO schoolDAO = new SchoolDAO(getContext());
-                        schoolDAO.add(new_school);
+                        //School new_school = new School(name_text, phoneString, address_text, cityString, postalCodeString);
+                        //SchoolDAO schoolDAO = new SchoolDAO(getContext());
+                        //schoolDAO.add(new_school);
 
                         //Navigation.findNavController(view).navigate(R.id.action_addSchool_to_parents2);
                     }

@@ -20,9 +20,8 @@ public class ChildrenDAO extends DAOBase{
     private static final String nameTableParents = "Parents";
     private static final String nameTableNurse = "Nurse";
     private static final String id = "id";
-    private static final String id_parents = "id_parents";
-
-    private static final String id_nurse = "id_nurse";
+    private static final String idParents = "idParents";
+    private static final String idNurse = "idNurse";
     private static final String firstName = "first_name";
     private static final String last_name = "last_name";
     private static final String birth = "birth";
@@ -38,108 +37,94 @@ public class ChildrenDAO extends DAOBase{
         open();
         ContentValues values = new ContentValues();
 
-        values.put(firstName, children.getFist_name());
-        values.put(last_name, children.getLast_name());
+        values.put(firstName, children.getFirstName());
+        values.put(last_name, children.getLastName());
         values.put(birth, String.valueOf(children.getBirth()));
         values.put(sex, children.getSex());
-        values.put(id_parents, children.getParents().getId());
+        values.put(idParents, children.getParents().getId());
 
         mDb.insert(nameTableChildren, null, values);
         close();
     }
-
     public void update(Children children) {
         open();
         ContentValues values = new ContentValues();
-        values.put(firstName, children.getFist_name());
-        values.put(last_name, children.getLast_name());
+        values.put(firstName, children.getFirstName());
+        values.put(last_name, children.getLastName());
         values.put(birth, String.valueOf(children.getBirth()));
         values.put(sex, children.getSex());
         if(children.getParents() != null)
         {
-            values.put(id_parents, children.getParents().getId());
+            values.put(idParents, children.getParents().getId());
         }
 
         if(children.getNurse().getId() == -1){
-            values.put(id_nurse, -1);
+            values.put(idNurse, -1);
         }
         else{
-            values.put(id_nurse, children.getNurse().getId());
+            values.put(idNurse, children.getNurse().getId());
         }
 
-        if(children.getNurse_accepted() >= 1)
+        if(children.getNurseAccepted() >= 1)
         {
-            values.put("nurse_accepted", children.getNurse_accepted());
+            values.put("nurse_accepted", children.getNurseAccepted());
         }
 
         mDb.update(nameTableChildren, values, id  + " = ?", new String[] {String.valueOf(children.getId())});
         close();
     }
-
-    public void delete(long id_children) {
+    public void delete(long idChildren) {
         open();
-        getAllEventsByDateAndChild(id_children);
-        mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(id_children)});
-        close();
-    }
-
-    public void deleteEvent(long id) {
-        mDb.delete("CalendarEvent",  "id_children" +  " = ?", new String[] { String.valueOf(id) });
-    }
-
-    public void getAllEventsByDateAndChild(long id_children) {
         String selectQuery = "SELECT * FROM CalendarEvent WHERE " + " id_children " + " = ?";
-
-
         Cursor cursor;
-        cursor = mDb.rawQuery(selectQuery, new String[] { String.valueOf(id_children) });
-
+        cursor = mDb.rawQuery(selectQuery, new String[] { String.valueOf(idChildren) });
         if (cursor.moveToFirst()) {
             do {
-                deleteEvent(cursor.getInt(cursor.getColumnIndex("id_children")));
+                int dataIdChildren = cursor.getInt(cursor.getColumnIndex("id_children"));
+                mDb.delete("CalendarEvent",  "id_children" +  " = ?", new String[] { String.valueOf(dataIdChildren) });
             } while (cursor.moveToNext());
         }
         cursor.close();
-
+        mDb.delete(nameTableChildren, id + " = ?", new String[] {String.valueOf(idChildren)});
+        close();
     }
-
     public ArrayList<Children> getChildrens() {
         ArrayList<Children> allChildren = new ArrayList<Children>();
 
         this.open();
         //Cursor unCurseur = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c JOIN " + nameTableParents + " p ON c.id = p.id;", null);
-        Cursor unCurseur = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c JOIN " + nameTableParents + " p ON c." + id_parents + " = p." + id + " JOIN " + nameTableNurse + " n ON p." + id_nurse + " = n." + id + ";", null);
+        Cursor unCurseur = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c JOIN " + nameTableParents + " p ON c." + idParents + " = p." + id + " JOIN " + nameTableNurse + " n ON p." + idNurse + " = n." + id + ";", null);
         if (unCurseur.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(unCurseur.getInt(unCurseur.getColumnIndex(id)));
-                children.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
-                children.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+                children.setFirstName(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+                children.setLastName(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
                 children.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
                 children.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
 
                 Parents parents = new Parents();
                 parents.setId(unCurseur.getInt(unCurseur.getColumnIndex("p.id")));
-                parents.setFist_name(unCurseur.getString(unCurseur.getColumnIndex("p.first_name")));
-                parents.setLast_name(unCurseur.getString(unCurseur.getColumnIndex("p.last_name")));
+                parents.setFirstName(unCurseur.getString(unCurseur.getColumnIndex("p.first_name")));
+                parents.setLastName(unCurseur.getString(unCurseur.getColumnIndex("p.last_name")));
                 parents.setBirth(unCurseur.getString(unCurseur.getColumnIndex("p.birth")));
                 parents.setCity(unCurseur.getString(unCurseur.getColumnIndex("p.city")));
                 parents.setCountry(unCurseur.getString(unCurseur.getColumnIndex("p.country")));
-                parents.setAdress(unCurseur.getString(unCurseur.getColumnIndex("p.adress")));
-                parents.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex("p.postal_code")));
+                parents.setaddress(unCurseur.getString(unCurseur.getColumnIndex("p.address")));
+                parents.setPostalCode(unCurseur.getString(unCurseur.getColumnIndex("p.postal_code")));
                 parents.setMail(unCurseur.getString(unCurseur.getColumnIndex("p.mail")));
                 parents.setPhone(unCurseur.getString(unCurseur.getColumnIndex("p.phone")));
                 parents.setSex(unCurseur.getString(unCurseur.getColumnIndex("p.sex")));
 
                 Nurse nurse = new Nurse();
                 nurse.setId(unCurseur.getInt(unCurseur.getColumnIndex("n.id")));
-                nurse.setFist_name(unCurseur.getString(unCurseur.getColumnIndex("n.first_name")));
-                nurse.setLast_name(unCurseur.getString(unCurseur.getColumnIndex("n.last_name")));
+                nurse.setFirstName(unCurseur.getString(unCurseur.getColumnIndex("n.first_name")));
+                nurse.setLastName(unCurseur.getString(unCurseur.getColumnIndex("n.last_name")));
                 nurse.setBirth(unCurseur.getString(unCurseur.getColumnIndex("n.birth")));
                 nurse.setCity(unCurseur.getString(unCurseur.getColumnIndex("n.city")));
                 nurse.setCountry(unCurseur.getString(unCurseur.getColumnIndex("n.country")));
-                nurse.setAdress(unCurseur.getString(unCurseur.getColumnIndex("n.adress")));
-                nurse.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex("n.postal_code")));
+                nurse.setaddress(unCurseur.getString(unCurseur.getColumnIndex("n.address")));
+                nurse.setPostalCode(unCurseur.getString(unCurseur.getColumnIndex("n.postal_code")));
                 nurse.setMail(unCurseur.getString(unCurseur.getColumnIndex("n.mail")));
                 nurse.setPhone(unCurseur.getString(unCurseur.getColumnIndex("n.phone")));
                 nurse.setSex(unCurseur.getString(unCurseur.getColumnIndex("n.sex")));
@@ -160,42 +145,41 @@ public class ChildrenDAO extends DAOBase{
         return allChildren;
 
     }
-
     public Children getChildrenByID(int id) {
         Children children = null;
 
         this.open();
-        Cursor unCurseur = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c JOIN " + nameTableParents + " p ON c." + id_parents + " = p." + id + " JOIN " + nameTableNurse + " n ON p." + id_nurse + " = n." + id + " WHERE c." + id + " = " + id + ";", null);
+        Cursor unCurseur = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c JOIN " + nameTableParents + " p ON c." + idParents + " = p." + id + " JOIN " + nameTableNurse + " n ON p." + idNurse + " = n." + id + " WHERE c." + id + " = " + id + ";", null);
         if (unCurseur.moveToFirst()) {
             children = new Children();
             children.setId(id);
-            children.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
-            children.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+            children.setFirstName(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+            children.setLastName(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
             children.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
             children.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
 
             Parents parents = new Parents();
             parents.setId(unCurseur.getInt(unCurseur.getColumnIndex("p.id")));
-            parents.setFist_name(unCurseur.getString(unCurseur.getColumnIndex("p.first_name")));
-            parents.setLast_name(unCurseur.getString(unCurseur.getColumnIndex("p.last_name")));
+            parents.setFirstName(unCurseur.getString(unCurseur.getColumnIndex("p.first_name")));
+            parents.setLastName(unCurseur.getString(unCurseur.getColumnIndex("p.last_name")));
             parents.setBirth(unCurseur.getString(unCurseur.getColumnIndex("p.birth")));
             parents.setCity(unCurseur.getString(unCurseur.getColumnIndex("p.city")));
             parents.setCountry(unCurseur.getString(unCurseur.getColumnIndex("p.country")));
-            parents.setAdress(unCurseur.getString(unCurseur.getColumnIndex("p.adress")));
-            parents.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex("p.postal_code")));
+            parents.setaddress(unCurseur.getString(unCurseur.getColumnIndex("p.address")));
+            parents.setPostalCode(unCurseur.getString(unCurseur.getColumnIndex("p.postal_code")));
             parents.setMail(unCurseur.getString(unCurseur.getColumnIndex("p.mail")));
             parents.setPhone(unCurseur.getString(unCurseur.getColumnIndex("p.phone")));
             parents.setSex(unCurseur.getString(unCurseur.getColumnIndex("p.sex")));
 
             Nurse nurse = new Nurse();
             nurse.setId(unCurseur.getInt(unCurseur.getColumnIndex("n.id")));
-            nurse.setFist_name(unCurseur.getString(unCurseur.getColumnIndex("n.first_name")));
-            nurse.setLast_name(unCurseur.getString(unCurseur.getColumnIndex("n.last_name")));
+            nurse.setFirstName(unCurseur.getString(unCurseur.getColumnIndex("n.first_name")));
+            nurse.setLastName(unCurseur.getString(unCurseur.getColumnIndex("n.last_name")));
             nurse.setBirth(unCurseur.getString(unCurseur.getColumnIndex("n.birth")));
             nurse.setCity(unCurseur.getString(unCurseur.getColumnIndex("n.city")));
             nurse.setCountry(unCurseur.getString(unCurseur.getColumnIndex("n.country")));
-            nurse.setAdress(unCurseur.getString(unCurseur.getColumnIndex("n.adress")));
-            nurse.setPostal_code(unCurseur.getString(unCurseur.getColumnIndex("n.postal_code")));
+            nurse.setaddress(unCurseur.getString(unCurseur.getColumnIndex("n.address")));
+            nurse.setPostalCode(unCurseur.getString(unCurseur.getColumnIndex("n.postal_code")));
             nurse.setMail(unCurseur.getString(unCurseur.getColumnIndex("n.mail")));
             nurse.setPhone(unCurseur.getString(unCurseur.getColumnIndex("n.phone")));
             nurse.setSex(unCurseur.getString(unCurseur.getColumnIndex("n.sex")));
@@ -206,7 +190,6 @@ public class ChildrenDAO extends DAOBase{
         this.close();
         return children;
     }
-
     public Children getChildrenByIDEasy(int id) {
         Children children = null;
 
@@ -215,8 +198,8 @@ public class ChildrenDAO extends DAOBase{
         if (unCurseur.moveToFirst()) {
             children = new Children();
             children.setId(id);
-            children.setFist_name(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
-            children.setLast_name(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
+            children.setFirstName(unCurseur.getString(unCurseur.getColumnIndex(firstName)));
+            children.setLastName(unCurseur.getString(unCurseur.getColumnIndex(last_name)));
             children.setBirth(unCurseur.getString(unCurseur.getColumnIndex(birth)));
             children.setSex(unCurseur.getString(unCurseur.getColumnIndex(sex)));
 
@@ -224,7 +207,6 @@ public class ChildrenDAO extends DAOBase{
         this.close();
         return children;
     }
-
     public Children getChildrenByNameEasy(String firstName, String lastName) {
         Children children = null;
 
@@ -233,8 +215,8 @@ public class ChildrenDAO extends DAOBase{
         if (cursor.moveToFirst()) {
             children = new Children();
             children.setId(cursor.getInt(cursor.getColumnIndex(id)));
-            children.setFist_name(cursor.getString(cursor.getColumnIndex(this.firstName)));
-            children.setLast_name(cursor.getString(cursor.getColumnIndex(this.last_name)));
+            children.setFirstName(cursor.getString(cursor.getColumnIndex(this.firstName)));
+            children.setLastName(cursor.getString(cursor.getColumnIndex(this.last_name)));
             children.setBirth(cursor.getString(cursor.getColumnIndex(birth)));
             children.setSex(cursor.getString(cursor.getColumnIndex(sex)));
         }
@@ -242,30 +224,27 @@ public class ChildrenDAO extends DAOBase{
         this.close();
         return children;
     }
-
     public ArrayList<Children> getChildrensByParentId(int parentId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_parents + " = ?;",
-                new String[]{String.valueOf(parentId)});
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " + "WHERE c." + idParents + " = ?;", new String[]{String.valueOf(parentId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
                 Nurse nurse = new Nurse();
-                nurse.setId(cursor.getInt(cursor.getColumnIndex("id_nurse")));
+                nurse.setId(cursor.getInt(cursor.getColumnIndex("idNurse")));
                 children.setNurse(nurse);
 
                 Parents parents = new Parents();
-                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                parents.setId(cursor.getInt(cursor.getColumnIndex("idParents")));
                 children.setParents(parents);
 
                 allChildren.add(children);
@@ -278,23 +257,20 @@ public class ChildrenDAO extends DAOBase{
         close();
         return allChildren;
     }
-
-
-
     public ArrayList<Children> getChildrensByParentIdWithoutNurse(int parentId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_parents + " = ? AND c.id_nurse IS NULL OR c.id_nurse = -1;",
+                        "WHERE c." + idParents + " = ? AND c.idNurse IS NULL OR c.idNurse = -1;",
                 new String[]{String.valueOf(parentId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
@@ -308,24 +284,23 @@ public class ChildrenDAO extends DAOBase{
         close();
         return allChildren;
     }
-
     public ArrayList<Children> getChildrensByParentsIdWithNurse(int parentId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_parents + " = ? AND c.id_nurse IS NOT NULL;",
+                        "WHERE c." + idParents + " = ? AND c.idNurse IS NOT NULL;",
                 new String[]{String.valueOf(parentId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
-                children.setNurse_accepted(cursor.getInt(cursor.getColumnIndex("nurse_accepted")));
+                children.setNurseAccepted(cursor.getInt(cursor.getColumnIndex("nurse_accepted")));
 
                 allChildren.add(children);
             } while (cursor.moveToNext());
@@ -337,28 +312,27 @@ public class ChildrenDAO extends DAOBase{
         close();
         return allChildren;
     }
-
     public ArrayList<Children> getChildrensByNurseId(int nurseId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted = 1;",
+                        "WHERE c." + idNurse + " = ? AND c.nurse_accepted = 1;",
                 new String[]{String.valueOf(nurseId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
 
                 Parents parents = new Parents();
 
-                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                parents.setId(cursor.getInt(cursor.getColumnIndex("idParents")));
                 children.setParents(parents);
 
                 allChildren.add(children);
@@ -371,32 +345,31 @@ public class ChildrenDAO extends DAOBase{
         close();
         return allChildren;
     }
-
     public ArrayList<Children> getChildrensByNurseIdExistingNurse(int nurseId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted = 1;",
+                        "WHERE c." + idNurse + " = ? AND c.nurse_accepted = 1;",
                 new String[]{String.valueOf(nurseId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
                 Nurse nurse = new Nurse();
 
-                nurse.setId(cursor.getInt(cursor.getColumnIndex("id_nurse")));
+                nurse.setId(cursor.getInt(cursor.getColumnIndex("idNurse")));
                 Log.e("test", String.valueOf(nurse.getId()));
                 children.setNurse(nurse);
 
                 Parents parents = new Parents();
-                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                parents.setId(cursor.getInt(cursor.getColumnIndex("idParents")));
                 children.setParents(parents);
 
                 allChildren.add(children);
@@ -410,29 +383,26 @@ public class ChildrenDAO extends DAOBase{
         close();
         return allChildren;
     }
-
-
-
     public ArrayList<Children> getChildrensByNurseIdWaiting(int nurseId) {
         ArrayList<Children> allChildren = new ArrayList<>();
 
         open();
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + nameTableChildren + " c " +
-                        "WHERE c." + id_nurse + " = ? AND c.nurse_accepted IS NULL OR c.nurse_accepted = -1;",
+                        "WHERE c." + idNurse + " = ? AND c.nurse_accepted IS NULL OR c.nurse_accepted = -1;",
                 new String[]{String.valueOf(nurseId)});
 
         if (cursor.moveToFirst()) {
             do {
                 Children children = new Children();
                 children.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                children.setFist_name(cursor.getString(cursor.getColumnIndex("first_name")));
-                children.setLast_name(cursor.getString(cursor.getColumnIndex("last_name")));
+                children.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                children.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
                 children.setBirth(cursor.getString(cursor.getColumnIndex("birth")));
                 children.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 
                 Parents parents = new Parents();
 
-                parents.setId(cursor.getInt(cursor.getColumnIndex("id_parents")));
+                parents.setId(cursor.getInt(cursor.getColumnIndex("idParents")));
                 children.setParents(parents);
 
                 allChildren.add(children);

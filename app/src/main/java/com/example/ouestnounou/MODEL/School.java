@@ -10,81 +10,70 @@ public class School {
     private String city;
     private String country;
     private String address;
-    private String postal_code;
+    private String postalCode;
     private String mail;
 
-    public School( String name, String phone, String address, String city, String postal_code) {
+    public School( String name, String phone, String address, String city, String postalCode, String mail, String country) {
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.city = city;
-        this.postal_code = postal_code;
-        this.mail = "temp";
-        this.country = "temp";
+        this.postalCode = postalCode;
+        this.mail = mail;
+        this.country = country;
     }
 
     public School(){}
 
+    //GETTER
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPhone() {
         return phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCity() {
         return city;
     }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCountry() {
         return country;
     }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getAddress() {
         return address;
+    }
+    public String getPostalCode() {
+        return postalCode;
+    }
+    public String getMail() {
+        return mail;
+    }
+
+    //SETTER
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public String getPostal_code() {
-        return postal_code;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
     public void setMail(String mail) {
         this.mail = mail;
     }

@@ -27,12 +27,11 @@ public class AddChildren extends Fragment {
 
     Button validation;
     EditText first_name, last_name;
-    TextView error, step;
-    RadioGroup sex;
+    TextView error;
     RadioButton boy, girl;
     DatePicker birth;
 
-    String first_name_text, last_name_text, birth_text, sex_text;
+    String firstNameString, lastNameString, birthString, sexString;
 
     private static final String ARG_FIRST_NAME = "first_name";
     private static final String ARG_LAST_NAME = "last_name";
@@ -47,10 +46,10 @@ public class AddChildren extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            first_name_text = getArguments().getString(ARG_FIRST_NAME);
-            last_name_text = getArguments().getString(ARG_LAST_NAME);
-            birth_text = getArguments().getString(ARG_DATE_BIRTH);
-            sex_text = getArguments().getString(ARG_SEX);
+            firstNameString = getArguments().getString(ARG_FIRST_NAME);
+            lastNameString = getArguments().getString(ARG_LAST_NAME);
+            birthString = getArguments().getString(ARG_DATE_BIRTH);
+            sexString = getArguments().getString(ARG_SEX);
         }
     }
 
@@ -77,29 +76,29 @@ public class AddChildren extends Fragment {
 
         if(getArguments() != null)
         {
-            if(sex_text.equals(getResources().getString(R.string.boy)))
+            if(sexString.equals(getResources().getString(R.string.boy)))
             {
                 boy.setChecked(true);
             }
-            else if (sex_text.equals(getResources().getString(R.string.girl)))
+            else if (sexString.equals(getResources().getString(R.string.girl)))
             {
                 girl.setChecked(true);
             }
 
-            first_name.setText(first_name_text);
-            last_name.setText(last_name_text);
+            first_name.setText(firstNameString);
+            last_name.setText(lastNameString);
 
-            String[] date_array = birth_text.split("/");
+            String[] date_array = birthString.split("/");
             birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
         }
         else
         {
             //SEX BASE
             if(boy.isChecked()){
-                sex_text = boy.getText().toString();
+                sexString = boy.getText().toString();
             }
             else if(girl.isChecked()){
-                sex_text = girl.getText().toString();
+                sexString = girl.getText().toString();
             }
 
         }
@@ -118,21 +117,21 @@ public class AddChildren extends Fragment {
                 case R.id.validation:
                     Bundle args = new Bundle();
 
-                    first_name_text = first_name.getText().toString();
-                    last_name_text = last_name.getText().toString();
-                    birth_text = String.valueOf(birth.getDayOfMonth()) + "/" + String.valueOf(birth.getMonth()) + "/" + String.valueOf(birth.getYear());
+                    firstNameString = first_name.getText().toString();
+                    lastNameString = last_name.getText().toString();
+                    birthString = String.valueOf(birth.getDayOfMonth()) + "/" + String.valueOf(birth.getMonth()) + "/" + String.valueOf(birth.getYear());
 
 
-                    if(first_name_text.isEmpty() || last_name_text.isEmpty())
+                    if(firstNameString.isEmpty() || lastNameString.isEmpty())
                     {
                         error.setText("Veuillez remplir les champs correctement");
                     }
                     else
                     {
-                        args.putString(ARG_FIRST_NAME, first_name_text);
-                        args.putString(ARG_LAST_NAME, last_name_text);
-                        args.putString(ARG_DATE_BIRTH, birth_text);
-                        args.putString(ARG_SEX, sex_text);
+                        args.putString(ARG_FIRST_NAME, firstNameString);
+                        args.putString(ARG_LAST_NAME, lastNameString);
+                        args.putString(ARG_DATE_BIRTH, birthString);
+                        args.putString(ARG_SEX, sexString);
 
                         SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
                         int id_parents = prefs.getInt("id", 0);
@@ -140,27 +139,19 @@ public class AddChildren extends Fragment {
                         com.example.ouestnounou.MODEL.Parents parents_children = new Parents();
                         parents_children.setId(id_parents);
 
-                        Children new_children = new Children(first_name_text, last_name_text, birth_text, sex_text, parents_children);
+                        Children new_children = new Children(firstNameString, lastNameString, birthString, sexString, parents_children);
 
                         ChildrenDAO childrenDAO = new ChildrenDAO(getContext());
                         childrenDAO.add(new_children);
 
                         Navigation.findNavController(view).navigate(R.id.action_addChildren_to_children);
-
-                    //ENREGISTER ENFANT BDD
-                    //ALLER SUR LA PAGE ECOLE
-
-                    //AUTRE :
-                    //AJOUTER SCOLARISE ET LE RELIER A CETTE PAGE
-                    //PENSER A RELIER LE DATE BIRTH ET SEX DE L'enfant voir la page REGISTER 1 si tu veux t'aider facilement
-                    //EN CAS DE PROB DEMANDE A BILLY
                     }
                     break;
                 case R.id.boy:
-                    sex_text = boy.getText().toString();
+                    sexString = boy.getText().toString();
                     break;
                 case R.id.girl:
-                    sex_text = girl.getText().toString();
+                    sexString = girl.getText().toString();
                     break;
             }
 

@@ -7,37 +7,43 @@ import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    //MULTIPLE TABLE
+    //TABLE
+    private static final String nameTableParents = "Parents";
+    private static final String nameTableChildren = "Children";
+    private static final String nameTableSchool = "School";
+    private static final String nameTableNurse = "Nurse";
+    private static final String nameTableCalendarEvent = "CalendarEvent";
+
+    //ID
+    private static final String id = "id";
+    private static final String idParents = "id_parents";
+    private static final String idChildren = "id_children";
+    private static final String idSchool = "id_school";
+    private static final String idNurse = "id_nurse";
+    private static final String idCalendarEvent = "id_calendar_event";
+
+    //CHAMPS
     private static final String mail = "mail";
     private static final String password = "password";
-    private static final String id = "id";
+
     private static final String birth = "birth";
     private static final String city = "city";
     private static final String country = "country";
-    private static final String adress = "adress";
+    private static final String address = "address";
     private static final String firstName = "first_name";
     private static final String lastName = "last_name";
     private static final String postalCode = "postal_code";
     private static final String phone = "phone";
     private static final String sex = "sex";
-
-
-    private static final String nameTableParents = "Parents";
-
-    private static final String nameTableNurse = "Nurse";
     private static final String ageMin = "age_min";
     private static final String ageMax = "age_max";
     private static final String nbChildren = "nb_children";
-
-    private static final String nameTableChildren = "Children";
-    private static final String nameTableSchool = "School";
     private static final String name = "name";
-
-    private static final String nameTableCalendarEvent = "CalendarEvent";
-    private static final String datePropose = "datePropose";
+    private static final String datePropose = "date_propose";
     private static final String accepted = "accepted";
-    private static final String startTime = "startTime";
-    private static final String endTime = "endTime";
+    private static final String startTime = "start_time";
+    private static final String endTime = "end_time";
+    private static final String nurseAccepted = "nurse_accepted";
 
 
     private static final String reqCreateNurse =
@@ -49,7 +55,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + birth + " TEXT,"
                     + sex + " TEXT,"
                     + city + " TEXT,"
-                    + adress + " TEXT,"
+                    + address + " TEXT,"
                     + postalCode + " TEXT,"
                     + country + " TEXT,"
                     + ageMin + " INTEGER,"
@@ -66,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + birth + " TEXT,"
                     + sex + " TEXT,"
                     + city + " TEXT,"
-                    + adress + " TEXT,"
+                    + address + " TEXT,"
                     + postalCode + " TEXT,"
                     + country + " TEXT,"
                     + mail + " TEXT,"
@@ -76,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + name + " TEXT,"
                     + city + " TEXT,"
-                    + adress + " TEXT,"
+                    + address + " TEXT,"
                     + postalCode + " TEXT,"
                     + country + " TEXT,"
                     + phone + " TEXT,"
@@ -84,9 +90,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String reqCreateChildren =
             "CREATE TABLE " + nameTableChildren + " ("
                     + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "nurse_accepted" + " INTEGER NULL,"
-                    + "id_parents" + " INTEGER,"
-                    + "id_nurse" + " INTEGER NULL,"
+                    + nurseAccepted + " INTEGER NULL,"
+                    + idParents + " INTEGER,"
+                    + idNurse + " INTEGER NULL,"
                     + firstName + " TEXT,"
                     + lastName + " TEXT,"
                     + sex + " TEXT,"
@@ -95,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String reqCreateCalendarEvent =
             "CREATE TABLE " + nameTableCalendarEvent + " ("
                     + id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "id_children" + " INTEGER,"
+                    + idChildren+ " INTEGER,"
                     + accepted + " TEXT NULL,"
                     + datePropose + " TEXT,"
                     + startTime + " TEXT,"

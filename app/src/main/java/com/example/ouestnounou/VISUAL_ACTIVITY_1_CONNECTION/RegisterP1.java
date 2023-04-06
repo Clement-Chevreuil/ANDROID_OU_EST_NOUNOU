@@ -26,22 +26,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class RegisterP1 extends Fragment {
 
-    Button validation, connexion;
-    EditText first_name, last_name;
-    TextView error, step;
-    RadioButton nurse, parents, boy, girl;
-    DatePicker birth;
-    String first_name_text, last_name_text, category_text, birth_text, sex_text;
-    Date birth_date;
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Views
+    private Button validationButton, connexionButton;
+    private EditText firstNameEditText, lastNameEditText;
+    private TextView errorTextView, stepTextView;
+    private RadioButton nurseRadioButton, parentsRadioButton, boyRadioButton, girlRadioButton;
+    private DatePicker birthDatePicker;
 
+    // Arguments keys
     private static final String ARG_CATEGORY = "category";
-    private static final String ARG_FIRST_NAME = "first_name";
-    private static final String ARG_LAST_NAME = "last_name";
-    private static final String ARG_DATE_BIRTH = "date_birth";
+    private static final String ARG_FIRST_NAME = "firstName";
+    private static final String ARG_LAST_NAME = "lastName";
+    private static final String ARG_DATE_BIRTH = "dateBirth";
     private static final String ARG_SEX = "sex";
+
+    // Arguments values
+    private String categoryValue, firstNameValue, lastNameValue, birthDateValue, sexValue;
 
     public RegisterP1() {
         // Required empty public constructor
@@ -51,143 +54,129 @@ public class RegisterP1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            first_name_text = getArguments().getString(ARG_FIRST_NAME);
-            last_name_text = getArguments().getString(ARG_LAST_NAME);
-            birth_text = getArguments().getString(ARG_DATE_BIRTH);
-            category_text = getArguments().getString(ARG_CATEGORY);
-            sex_text = getArguments().getString(ARG_SEX);
+            categoryValue = getArguments().getString(ARG_CATEGORY);
+            firstNameValue = getArguments().getString(ARG_FIRST_NAME);
+            lastNameValue = getArguments().getString(ARG_LAST_NAME);
+            birthDateValue = getArguments().getString(ARG_DATE_BIRTH);
+            sexValue = getArguments().getString(ARG_SEX);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.b_fragment_register_p1, container, false);
+        View rootView = inflater.inflate(R.layout.b_fragment_register_p1, container, false);
 
-        validation = v.findViewById(R.id.validation);
-        validation.setOnClickListener(click_event);
+        // Find views
+        validationButton = rootView.findViewById(R.id.validation);
+        connexionButton = rootView.findViewById(R.id.connexion);
+        nurseRadioButton = rootView.findViewById(R.id.nurse);
+        parentsRadioButton = rootView.findViewById(R.id.parents);
+        boyRadioButton = rootView.findViewById(R.id.boy);
+        girlRadioButton = rootView.findViewById(R.id.girl);
+        firstNameEditText = rootView.findViewById(R.id.first_name);
+        lastNameEditText = rootView.findViewById(R.id.last_name);
+        errorTextView = rootView.findViewById(R.id.error);
+        stepTextView = rootView.findViewById(R.id.step);
+        birthDatePicker = rootView.findViewById(R.id.birth);
 
-        connexion = v.findViewById(R.id.connexion);
-        connexion.setOnClickListener(click_event);
+        // Set listeners
+        validationButton.setOnClickListener(clickListener);
+        connexionButton.setOnClickListener(clickListener);
+        nurseRadioButton.setOnClickListener(clickListener);
+        parentsRadioButton.setOnClickListener(clickListener);
+        boyRadioButton.setOnClickListener(clickListener);
+        girlRadioButton.setOnClickListener(clickListener);
 
-        nurse = v.findViewById(R.id.nurse);
-        nurse.setOnClickListener(click_event);
-        
-        parents = v.findViewById(R.id.parents);
-        parents.setOnClickListener(click_event);
+        // Set default values
+        setDefaultCategory();
+        setDefaultSex();
 
-        girl = v.findViewById(R.id.girl);
-        girl.setOnClickListener(click_event);
-
-        boy = v.findViewById(R.id.boy);
-        boy.setOnClickListener(click_event);
-
-        first_name = v.findViewById(R.id.first_name);
-        last_name = v.findViewById(R.id.last_name);
-        error = v.findViewById(R.id.error);
-        step = v.findViewById(R.id.step);
-        birth = v.findViewById(R.id.birth);
-
-
-
-        if(getArguments() != null)
-        {
-            if(category_text.equals(getResources().getString(R.string.nurse)))
-            {
-                nurse.setChecked(true);
-            }
-            else if (category_text.equals(getResources().getString(R.string.parents)))
-            {
-                parents.setChecked(true);
+        if (getArguments() != null) {
+            // Set values from arguments
+            if (categoryValue.equals(getResources().getString(R.string.nurse))) {
+                nurseRadioButton.setChecked(true);
+            } else if (categoryValue.equals(getResources().getString(R.string.parents))) {
+                parentsRadioButton.setChecked(true);
             }
 
-            if(sex_text.equals(getResources().getString(R.string.boy)))
-            {
-                boy.setChecked(true);
-            }
-            else if (sex_text.equals(getResources().getString(R.string.girl)))
-            {
-                girl.setChecked(true);
+            if (sexValue.equals(getResources().getString(R.string.boy))) {
+                boyRadioButton.setChecked(true);
+            } else if (sexValue.equals(getResources().getString(R.string.girl))) {
+                girlRadioButton.setChecked(true);
             }
 
-            first_name.setText(first_name_text);
-            last_name.setText(last_name_text);
+            firstNameEditText.setText(firstNameValue);
+            lastNameEditText.setText(lastNameValue);
 
-            String[] date_array = birth_text.split("/");
-            birth.updateDate(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]), Integer.valueOf(date_array[0]));
-        }
-        else
-        {
-            //CATEGORY BASE
-            if(nurse.isChecked()){
-                category_text = nurse.getText().toString();
-            }
-            else if(parents.isChecked()){
-                category_text = parents.getText().toString();
-            }
-
-            //SEX BASE
-            if(boy.isChecked()){
-                sex_text = boy.getText().toString();
-            }
-            else if(girl.isChecked()){
-                sex_text = girl.getText().toString();
-            }
-
+            String[] dateArray = birthDateValue.split("/");
+            birthDatePicker.updateDate(
+                    Integer.valueOf(dateArray[2]),
+                    Integer.valueOf(dateArray[1]),
+                    Integer.valueOf(dateArray[0])
+            );
         }
 
-
-
-        return v;
+        return rootView;
     }
 
-    private View.OnClickListener click_event = new View.OnClickListener() {
+    private void setDefaultCategory() {
+        if (nurseRadioButton.isChecked()) {
+            categoryValue = nurseRadioButton.getText().toString();
+        } else if (parentsRadioButton.isChecked()) {
+            categoryValue = parentsRadioButton.getText().toString();
+        }
+    }
+
+    private void setDefaultSex() {
+        if (sexValue.equals(getResources().getString(R.string.boy))) {
+            boyRadioButton.setChecked(true);
+        } else if (sexValue.equals(getResources().getString(R.string.girl))) {
+            girlRadioButton.setChecked(true);
+        }
+    }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId())
-            {
+            switch (view.getId()) {
                 case R.id.validation:
                     Bundle args = new Bundle();
 
-                    first_name_text = first_name.getText().toString();
-                    last_name_text = last_name.getText().toString();
-                    birth_text = String.valueOf(birth.getDayOfMonth()) + "/" + String.valueOf(birth.getMonth()) + "/" + String.valueOf(birth.getYear());
+                    String firstName = firstNameEditText.getText().toString();
+                    String lastName = lastNameEditText.getText().toString();
+                    String birthDate = birthDatePicker.getDayOfMonth() + "/" + (birthDatePicker.getMonth() + 1) + "/" + birthDatePicker.getYear();
 
-                    if(first_name_text.isEmpty() || last_name_text.isEmpty())
-                    {
-                        error.setText("Vueillez remplir les champs correctement");
-                    }
-                    else
-                    {
-                        args.putString(ARG_CATEGORY, category_text);
-                        args.putString(ARG_FIRST_NAME, first_name_text);
-                        args.putString(ARG_LAST_NAME, last_name.getText().toString());
-                        args.putString(ARG_DATE_BIRTH, birth_text);
-                        args.putString(ARG_SEX, sex_text);
+                    if (firstName.isEmpty() || lastName.isEmpty()) {
+                        errorTextView.setText("Veuillez remplir les champs correctement.");
+                    } else {
+                        args.putString(ARG_CATEGORY, categoryValue);
+                        args.putString(ARG_FIRST_NAME, firstName);
+                        args.putString(ARG_LAST_NAME, lastName);
+                        args.putString(ARG_DATE_BIRTH, birthDate);
+                        args.putString(ARG_SEX, sexValue);
                         Navigation.findNavController(view).navigate(R.id.action_registerP1_to_registerP2, args);
                     }
                     break;
-
                 case R.id.connexion:
                     Navigation.findNavController(view).navigate(R.id.action_registerP1_to_login);
                     break;
                 case R.id.parents:
-                    step.setText("etape 1/3");
-                    category_text = parents.getText().toString();
+                    stepTextView.setText("Etape 1/3");
+                    categoryValue = parentsRadioButton.getText().toString();
                     break;
                 case R.id.nurse:
-                    step.setText("etape 1/4");
-                    category_text = nurse.getText().toString();
+                    stepTextView.setText("Etape 1/4");
+                    categoryValue = nurseRadioButton.getText().toString();
                     break;
                 case R.id.boy:
-                    sex_text = boy.getText().toString();
+                    sexValue = boyRadioButton.getText().toString();
                     break;
                 case R.id.girl:
-                    sex_text = girl.getText().toString();
+                    sexValue = girlRadioButton.getText().toString();
                     break;
             }
-
         }
     };
+
 
 }

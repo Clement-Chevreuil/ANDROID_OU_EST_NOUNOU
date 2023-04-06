@@ -18,6 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
+    SharedPreferences prefs;
+    String categoryString;
+    int idCategoryInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,11 @@ public class Menu extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView menu = (BottomNavigationView) findViewById(R.id.BottomNavigation);
 
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences("session", MODE_PRIVATE);
-        String category = prefs.getString("category", "");
-        int id_category = prefs.getInt("id", 0);
+        prefs = getApplicationContext().getSharedPreferences("session", MODE_PRIVATE);
+        categoryString = prefs.getString("category", "");
+        idCategoryInt = prefs.getInt("id", 0);
 
-        if(category.equals(getResources().getString(R.string.nurse))){
+        if(categoryString.equals(getResources().getString(R.string.nurse))){
             menu.setSelectedItemId(R.id.pay);
             navController.navigate(R.id.contract);
         }
@@ -44,9 +47,6 @@ public class Menu extends AppCompatActivity {
 
 
         menu.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            SharedPreferences prefs = getApplicationContext().getSharedPreferences("session", MODE_PRIVATE);
-            String category = prefs.getString("category", "");
-            int id_category = prefs.getInt("id", 0);
             ChildrenDAO childrenDAO = new ChildrenDAO(getApplicationContext());
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -58,8 +58,8 @@ public class Menu extends AppCompatActivity {
                         navController.navigate(R.id.settings_parents);
                         return true;
                     case R.id.calendar:
-                        if(category.equals(getResources().getString(R.string.nurse))){
-                            ArrayList<Children> childrens = childrenDAO.getChildrensByNurseId(id_category);
+                        if(categoryString.equals(getResources().getString(R.string.nurse))){
+                            ArrayList<Children> childrens = childrenDAO.getChildrensByNurseId(idCategoryInt);
                             if(childrens == null)
                             {
                                 Toast.makeText(getApplicationContext(), "Il vous faut au moins un contrat pour afficher acceder a cette page", Toast.LENGTH_SHORT).show();
@@ -70,7 +70,7 @@ public class Menu extends AppCompatActivity {
                             }
                         }
                         else{
-                            ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(id_category);
+                            ArrayList<Children> childrens = childrenDAO.getChildrensByParentId(idCategoryInt);
                             if(childrens == null)
                             {
                                 Toast.makeText(getApplicationContext(), "Il vous faut d'abord créer des enfants pour y acceder", Toast.LENGTH_SHORT).show();
@@ -84,9 +84,9 @@ public class Menu extends AppCompatActivity {
                         return true;
                     case R.id.childrens:
 
-                        if(category.equals(getResources().getString(R.string.nurse))){
+                        if(categoryString.equals(getResources().getString(R.string.nurse))){
 
-                            ArrayList<Children> childrensNurse = childrenDAO.getChildrensByNurseId(id_category);
+                            ArrayList<Children> childrensNurse = childrenDAO.getChildrensByNurseId(idCategoryInt);
                             if(childrensNurse == null)
                             {
                                 Toast.makeText(getApplicationContext(), "Il vous faut au moins un contrat pour afficher acceder a cette page", Toast.LENGTH_SHORT).show();
@@ -102,10 +102,9 @@ public class Menu extends AppCompatActivity {
 
                         return true;
                     case R.id.search:
-                        category = prefs.getString("category", "");
-                        if( ! category.equals(getResources().getString(R.string.nurse))){
-                            ArrayList<Children> childrensVerif = childrenDAO.getChildrensByParentId(id_category);
-                            ArrayList<Children> childrensNurse = childrenDAO.getChildrensByParentIdWithoutNurse(id_category);
+                        if( ! categoryString.equals(getResources().getString(R.string.nurse))){
+                            ArrayList<Children> childrensVerif = childrenDAO.getChildrensByParentId(idCategoryInt);
+                            ArrayList<Children> childrensNurse = childrenDAO.getChildrensByParentIdWithoutNurse(idCategoryInt);
 
                             if (childrensVerif == null) {
                                 Toast.makeText(getApplicationContext(), "Il vous faut des enfants pour acceder a cette page", Toast.LENGTH_SHORT).show();
@@ -123,7 +122,6 @@ public class Menu extends AppCompatActivity {
                         else
                         {
                             Toast.makeText(getApplicationContext(), "Fonctionnalité non disponible pour le moment", Toast.LENGTH_SHORT).show();
-                           //navController.navigate(R.id.search_parents);
                         }
                         return true;
 

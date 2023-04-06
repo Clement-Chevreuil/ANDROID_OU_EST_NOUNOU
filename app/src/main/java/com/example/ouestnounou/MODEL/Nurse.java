@@ -6,157 +6,133 @@ public class Nurse {
 
     private int id;
     private String sex;
-    private String fist_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String birth;
     private String city;
     private String country;
     private String phone;
-    private String adress;
-    private String postal_code;
+    private String address;
+    private String postalCode;
     private String mail;
     private String password;
-    private int age_min;
-    private int age_max;
-    private int nb_children;
+    private int ageMin;
+    private int ageMax;
+    private int nbChildren;
 
     public Nurse(){}
 
-    public Nurse(String fist_name, String last_name, String sex, String birth, String city, String country, String phone, String adress, String postal_code, String mail, String password, int age_min, int age_max, int nb_children) {
+    public Nurse(String firstName, String lastName, String sex, String birth, String city, String country, String phone, String address, String postalCode, String mail, String password, int ageMin, int ageMax, int nbChildren) {
         this.sex = sex;
-        this.fist_name = fist_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birth = birth;
         this.city = city;
         this.country = country;
         this.phone = phone;
-        this.adress = adress;
-        this.postal_code = postal_code;
+        this.address = address;
+        this.postalCode = postalCode;
         this.mail = mail;
         this.password = password;
-        this.age_min = age_min;
-        this.age_max = age_max;
-        this.nb_children = nb_children;
+        this.ageMin = ageMin;
+        this.ageMax = ageMax;
+        this.nbChildren = nbChildren;
     }
 
 
     public String getSex() {
         return sex;
     }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public String getFirstName() {
+        return firstName;
     }
-
-    public String getFist_name() {
-        return fist_name;
+    public String getLastName() {
+        return lastName;
     }
-
-    public void setFist_name(String fist_name) {
-        this.fist_name = fist_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
     public String getBirth() {
         return birth;
     }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
     public String getCity() {
         return city;
     }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCountry() {
         return country;
     }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public String getaddress() {
+        return address;
     }
-
-    public String getAdress() {
-        return adress;
+    public String getPostalCode() {
+        return postalCode;
     }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getPostal_code() {
-        return postal_code;
-    }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
     public String getMail() {
         return mail;
     }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
     public String getPassword() {
         return password;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public int getAgeMax() {
+        return ageMax;
     }
-
-    public int getAge_min() {
-        return age_min;
-    }
-
-    public void setAge_min(int age_min) {
-        this.age_min = age_min;
-    }
-
-    public int getAge_max() {
-        return age_max;
-    }
-
-    public void setAge_max(int age_max) {
-        this.age_max = age_max;
-    }
-
     public String getPhone() {
         return phone;
     }
+    public int getNbChildren() {
+        return nbChildren;
+    }
+    public int getAgeMin() {
+        return ageMin;
+    }
 
+
+    //SETTER
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    
+    public void setaddress(String address) {
+        this.address = address;
+    }
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+ 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setAgeMin(int ageMin) {
+        this.ageMin = ageMin;
+    }
+    public void setAgeMax(int ageMax) {
+        this.ageMax = ageMax;
+    }
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public int getNb_children() {
-        return nb_children;
-    }
-
-    public void setNb_children(int nb_children) {
-        this.nb_children = nb_children;
+    public void setNbChildren(int nbChildren) {
+        this.nbChildren = nbChildren;
     }
 }

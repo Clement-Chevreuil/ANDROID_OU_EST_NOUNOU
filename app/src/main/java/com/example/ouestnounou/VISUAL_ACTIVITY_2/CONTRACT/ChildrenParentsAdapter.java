@@ -56,9 +56,9 @@ public class ChildrenParentsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.timeTextView.setText( children_list.get(position).getFist_name() + " - " + children_list.get(position).getLast_name());
+        holder.timeTextView.setText( children_list.get(position).getFirstName() + " - " + children_list.get(position).getLastName());
 
-        if(children_list.get(position).getNurse_accepted() == 1){
+        if(children_list.get(position).getNurseAccepted() == 1){
             holder.waiting.setText("Accepté");
         }
         else{

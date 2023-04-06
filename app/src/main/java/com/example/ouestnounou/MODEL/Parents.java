@@ -6,59 +6,57 @@ import java.util.Date;
 public class Parents {
 
     private int id;
-    private String fist_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String birth;
     private String city;
     private String country;
-    private String adress;
-    private String postal_code;
+    private String address;
+    private String postalCode;
     private String mail;
     private String password;
     private String phone;
-
     private String sex;
-
     private ArrayList<Children> chidrens;
 
-    public Parents(int id, String fist_name, String last_name, String birth, String city, String country, String adress, String postal_code, String mail, String password, String phone, String sex, ArrayList<Children> childrens) {
+    public Parents(int id, String firstName, String lastName, String birth, String city, String country, String address, String postalCode, String mail, String password, String phone, String sex, ArrayList<Children> childrens) {
         this.id = id;
-        this.fist_name = fist_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birth = birth;
         this.city = city;
         this.country = country;
-        this.adress = adress;
-        this.postal_code = postal_code;
+        this.address = address;
+        this.postalCode = postalCode;
         this.mail = mail;
         this.password = password;
         this.phone = phone;
         this.sex = sex;
         this.chidrens = childrens;
     }
-    public Parents(int id, String fist_name, String last_name, String birth, String city, String country, String adress, String postal_code, String mail, String password, String phone, String sex) {
+    public Parents(int id, String firstName, String lastName, String birth, String city, String country, String address, String postalCode, String mail, String password, String phone, String sex) {
         this.id = id;
-        this.fist_name = fist_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birth = birth;
         this.city = city;
         this.country = country;
-        this.adress = adress;
-        this.postal_code = postal_code;
+        this.address = address;
+        this.postalCode = postalCode;
         this.mail = mail;
         this.password = password;
         this.phone = phone;
         this.sex = sex;
     }
 
-    public Parents( String fist_name, String last_name, String birth, String city, String country, String adress, String postal_code, String mail, String password, String phone, String sex) {
-        this.fist_name = fist_name;
-        this.last_name = last_name;
+    public Parents( String firstName, String lastName, String birth, String city, String country, String address, String postalCode, String mail, String password, String phone, String sex) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birth = birth;
         this.city = city;
         this.country = country;
-        this.adress = adress;
-        this.postal_code = postal_code;
+        this.address = address;
+        this.postalCode = postalCode;
         this.mail = mail;
         this.password = password;
         this.phone = phone;
@@ -67,106 +65,82 @@ public class Parents {
 
     public Parents(){}
 
+    //GETTER
     public int getId() {
         return id;
     }
-
     public String getSex() {
         return sex;
     }
-
-    public void setSex(String sex) {
-        this.sex = sex;
+    public String getFirstName() {
+        return firstName;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public String getLastName() {
+        return lastName;
     }
-
-    public String getFist_name() {
-        return fist_name;
-    }
-
-    public void setFist_name(String fist_name) {
-        this.fist_name = fist_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
     public String getBirth() {
         return birth;
     }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
     public String getCity() {
         return city;
     }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCountry() {
         return country;
     }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public String getaddress() {
+        return address;
     }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getPostal_code() {
-        return postal_code;
-    }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
     public String getMail() {
         return mail;
     }
-
-    public void setMail(String mail) {
-        this.mail = mail;
+    public String getPostalCode() {
+        return postalCode;
     }
-
     public String getPassword() {
         return password;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhone() {
         return phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public ArrayList<Children> getChidrens() {
         return chidrens;
     }
 
+    //SETTER
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public void setaddress(String address) {
+        this.address = address;
+    }
+    public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
     public void setChidrens(ArrayList<Children> chidrens) {
         this.chidrens = chidrens;
     }

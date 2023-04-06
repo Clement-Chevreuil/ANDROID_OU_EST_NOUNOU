@@ -42,20 +42,23 @@ public class CalendarEventAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        ChildrenDAO childrenDAO = new ChildrenDAO(convertView.getContext());
+
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.e_calendar_list_item, parent, false);
             holder = new ViewHolder();
             holder.timeTextView = (TextView) convertView.findViewById(R.id.timeTextView);
             holder.acceptedCheckBox = (CheckBox) convertView.findViewById(R.id.acceptedCheckBox);
             convertView.setTag(holder);
-        } else {
+        }
+        else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         CalendarEvent event = mEvents.get(position);
-        ChildrenDAO childrenDAO = new ChildrenDAO(convertView.getContext());
+
         Children child = childrenDAO.getChildrenByIDEasy(event.getChildren().getId());
-        holder.timeTextView.setText(event.getDate() + " - " + event.getStartTime() + " - " + event.getEndTime() + " : " + child.getFist_name() + " " + child.getLast_name());
+        holder.timeTextView.setText(event.getDate() + " - " + event.getStartTime() + " - " + event.getEndTime() + " : " + child.getFirstName() + " " + child.getLastName());
         holder.acceptedCheckBox.setChecked(event.isAccepted());
         holder.acceptedCheckBox.setEnabled(false);
 
