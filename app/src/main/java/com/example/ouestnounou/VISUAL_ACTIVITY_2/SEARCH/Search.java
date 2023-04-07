@@ -37,20 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search extends Fragment implements OnMapReadyCallback{
-
-    private MapView mapView;
     private GoogleMap googleMap;
-
-    public Search() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,11 +56,8 @@ public class Search extends Fragment implements OnMapReadyCallback{
         // Initialise la carte avec l'interface OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
-
         return view;
     }
-
-
 
     @Override
     public void onMapReady(GoogleMap map) {

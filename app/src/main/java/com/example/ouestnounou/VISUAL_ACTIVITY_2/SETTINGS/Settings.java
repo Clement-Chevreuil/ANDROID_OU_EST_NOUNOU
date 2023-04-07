@@ -17,44 +17,35 @@ import com.google.android.material.tabs.TabLayout;
 
 public class Settings extends Fragment {
 
-    public Settings() {
-        // Required empty public constructor
-    }
-
     TabLayout tabLayout;
     ViewPager2 viewPager;
-    MyViewPagerAdapter myViewPagerAdapter;
+    MyViewPagerAdapterParents myViewPagerAdapterParents;
     MyViewPagerAdapterNurse myViewPagerAdapterNurse;
+    SharedPreferences prefs;
+    String categoryString;
+    int idCategoryInt;
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        SharedPreferences prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
-        String category = prefs.getString("category", "");
-        int id_category = prefs.getInt("id", 0);
 
-        View v;
+        prefs = getContext().getSharedPreferences("session", MODE_PRIVATE);
+        categoryString = prefs.getString("categoryString", "");
+        idCategoryInt = prefs.getInt("id", 0);
 
-        if(category.equals(getResources().getString(R.string.nurse))){
+        if(categoryString.equals(getResources().getString(R.string.nurse))){
             v = inflater.inflate(R.layout.e_fragment_settings_nurse, container, false);
-
+            tabLayout = v.findViewById(R.id.table_layout);
+            viewPager = v.findViewById(R.id.view_pager);
+            myViewPagerAdapterNurse = new MyViewPagerAdapterNurse(getActivity());
+            viewPager.setAdapter(myViewPagerAdapterNurse);
         }
         else{
             v = inflater.inflate(R.layout.e_fragment_settings, container, false);
-        }
-
-        tabLayout = v.findViewById(R.id.table_layout);
-        viewPager = v.findViewById(R.id.view_pager);
-
-        if(category.equals(getResources().getString(R.string.nurse))){
-            myViewPagerAdapterNurse = new MyViewPagerAdapterNurse(getActivity());
-            viewPager.setAdapter(myViewPagerAdapterNurse);
-
-
-        }
-        else{
-            myViewPagerAdapter = new MyViewPagerAdapter(getActivity());
-            viewPager.setAdapter(myViewPagerAdapter);
+            tabLayout = v.findViewById(R.id.table_layout);
+            viewPager = v.findViewById(R.id.view_pager);
+            myViewPagerAdapterParents = new MyViewPagerAdapterParents(getActivity());
+            viewPager.setAdapter(myViewPagerAdapterParents);
         }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -62,12 +53,10 @@ public class Settings extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -81,6 +70,7 @@ public class Settings extends Fragment {
                 tabLayout.getTabAt(position).select();
             }
         });
+        
         return v;
     }
 

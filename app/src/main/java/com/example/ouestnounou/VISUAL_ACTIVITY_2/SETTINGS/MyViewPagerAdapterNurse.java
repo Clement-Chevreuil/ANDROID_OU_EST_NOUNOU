@@ -29,7 +29,6 @@ public class MyViewPagerAdapterNurse extends FragmentStateAdapter {
                return new EInformations();
            case 3:
                return new NurseInformations();
-
            default:
                return new RegisterP3();
        }

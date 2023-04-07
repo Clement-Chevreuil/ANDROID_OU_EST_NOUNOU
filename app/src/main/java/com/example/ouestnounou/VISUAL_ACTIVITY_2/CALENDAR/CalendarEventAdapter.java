@@ -66,7 +66,6 @@ public class CalendarEventAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        TextView dateTextView;
         TextView timeTextView;
         CheckBox acceptedCheckBox;
     }

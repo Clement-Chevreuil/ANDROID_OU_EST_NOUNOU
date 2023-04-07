@@ -34,17 +34,20 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CalendarGestionningAdd extends Fragment {
-
+    //CALENDAR
     private CalendarView calendarView;
+    private String selectedDateString;
+
+    //SPINNER
+    private Spinner spinner;
+    ArrayAdapter<String> adapter;
+
+    //OTHERS
     private TextView textViewStartTime, textViewEndTime;
     private Button buttonStartTime, buttonEndTime, buttonSubmit;
-    private String selectedDateString, selectedStartTime, selectedEndTime;
-    private static final String ARG_DATE = "date";
-    private Spinner spinner;
+    private String selectedStartTime, selectedEndTime;
     private ChildrenDAO childrenDAO;
-
     Children child;
-    ArrayAdapter<String> adapter;
     SharedPreferences prefs;
     int idCategory;
 
@@ -81,7 +84,7 @@ public class CalendarGestionningAdd extends Fragment {
 
         //GESTION DE LA DATE DU CALENDRIER A PARTIR DE LA PAGE CALENDARGESTIONNING
         if (getArguments() != null) {
-            selectedDateString = getArguments().getString(ARG_DATE);
+            selectedDateString = getArguments().getString("date");
             String[] date_array = selectedDateString.split("/");
             Calendar calendar = Calendar.getInstance();
             calendar.set(Integer.valueOf(date_array[2]), Integer.valueOf(date_array[1]) - 1, Integer.valueOf(date_array[0]));

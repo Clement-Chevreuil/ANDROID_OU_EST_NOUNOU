@@ -30,7 +30,6 @@ public class AddChildren extends Fragment {
     TextView error;
     RadioButton boy, girl;
     DatePicker birth;
-
     String firstNameString, lastNameString, birthString, sexString;
 
     private static final String ARG_FIRST_NAME = "first_name";

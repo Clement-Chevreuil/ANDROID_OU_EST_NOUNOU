@@ -110,11 +110,9 @@ public class BaseInformations extends Fragment {
             switch (view.getId())
             {
                 case R.id.validation:
-                    Bundle args = new Bundle();
-
                     firstNameString = firstNameEditText.getText().toString();
                     lastNameString = lastNameEditText.getText().toString();
-                    birthString = String.valueOf(birthDatePicker.getDayOfMonth()) + "/" + String.valueOf(birthDatePicker.getMonth()) + "/" + String.valueOf(birthDatePicker.getYear());
+                    birthString = birthDatePicker.getDayOfMonth() + "/" + birthDatePicker.getMonth() + "/" + birthDatePicker.getYear();
 
                     if(firstNameString.isEmpty() || lastNameString.isEmpty())
                     {
@@ -136,10 +134,8 @@ public class BaseInformations extends Fragment {
                             parentsDAO.update(parents);
                             Toast.makeText(getContext(), "Vos informations ont bien été mise à jour!", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                     break;
-
                 case R.id.boy:
                     sexString = boyRadioButton.getText().toString();
                     break;

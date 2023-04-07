@@ -1,7 +1,5 @@
 package com.example.ouestnounou.VISUAL_ACTIVITY_2.SETTINGS;
 
-import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -12,9 +10,9 @@ import com.example.ouestnounou.MODULE.BaseInformations;
 import com.example.ouestnounou.MODULE.EInformations;
 import com.example.ouestnounou.VISUAL_ACTIVITY_1_CONNECTION.RegisterP3;
 
-public class MyViewPagerAdapter extends FragmentStateAdapter {
+public class MyViewPagerAdapterParents extends FragmentStateAdapter {
 
-    public MyViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public MyViewPagerAdapterParents(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -28,7 +26,6 @@ public class MyViewPagerAdapter extends FragmentStateAdapter {
                return new AddressInformations();
            case 2:
                return new EInformations();
-
            default:
                return new RegisterP3();
        }

@@ -35,24 +35,31 @@ import java.util.Locale;
 
 public class CalendarGestionning extends Fragment {
 
-    private CalendarView calendarView;
-    private ListView eventList;
+    //SPINNER
+    private ArrayList<Children> childrens;
+    private ArrayAdapter<String> adapterSpinner;
+    private Spinner childrenSpinner;
+    String selectedItem;
+
+    //CALENDAR
     private ArrayList<String> events;
-    ArrayList<Children> childrens;
-    private ArrayAdapter<String> adapter, adapterSpinner;
-    private Button addEventButton;
-    private CalendarEventDAO calendarEventDAO;
-    private ChildrenDAO childrenDAO;
-    private String selectedDateString, category;
-    private Spinner spinner;
-    int year, month, dayOfMonth, id_category;
-    SharedPreferences prefs;
+    private ArrayAdapter<String> adapter;
+    List<CalendarEvent> mEvents;
+    private CalendarView calendarView;
+    private ListView calendarListView;
+    private String selectedDateString;
     Calendar calendar;
     Date selectedDate;
     SimpleDateFormat dateFormat;
-    List<CalendarEvent> mEvents;
-    CalendarEventAdapter adapterDate;
-    String selectedItem;
+    CalendarEventAdapter calendarEventAdapter;
+    int year, month, dayOfMonth, id_category;
+
+    //OTHERS
+    private Button addEventButton;
+    private CalendarEventDAO calendarEventDAO;
+    private ChildrenDAO childrenDAO;
+    private String category;
+    SharedPreferences prefs;
     Children child;
 
     @Override
@@ -67,9 +74,9 @@ public class CalendarGestionning extends Fragment {
         id_category = prefs.getInt("id", 0);
 
         calendarView = rootView.findViewById(R.id.calendarView);
-        eventList = rootView.findViewById(R.id.eventList);
+        calendarListView = rootView.findViewById(R.id.eventList);
         addEventButton = rootView.findViewById(R.id.addEventButton);
-        spinner = rootView.findViewById(R.id.spinner);
+        childrenSpinner = rootView.findViewById(R.id.spinner);
 
 
         // GESTION DU SPINNER
@@ -81,15 +88,15 @@ public class CalendarGestionning extends Fragment {
             childrens = childrenDAO.getChildrensByParentId(id_category);
         }
         adapterSpinner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-        adapter.add("");
-        for (Children child : childrens) { adapter.add(child.getFirstName() + " " + child.getLastName()); }
-        spinner.setAdapter(adapter);
+        adapterSpinner.add("");
+        for (Children child : childrens) { adapterSpinner.add(child.getFirstName() + " " + child.getLastName()); }
+        childrenSpinner.setAdapter(adapterSpinner);
 
 
         // GESTION DU CALENDRIER INITIALISATION ET REMPLISSAGE POUR LA DATE D'AUJOURD'HUI
         events = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice, events);
-        eventList.setAdapter(adapter);
+        calendarListView.setAdapter(adapter);
         // Ajout des événements pour la date actuelle
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -100,8 +107,8 @@ public class CalendarGestionning extends Fragment {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         selectedDateString = dateFormat.format(selectedDate);
         mEvents = calendarEventDAO.getAllEventsByDate(selectedDateString);
-        adapterDate = new CalendarEventAdapter(getContext(), mEvents);
-        eventList.setAdapter(adapterDate);
+        calendarEventAdapter = new CalendarEventAdapter(getContext(), mEvents);
+        calendarListView.setAdapter(calendarEventAdapter);
 
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -112,7 +119,7 @@ public class CalendarGestionning extends Fragment {
                 month = month2;
                 dayOfMonth = dayOfMonth2;
 
-                selectedItem = spinner.getSelectedItem().toString();
+                selectedItem = childrenSpinner.getSelectedItem().toString();
                 if( ! selectedItem.isEmpty()){
                     String[] words = selectedItem.split(" ");
                     child = childrenDAO.getChildrenByNameEasy(words[0], words[1]);
@@ -128,8 +135,8 @@ public class CalendarGestionning extends Fragment {
                 dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 selectedDateString = dateFormat.format(selectedDate);
                 mEvents = calendarEventDAO.getAllEventsByDateAndChild(selectedDateString, child.getId());
-                adapterDate = new CalendarEventAdapter(getContext(), mEvents);
-                eventList.setAdapter(adapterDate);
+                calendarEventAdapter = new CalendarEventAdapter(getContext(), mEvents);
+                calendarListView.setAdapter(calendarEventAdapter);
 
             }
 
@@ -143,7 +150,7 @@ public class CalendarGestionning extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_calendar_gestionning_to_calendar_parents_add, bundle);
             }
         });
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        childrenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
 
@@ -162,8 +169,8 @@ public class CalendarGestionning extends Fragment {
                 dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 selectedDateString = dateFormat.format(selectedDate);
                 mEvents = calendarEventDAO.getAllEventsByDateAndChild(selectedDateString, child.getId());
-                adapterDate = new CalendarEventAdapter(getContext(), mEvents);
-                eventList.setAdapter(adapterDate);
+                calendarEventAdapter = new CalendarEventAdapter(getContext(), mEvents);
+                calendarListView.setAdapter(calendarEventAdapter);
             }
 
             @Override
